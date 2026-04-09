@@ -139,7 +139,7 @@ function ProfilePage() {
               {isZh ? '运行新分析 →' : 'Run New Analysis →'}
             </Link>
             <Link href="/dashboard" style={{ display: 'block', textAlign: 'center', padding: '9px', borderRadius: '8px', border: '1px solid var(--color-border)', color: 'var(--color-text-secondary)', textDecoration: 'none', fontSize: '0.875rem', fontWeight: 500 }}>
-              {isZh ? '仪表盘' : 'Dashboard'}
+              {isZh ? '账户中心' : 'Dashboard'}
             </Link>
             <button
               onClick={logout}
@@ -415,7 +415,7 @@ function ReportCard({
             {analysis.date}
           </p>
           <span style={{ fontSize: '0.8125rem', fontWeight: 600, letterSpacing: '0.02em', color: 'var(--color-text-muted)' }}>
-            {analysis.type === 'mock' ? (isZh ? '模拟演示' : 'Demo') : (isZh ? '报告上传' : 'Upload')}
+            {analysis.type === 'mock' ? (isZh ? '演示数据' : 'Demo') : (isZh ? '体检报告' : 'Report')}
           </span>
         </div>
 

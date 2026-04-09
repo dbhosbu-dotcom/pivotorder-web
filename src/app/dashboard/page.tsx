@@ -216,8 +216,8 @@ export default function DashboardPage() {
               {user.analyses.length === 0 ? (
                 <EmptyState
                   isZh={isZh}
-                  message={isZh ? '暂无分析记录。运行第一次分析后结果将在此显示。' : 'No analyses yet. Run your first analysis to see results here.'}
-                  actionLabel={isZh ? '运行分析 →' : 'Run Analysis →'}
+                  message={isZh ? '暂无检测记录。上传第一份体检报告后结果将显示在这里。' : 'No records yet. Upload your first report to get started.'}
+                  actionLabel={isZh ? '立即上传报告 →' : 'Upload Report →'}
                   actionHref="/engine"
                 />
               ) : (
@@ -240,8 +240,8 @@ export default function DashboardPage() {
               {user.analyses.length < 2 ? (
                 <EmptyState
                   isZh={isZh}
-                  message={isZh ? '需要至少2次分析记录才能显示趋势图。' : 'At least 2 analyses are needed to display the trend chart.'}
-                  actionLabel={isZh ? '运行分析 →' : 'Run Analysis →'}
+                  message={isZh ? '累积至少 2 次检测后，生物年龄趋势图将自动呈现。' : 'At least 2 analyses are needed to display the trend chart.'}
+                  actionLabel={isZh ? '上传新报告 →' : 'Upload Report →'}
                   actionHref="/engine"
                 />
               ) : (
@@ -272,7 +272,7 @@ export default function DashboardPage() {
                     features: isZh ? ['无限次分析', '历史记录追踪', '趋势分析图', '优先级干预排序'] : ['Unlimited analyses', 'History tracking', 'Trend charts', 'Priority intervention ranking'],
                     current: user.plan === 'pro',
                     cta: isZh ? '升级至专业版' : 'Upgrade to Pro',
-                    action: () => alert(isZh ? '支付功能即将上线，敬请期待！' : 'Payment coming soon — stay tuned!'),
+                    action: () => alert(isZh ? '在线支付即将开放，敬请期待！' : 'Payment coming soon — stay tuned!'),
                   },
                   {
                     name: isZh ? '企业版' : 'Enterprise',
@@ -386,7 +386,7 @@ function AnalysisCard({ analysis, isZh }: { analysis: SavedAnalysis; isZh: boole
       <div style={{ minWidth: '120px' }}>
         <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-heading)', margin: 0 }}>{analysis.date}</p>
         <span style={{ fontSize: '0.8125rem', fontWeight: 600, letterSpacing: '0.02em', color: 'var(--color-text-muted)' }}>
-          {analysis.type === 'mock' ? (isZh ? '模拟分析' : 'Mock') : (isZh ? '报告上传' : 'Upload')}
+          {analysis.type === 'mock' ? (isZh ? '演示数据' : 'Demo') : (isZh ? '体检报告' : 'Report')}
         </span>
       </div>
 

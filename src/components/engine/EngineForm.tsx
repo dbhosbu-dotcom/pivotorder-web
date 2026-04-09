@@ -407,7 +407,7 @@ export default function EngineForm() {
       }
     } catch (err) {
       console.error('[EngineForm]', err);
-      setToast(isZh ? '后端连接失败，正在以模拟数据运行…' : 'Engine connection failed — running with mock data…');
+      setToast(isZh ? '引擎连接异常，已切换为演示数据…' : 'Engine connection failed — running with demo data…');
       await new Promise((r) => setTimeout(r, 600));
       const mockResult = buildMockResult(form);
       setIsMockResult(true);
@@ -480,7 +480,7 @@ export default function EngineForm() {
               onClick={() => alert(isZh ? '支付功能即将上线，敬请期待！' : 'Payment coming soon — stay tuned!')}
               style={{ width: '100%', padding: '13px', borderRadius: '8px', backgroundColor: 'var(--color-accent)', color: 'var(--color-bg-dark)', fontWeight: 700, border: 'none', cursor: 'pointer', fontSize: '0.9375rem' }}
             >
-              {isZh ? '升级专业版 ¥99/月 →' : 'Upgrade to Pro ¥99/mo →'}
+              {isZh ? '升级专业版 →' : 'Upgrade to Pro →'}
             </button>
             <button
               onClick={() => runAnalysis(true)}
@@ -549,7 +549,7 @@ export default function EngineForm() {
                 backgroundColor: 'var(--color-accent)', color: 'var(--color-bg-dark)',
                 fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none',
               }}>
-                {isZh ? '注册——首次分析免费 →' : 'Register — 1 Free Analysis →'}
+                {isZh ? '注册，前 3 次分析免费 →' : 'Register — 3 Free Analyses →'}
               </Link>
             </div>
           )}
@@ -611,13 +611,13 @@ export default function EngineForm() {
             {isLoggedIn && canRunReal && uploadedFile
               ? (isZh ? `分析「${uploadedFile.length > 18 ? uploadedFile.slice(0, 18) + '…' : uploadedFile}」→` : `Analyze "${uploadedFile.length > 20 ? uploadedFile.slice(0, 20) + '…' : uploadedFile}" →`)
               : isLoggedIn && canRunReal
-                ? (isZh ? '启动精准支柱分析 →' : 'Initiate Precision Analysis →')
-                : (isZh ? '⚡ 体验模拟演示' : '⚡ Run Mock Demo')}
+                ? (isZh ? '开始分析 →' : 'Start Analysis →')
+                : (isZh ? '⚡ 体验演示' : '⚡ Run Demo')}
           </button>
 
           {!isLoggedIn && (
             <p style={{ textAlign: 'center', marginTop: '10px', fontSize: '0.75rem', color: 'rgba(255,255,255,0.22)' }}>
-              ⚡ {isZh ? '演示模式 · 无需登录 · 使用模拟数据' : 'Demo mode · No account required · uses mock data'}
+              ⚡ {isZh ? '演示模式 · 无需登录 · 使用示例数据' : 'Demo mode · No account required · uses sample data'}
             </p>
           )}
         </motion.div>
