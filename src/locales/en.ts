@@ -35,7 +35,7 @@ const en: Dict = {
     btnLogin:        'Sign In →',
     toLogin:         'Already have an account? Sign in →',
     toRegister:      "Don't have an account? Register — First Analysis Free →",
-    freeTierNote:    'Free: first 3 analyses · Pro ¥99/mo: Unlimited · Enterprise: API access',
+    freeTierNote:    'Free: first 3 analyses · Pro from ¥29/mo: Unlimited · Enterprise: API access',
     freeBadge:       'FREE',
     proBadge:        'PRO',
     enterpriseBadge: 'ENTERPRISE',

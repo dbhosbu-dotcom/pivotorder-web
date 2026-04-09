@@ -35,7 +35,7 @@ const zh: Dict = {
     btnLogin:        '登录 →',
     toLogin:         '已有账户？点击登录 →',
     toRegister:      '还没有账户？注册，首次分析免费 →',
-    freeTierNote:    '免费版：前 3 次分析 · 专业版 ¥99/月：无限次 · 企业版：API接入',
+    freeTierNote:    '免费版：前 3 次分析 · 专业版 ¥29/月起：无限次 · 企业版：API接入',
     freeBadge:       '免费',
     proBadge:        '专业版',
     enterpriseBadge: '企业版',
