@@ -11,7 +11,7 @@ export default function Navbar() {
   const pathname          = usePathname();
   const [open, setOpen]   = useState(false);
   const { t, toggleLanguage } = useLanguage();
-  const { user, logout } = useAuth();
+  const { user, logout } = useAuth(); // logout used in mobile menu
 
   const NAV_LINKS = [
     { label: t.nav.home,       href: '/' },
@@ -143,30 +143,29 @@ export default function Navbar() {
                   >
                     {t.nav.dashboard}
                   </Link>
-                  {/* User avatar */}
-                  <button
-                    onClick={logout}
-                    title={t.nav.langLabel === 'EN' ? '退出登录' : 'Sign out'}
+                  {/* User avatar → profile */}
+                  <Link
+                    href="/profile"
+                    title={t.nav.langLabel === 'EN' ? '我的资料' : 'My Profile'}
                     style={{
                       width: '34px',
                       height: '34px',
                       borderRadius: '50%',
                       backgroundColor: 'var(--color-accent)',
                       color: 'var(--color-bg-dark)',
-                      border: 'none',
-                      cursor: 'pointer',
                       fontSize: '0.75rem',
                       fontWeight: 700,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
+                      textDecoration: 'none',
                       transition: 'opacity 0.2s',
                     }}
-                    onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.8')}
-                    onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                    onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.opacity = '0.8')}
+                    onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.opacity = '1')}
                   >
                     {user.name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase()}
-                  </button>
+                  </Link>
                   <Link href="/engine" className="btn-primary">
                     {t.nav.langLabel === 'EN' ? '运行分析 →' : 'Run Analysis →'}
                   </Link>
@@ -329,6 +328,9 @@ export default function Navbar() {
               <>
                 <Link href="/dashboard" onClick={close} style={{ display: 'flex', alignItems: 'center', padding: '13px 0', fontSize: '1rem', fontWeight: 500, color: 'var(--color-text-primary)', textDecoration: 'none', borderBottom: '1px solid var(--color-border-subtle)' }}>
                   {t.nav.dashboard}
+                </Link>
+                <Link href="/profile" onClick={close} style={{ display: 'flex', alignItems: 'center', padding: '13px 0', fontSize: '1rem', fontWeight: 500, color: 'var(--color-text-primary)', textDecoration: 'none', borderBottom: '1px solid var(--color-border-subtle)' }}>
+                  {t.nav.langLabel === 'EN' ? '我的资料' : 'My Profile'}
                 </Link>
                 <button onClick={() => { logout(); close(); }} style={{ marginTop: '10px', width: '100%', padding: '11px', borderRadius: '8px', border: '1px solid var(--color-border)', backgroundColor: 'transparent', color: 'var(--color-text-secondary)', fontSize: '0.875rem', cursor: 'pointer' }}>
                   {t.nav.langLabel === 'EN' ? '退出登录' : 'Sign Out'}

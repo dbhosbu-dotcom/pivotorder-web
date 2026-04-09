@@ -29,7 +29,9 @@ export default function DashboardPage() {
 
   const initials = user.name.split(' ').map((w) => w[0]).join('').slice(0, 2).toUpperCase();
   const age = new Date().getFullYear() - user.birthYear;
-  const hasRemaining = user.plan !== 'free' || user.freeAnalysesUsed < 1;
+  const FREE_QUOTA   = 3;
+  const hasRemaining = user.plan !== 'free' || user.freeAnalysesUsed < FREE_QUOTA;
+  const remaining    = user.plan === 'free' ? Math.max(0, FREE_QUOTA - user.freeAnalysesUsed) : null;
 
   return (
     <div style={{ minHeight: 'calc(100vh - 68px)', backgroundColor: 'var(--color-bg-subtle)' }}>
@@ -100,9 +102,9 @@ export default function DashboardPage() {
             </span>
             {user.plan === 'free' && (
               <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', margin: 0 }}>
-                {user.freeAnalysesUsed > 0
-                  ? (isZh ? '免费次数已用完' : 'Free analysis used')
-                  : (isZh ? '1次免费分析剩余' : '1 free analysis remaining')}
+                {remaining! > 0
+                  ? (isZh ? `剩余 ${remaining} 次免费分析` : `${remaining} free ${remaining === 1 ? 'analysis' : 'analyses'} left`)
+                  : (isZh ? '免费次数已全部用完' : 'Free quota exhausted')}
               </p>
             )}
           </div>
@@ -259,7 +261,7 @@ export default function DashboardPage() {
                   {
                     name: isZh ? '免费版' : 'Free',
                     price: '¥0',
-                    features: isZh ? ['1次完整分析', '十大支柱报告', '基础建议'] : ['1 full analysis', '10-Pillar report', 'Basic recommendations'],
+                    features: isZh ? ['3次完整分析', '十大支柱报告', '基础干预建议'] : ['3 full analyses', '10-Pillar report', 'Basic recommendations'],
                     current: user.plan === 'free',
                     cta: isZh ? '当前方案' : 'Current Plan',
                     action: null,
@@ -404,7 +406,7 @@ function AnalysisCard({ analysis, isZh }: { analysis: SavedAnalysis; isZh: boole
           {isZh ? '落差' : 'Delta'}
         </p>
         <p style={{ fontSize: '1.25rem', fontWeight: 700, color: deltaColor, margin: 0 }}>
-          {delta > 0 ? '+' : ''}{delta.toFixed(1)} yrs
+          {delta > 0 ? '+' : ''}{delta.toFixed(1)} {isZh ? '岁' : 'yrs'}
         </p>
       </div>
 

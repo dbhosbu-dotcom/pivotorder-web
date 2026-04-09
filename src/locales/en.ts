@@ -16,8 +16,8 @@ const en: Dict = {
   },
 
   auth: {
-    registerTitle:   'Decode Your First Report. Free.',
-    registerSub:     'Create your account. Upload your checkup report. Receive a full 10-Pillar metabolic analysis — at no cost. From the second analysis onwards, a subscription applies.',
+    registerTitle:   'First 3 Report Analyses. Free.',
+    registerSub:     'Create your account. Upload your checkup report. Receive a full 10-Pillar metabolic analysis — free for your first 3 reports. A subscription applies from the 4th analysis onwards.',
     loginTitle:      'Welcome back.',
     loginSub:        'Sign in to access your analysis history and continue tracking your biology.',
     labelName:       'Full Name',
@@ -33,7 +33,7 @@ const en: Dict = {
     btnLogin:        'Sign In →',
     toLogin:         'Already have an account? Sign in →',
     toRegister:      "Don't have an account? Register — First Analysis Free →",
-    freeTierNote:    'Free: 1 analysis · Pro ¥99/mo: Unlimited · Enterprise: API access',
+    freeTierNote:    'Free: first 3 analyses · Pro ¥99/mo: Unlimited · Enterprise: API access',
     freeBadge:       'FREE',
     proBadge:        'PRO',
     enterpriseBadge: 'ENTERPRISE',

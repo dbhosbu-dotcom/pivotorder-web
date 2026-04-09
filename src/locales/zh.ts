@@ -16,8 +16,8 @@ const zh: Dict = {
   },
 
   auth: {
-    registerTitle:   '免费解读你的第一份报告。',
-    registerSub:     '创建账户，上传体检报告，获得完整的十大支柱代谢分析——完全免费。第二次起按订阅收费。',
+    registerTitle:   '前 3 次体检报告解读，完全免费。',
+    registerSub:     '创建账户，上传体检报告，获得完整的十大支柱代谢分析——前 3 次免费。第 4 次起按订阅收费。',
     loginTitle:      '欢迎回来。',
     loginSub:        '登录以访问你的分析历史，继续追踪你的生物学数据。',
     labelName:       '姓名',
@@ -33,7 +33,7 @@ const zh: Dict = {
     btnLogin:        '登录 →',
     toLogin:         '已有账户？点击登录 →',
     toRegister:      '还没有账户？注册，首次分析免费 →',
-    freeTierNote:    '免费版：1次分析 · 专业版 ¥99/月：无限次 · 企业版：API接入',
+    freeTierNote:    '免费版：前 3 次分析 · 专业版 ¥99/月：无限次 · 企业版：API接入',
     freeBadge:       '免费',
     proBadge:        '专业版',
     enterpriseBadge: '企业版',

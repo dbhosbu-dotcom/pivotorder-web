@@ -3,11 +3,13 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PATHWAYS, type Pathway } from '@/lib/pathwayData';
-import { useT } from '@/context/LanguageContext';
+import { useT, useLanguage } from '@/context/LanguageContext';
 
 /* ─── Card ───────────────────────────────────────────────────────────── */
 function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
   const [hovered, setHovered] = useState(false);
+  const { lang } = useLanguage();
+  const isZh = lang === 'zh';
 
   return (
     <motion.div
@@ -96,7 +98,7 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
             color: pathway.tagColor,
           }}
         >
-          {pathway.tag}
+          {isZh ? pathway.tagZh : pathway.tag}
         </span>
       </div>
 
@@ -174,7 +176,7 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
                 flexShrink: 0,
               }}
             >
-              {m.label}
+              {isZh ? m.labelZh : m.label}
             </span>
             <span
               style={{
@@ -219,7 +221,7 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
             color: 'rgba(255,255,255,0.3)',
           }}
         >
-          Clock Target: {pathway.clockTarget}
+          {isZh ? `时钟靶点：${pathway.clockTargetZh}` : `Clock Target: ${pathway.clockTarget}`}
         </span>
       </div>
     </motion.div>

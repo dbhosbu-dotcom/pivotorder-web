@@ -9,6 +9,7 @@ import { useAuth } from '@/context/AuthContext';
 import PillarResultCard, { type PillarResult, type RiskLevel } from '@/components/engine/PillarResultCard';
 import PillarRadarChart from '@/components/engine/PillarRadarChart';
 import HumanCareMessage from '@/components/engine/HumanCareMessage';
+import PrintEngineResult from '@/components/engine/PrintEngineResult';
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 interface FormState {
@@ -321,7 +322,7 @@ function UploadZone({ isZh, onFileSelect, selectedFile, locked }: {
 ═══════════════════════════════════════════════════════════════════════ */
 export default function EngineForm() {
   const { lang } = useLanguage();
-  const { user, consumeFreeAnalysis, hasRemainingAnalyses, saveAnalysis } = useAuth();
+  const { user, consumeFreeAnalysis, hasRemainingAnalyses, remainingFreeCount, saveAnalysis } = useAuth();
   const isZh = lang === 'zh';
 
   const [form, setForm] = useState<FormState>({ currentAge: 47, gender: 'Male' });
@@ -361,8 +362,9 @@ export default function EngineForm() {
     if (useMock) {
       await new Promise((r) => setTimeout(r, logLines.length * 480 + 400));
       const mockResult = buildMockResult(form);
+      const pillars0 = buildPillarResults(form.currentAge, form.gender);
       setResult(mockResult);
-      setPillarResults(buildPillarResults(form.currentAge, form.gender));
+      setPillarResults(pillars0);
       setPhase('result');
       if (!isMock && isLoggedIn) {
         consumeFreeAnalysis();
@@ -371,7 +373,9 @@ export default function EngineForm() {
           biologicalAge:      mockResult.predicted_age,
           chronologicalAge:   form.currentAge,
           delta:              mockResult.delta_years,
-          topFlags:           ['Case E', 'Case A', 'Case C'],
+          topFlags:           pillars0.filter((p) => p.risk !== 'normal').map((p) => p.caseId),
+          pillarSummary:      pillars0.map((p) => ({ caseId: p.caseId, nameZh: p.nameZh, nameEn: p.nameEn, risk: p.risk })),
+          optimizationItems:  mockResult.optimization_plan,
         });
       }
       return;
@@ -385,8 +389,9 @@ export default function EngineForm() {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const data: AnalysisResult = await res.json();
+      const pillars1 = buildPillarResults(form.currentAge, form.gender);
       setResult(data);
-      setPillarResults(buildPillarResults(form.currentAge, form.gender));
+      setPillarResults(pillars1);
       setPhase('result');
       if (isLoggedIn) {
         consumeFreeAnalysis();
@@ -395,7 +400,9 @@ export default function EngineForm() {
           biologicalAge:    data.predicted_age,
           chronologicalAge: form.currentAge,
           delta:            data.delta_years,
-          topFlags:         ['Case E', 'Case A'],
+          topFlags:         pillars1.filter((p) => p.risk !== 'normal').map((p) => p.caseId),
+          pillarSummary:    pillars1.map((p) => ({ caseId: p.caseId, nameZh: p.nameZh, nameEn: p.nameEn, risk: p.risk })),
+          optimizationItems: data.optimization_plan,
         });
       }
     } catch (err) {
@@ -445,8 +452,8 @@ export default function EngineForm() {
             <span style={{ fontSize: '1rem' }}>✨</span>
             <p style={{ fontSize: '0.9rem', color: 'rgba(255,255,255,0.8)', margin: 0 }}>
               {isZh
-                ? `欢迎回来，${user.name}！你有 1 次免费分析剩余，上传报告立即解读。`
-                : `Welcome back, ${user.name}! You have 1 free analysis — upload your report to start.`}
+                ? `欢迎回来，${user.name}！你还有 ${remainingFreeCount()} 次免费分析机会，上传报告立即解读。`
+                : `Welcome back, ${user.name}! You have ${remainingFreeCount()} free ${remainingFreeCount() === 1 ? 'analysis' : 'analyses'} remaining — upload your report to start.`}
             </p>
           </div>
         </div>
@@ -832,9 +839,9 @@ export default function EngineForm() {
             <button
               onClick={handleReset}
               style={{
-                flex: 1, minWidth: '160px', padding: '14px 20px', borderRadius: '10px',
+                flex: 1, minWidth: '140px', padding: '14px 18px', borderRadius: '10px',
                 border: '1px solid rgba(255,255,255,0.12)', backgroundColor: 'transparent',
-                color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', fontWeight: 600,
+                color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', fontWeight: 600,
                 cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'inherit',
               }}
               onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.borderColor = 'rgba(255,215,0,0.4)'; (e.currentTarget as HTMLElement).style.color = '#FFD700'; }}
@@ -843,20 +850,38 @@ export default function EngineForm() {
               ← {isZh ? '重新分析' : 'New Analysis'}
             </button>
             {isLoggedIn && (
-              <Link href="/dashboard" style={{
-                flex: 1, minWidth: '160px', padding: '14px 20px', borderRadius: '10px',
+              <Link href="/profile?tab=reports" style={{
+                flex: 1, minWidth: '140px', padding: '14px 18px', borderRadius: '10px',
                 border: '1px solid rgba(255,255,255,0.12)', backgroundColor: 'transparent',
-                color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem', fontWeight: 600,
+                color: 'rgba(255,255,255,0.6)', fontSize: '0.875rem', fontWeight: 600,
                 textDecoration: 'none', textAlign: 'center',
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               }}>
-                {isZh ? '我的仪表盘 →' : 'My Dashboard →'}
+                {isZh ? '我的报告 →' : 'My Reports →'}
               </Link>
             )}
+            {/* PDF export */}
+            <button
+              onClick={() => window.print()}
+              style={{
+                flex: 1, minWidth: '140px', padding: '14px 18px', borderRadius: '10px',
+                border: '1px solid rgba(255,215,0,0.35)', backgroundColor: 'rgba(255,215,0,0.08)',
+                color: '#FFD700', fontSize: '0.875rem', fontWeight: 700,
+                cursor: 'pointer', transition: 'all 0.2s', fontFamily: 'inherit',
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,215,0,0.15)'; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.backgroundColor = 'rgba(255,215,0,0.08)'; }}
+            >
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
+                <path d="M8 2v8M4 7l4 4 4-4M2 12h12" stroke="#FFD700" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              {isZh ? '导出 PDF 报告' : 'Export PDF'}
+            </button>
             <Link href="/solutions" style={{
-              flex: 1, minWidth: '160px', padding: '14px 20px', borderRadius: '10px',
+              flex: 1, minWidth: '140px', padding: '14px 18px', borderRadius: '10px',
               border: 'none', backgroundColor: '#FFD700', color: '#0D0D0D',
-              fontSize: '0.9rem', fontWeight: 700, textDecoration: 'none',
+              fontSize: '0.875rem', fontWeight: 700, textDecoration: 'none',
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               transition: 'background-color 0.2s',
             }}
@@ -874,6 +899,20 @@ export default function EngineForm() {
               : 'Results generated by the PivotOrder multi-omic fusion engine · Engine v2.4.1\nThis output is for research and informational purposes only. Not a medical diagnosis.'}
           </p>
         </motion.div>
+      )}
+
+      {/* ── PRINT-ONLY engine report (shown only during window.print()) ── */}
+      {result && (
+        <PrintEngineResult
+          chronologicalAge={form.currentAge}
+          biologicalAge={result.predicted_age}
+          delta={result.delta_years}
+          confidenceInterval={result.confidence_interval}
+          optimizationPlan={result.optimization_plan}
+          pillarResults={pillarResults.map((p) => ({ caseId: p.caseId, nameZh: p.nameZh, nameEn: p.nameEn, risk: p.risk }))}
+          isZh={isZh}
+          isMock={isMockResult}
+        />
       )}
 
       <style>{`
