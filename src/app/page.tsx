@@ -1,5 +1,6 @@
 import HeroSection from '@/components/home/HeroSection';
 import ParadigmSection from '@/components/home/ParadigmSection';
+import PillarsPreviewSection from '@/components/home/PillarsPreviewSection';
 import CtaSection from '@/components/home/CtaSection';
 
 export default function HomePage() {
@@ -7,6 +8,7 @@ export default function HomePage() {
     <>
       <HeroSection />
       <ParadigmSection />
+      <PillarsPreviewSection />
       <CtaSection />
     </>
   );

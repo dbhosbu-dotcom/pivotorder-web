@@ -4,12 +4,77 @@ export interface Dict {
   /* ── Global / Nav ─────────────────────────────────── */
   nav: {
     home:         string;
+    pillars:      string;
     engine:       string;
     solutions:    string;
     science:      string;
     enterprise:   string;
     access:       string;
-    langLabel:    string; // label for the OTHER language (click to switch)
+    dashboard:    string;
+    signIn:       string;
+    getStarted:   string;
+    langLabel:    string;
+  };
+
+  /* ── Auth ─────────────────────────────────────────── */
+  auth: {
+    registerTitle:    string;
+    registerSub:      string;
+    loginTitle:       string;
+    loginSub:         string;
+    labelName:        string;
+    labelEmail:       string;
+    labelPassword:    string;
+    labelBirthYear:   string;
+    labelGender:      string;
+    labelRegion:      string;
+    optMale:          string;
+    optFemale:        string;
+    optOther:         string;
+    btnRegister:      string;
+    btnLogin:         string;
+    toLogin:          string;
+    toRegister:       string;
+    freeTierNote:     string;
+    freeBadge:        string;
+    proBadge:         string;
+    enterpriseBadge:  string;
+  };
+
+  /* ── Pillars Page ─────────────────────────────────── */
+  pillars: {
+    badge:            string;
+    headline:         string;
+    sub:              string;
+    thresholdLabel:   string;
+    hospitalRange:    string;
+    optimalRange:     string;
+    triggerValue:     string;
+    dependencyLabel:  string;
+    ctaHeadline:      string;
+    ctaSub:           string;
+    btnUpload:        string;
+    btnEngine:        string;
+  };
+
+  /* ── Dashboard ────────────────────────────────────── */
+  dashboard: {
+    welcome:          string;
+    subscription:     string;
+    freeUsed:         string;
+    freePlan:         string;
+    proPlan:          string;
+    enterprisePlan:   string;
+    upgradeBtn:       string;
+    historyLabel:     string;
+    noHistory:        string;
+    viewReport:       string;
+    trendLabel:       string;
+    runNew:           string;
+    bioAge:           string;
+    delta:            string;
+    topFlags:         string;
+    logout:           string;
   };
 
   /* ── Home — Hero ──────────────────────────────────── */

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useT } from '@/context/LanguageContext';
+import { useT, useLanguage } from '@/context/LanguageContext';
 
 /* ── CountUp hook ─────────────────────────────────────────────────── */
 function useCountDown(from: number, to: number, duration: number, started: boolean) {
@@ -28,7 +28,13 @@ function useCountDown(from: number, to: number, duration: number, started: boole
   return value;
 }
 
-const TOOLTIP_DETAILS = [
+const TOOLTIP_DETAILS_ZH = [
+  '• Horvath 2.0 甲基化时钟',
+  '• 代谢组面板 · 12 项标志物',
+  '• 肠道菌群多样性指数',
+  '• 心率变异性自主神经评分',
+];
+const TOOLTIP_DETAILS_EN = [
   '• Horvath 2.0 Methylation Clock',
   '• Metabolomic Panel · 12 markers',
   '• Gut Microbiome Diversity Index',
@@ -37,6 +43,9 @@ const TOOLTIP_DETAILS = [
 
 export default function HeroSection() {
   const t = useT();
+  const { lang } = useLanguage();
+  const isZh = lang === 'zh';
+  const tooltipDetails = isZh ? TOOLTIP_DETAILS_ZH : TOOLTIP_DETAILS_EN;
   const [animStarted, setAnimStarted] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
@@ -202,7 +211,7 @@ export default function HeroSection() {
                 <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-heading)', fontWeight: 600, lineHeight: 1.7, margin: 0 }}>
                   {t.hero.tooltip_title}
                 </p>
-                {TOOLTIP_DETAILS.map((line, i) => (
+                {tooltipDetails.map((line, i) => (
                   <p key={i} style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', fontWeight: 400, lineHeight: 1.7, margin: 0 }}>
                     {line}
                   </p>
@@ -260,7 +269,7 @@ export default function HeroSection() {
             transition: 'opacity 0.6s ease-out 0.55s',
           }}
         >
-          <Link href="/engine" className="btn-primary">
+          <Link href="/auth/register" className="btn-primary">
             {t.hero.btn_engine} <span>→</span>
           </Link>
           <Link href="/engine?mode=mock" className="btn-secondary">
@@ -287,7 +296,7 @@ export default function HeroSection() {
           className="text-caption"
           style={{ textTransform: 'uppercase', letterSpacing: '0.12em' }}
         >
-          Scroll
+          {isZh ? '向下' : 'Scroll'}
         </span>
         <svg
           className="animate-bounce-arrow"

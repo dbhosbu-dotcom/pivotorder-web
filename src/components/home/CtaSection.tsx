@@ -133,7 +133,7 @@ export default function CtaSection() {
           }}
         >
           <Link
-            href="/engine"
+            href="/auth/register"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
