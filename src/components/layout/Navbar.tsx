@@ -58,7 +58,7 @@ function ExploreDropdown({ isZh, pathname }: { isZh: boolean; pathname: string }
   return (
     <div
       ref={ref}
-      style={{ position: 'relative' }}
+      style={{ position: 'relative', paddingBottom: '16px', marginBottom: '-16px' }}
       onMouseEnter={() => setOpen(true)}
       onMouseLeave={() => setOpen(false)}
     >
@@ -94,7 +94,7 @@ function ExploreDropdown({ isZh, pathname }: { isZh: boolean; pathname: string }
       {/* Dropdown panel */}
       <div
         style={{
-          position: 'absolute', top: 'calc(100% + 12px)', left: '50%',
+          position: 'absolute', top: 'calc(100% + 4px)', left: '50%',
           width: '320px',
           backgroundColor: '#FFFFFF',
           border: '1px solid var(--color-border)',
