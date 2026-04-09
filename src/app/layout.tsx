@@ -1,14 +1,16 @@
 import type { Metadata } from 'next';
-import { Inter, JetBrains_Mono } from 'next/font/google';
+import { Plus_Jakarta_Sans, JetBrains_Mono } from 'next/font/google';
 import './globals.css';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { AuthProvider } from '@/context/AuthContext';
 
-const inter = Inter({
+/* Plus Jakarta Sans — rounded humanist geometry, closest to the PivotOrder logo wordmark */
+const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  weight: ['300', '400', '500', '600', '700', '800'],
+  variable: '--font-sans',
   display: 'swap',
 });
 
@@ -45,11 +47,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${jetbrainsMono.variable}`}>
+    <html lang="en" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <body
         style={{
           fontFamily:
-            'var(--font-inter), "PingFang SC", "Noto Sans SC", system-ui, sans-serif',
+            'var(--font-sans), "PingFang SC", "Noto Sans SC", system-ui, sans-serif',
           backgroundColor: 'var(--color-bg)',
           color: 'var(--color-text-primary)',
           minHeight: '100vh',
