@@ -14,169 +14,211 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar() {
-  const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname   = usePathname();
+  const [open, setOpen] = useState(false);
+
+  const close = () => setOpen(false);
 
   return (
-    <header
-      style={{
-        position: 'sticky',
-        top: 0,
-        zIndex: 100,
-        backgroundColor: 'rgba(255, 255, 255, 0.92)',
-        backdropFilter: 'blur(12px)',
-        WebkitBackdropFilter: 'blur(12px)',
-        borderBottom: '1px solid var(--color-border)',
-      }}
-    >
-      <div className="container-site">
-        <nav
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            height: '68px',
-          }}
-        >
-          {/* Logo */}
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
-            <Image
-              src="/assets/logo.png"
-              alt="PivotOrder"
-              width={160}
-              height={36}
-              style={{ height: '36px', width: 'auto' }}
-              priority
-              unoptimized
-            />
-          </Link>
-
-          {/* Desktop nav links */}
-          <ul
-            className="hidden md:flex"
+    <>
+      <header
+        className="no-print"
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 100,
+          backgroundColor: 'rgba(255, 255, 255, 0.92)',
+          backdropFilter: 'blur(12px)',
+          WebkitBackdropFilter: 'blur(12px)',
+          borderBottom: '1px solid var(--color-border)',
+        }}
+      >
+        <div className="container-site">
+          <nav
             style={{
-              listStyle: 'none',
-              margin: 0,
-              padding: 0,
-              gap: '36px',
-              alignItems: 'center',
-            }}
-          >
-            {NAV_LINKS.map((link) => {
-              const isActive = pathname === link.href;
-              return (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    style={{
-                      fontSize: '0.9375rem',
-                      fontWeight: isActive ? 600 : 400,
-                      color: isActive
-                        ? 'var(--color-text-heading)'
-                        : 'var(--color-text-secondary)',
-                      textDecoration: 'none',
-                      paddingBottom: '4px',
-                      borderBottom: isActive
-                        ? '2px solid var(--color-accent)'
-                        : '2px solid transparent',
-                      transition: 'color 0.2s ease, border-color 0.2s ease',
-                    }}
-                    onMouseEnter={(e) => {
-                      if (!isActive) {
-                        (e.currentTarget as HTMLElement).style.color =
-                          'var(--color-text-heading)';
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (!isActive) {
-                        (e.currentTarget as HTMLElement).style.color =
-                          'var(--color-text-secondary)';
-                      }
-                    }}
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* Desktop CTA */}
-          <div className="hidden md:flex" style={{ alignItems: 'center', gap: '16px' }}>
-            <Link href="/engine" className="btn-primary">
-              Access Engine <span style={{ fontSize: '1rem' }}>→</span>
-            </Link>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            className="flex md:hidden"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-            style={{
-              background: 'none',
-              border: 'none',
-              cursor: 'pointer',
-              padding: '8px',
               display: 'flex',
-              flexDirection: 'column',
-              gap: '5px',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              height: '68px',
             }}
           >
-            {[0, 1, 2].map((i) => (
+            {/* ── Logo ── */}
+            <Link href="/" onClick={close} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+              <Image
+                src="/assets/logo.png"
+                alt="PivotOrder"
+                width={160}
+                height={36}
+                style={{ height: '36px', width: 'auto' }}
+                priority
+                unoptimized
+              />
+            </Link>
+
+            {/* ── Desktop nav links ── */}
+            <ul
+              className="hidden md:flex"
+              style={{ listStyle: 'none', margin: 0, padding: 0, gap: '36px', alignItems: 'center' }}
+            >
+              {NAV_LINKS.map((link) => {
+                const active = pathname === link.href;
+                return (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      style={{
+                        fontSize: '0.9375rem',
+                        fontWeight: active ? 600 : 400,
+                        color: active ? 'var(--color-text-heading)' : 'var(--color-text-secondary)',
+                        textDecoration: 'none',
+                        paddingBottom: '4px',
+                        borderBottom: active ? '2px solid var(--color-accent)' : '2px solid transparent',
+                        transition: 'color 0.2s ease, border-color 0.2s ease',
+                      }}
+                      onMouseEnter={(e) => {
+                        if (!active)
+                          (e.currentTarget as HTMLElement).style.color = 'var(--color-text-heading)';
+                      }}
+                      onMouseLeave={(e) => {
+                        if (!active)
+                          (e.currentTarget as HTMLElement).style.color = 'var(--color-text-secondary)';
+                      }}
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+
+            {/* ── Desktop CTA ── */}
+            <div className="hidden md:flex" style={{ alignItems: 'center', gap: '16px' }}>
+              <Link href="/engine" className="btn-primary">
+                Access Engine <span style={{ fontSize: '1rem' }}>→</span>
+              </Link>
+            </div>
+
+            {/* ── Mobile hamburger ── */}
+            <button
+              className="flex md:hidden"
+              onClick={() => setOpen((v) => !v)}
+              aria-label={open ? 'Close menu' : 'Open menu'}
+              aria-expanded={open}
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                padding: '8px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '36px',
+                height: '36px',
+                position: 'relative',
+              }}
+            >
+              {/* Bar 1 — rotates to top arm of X */}
               <span
-                key={i}
                 style={{
+                  position: 'absolute',
                   display: 'block',
                   width: '22px',
                   height: '2px',
                   backgroundColor: 'var(--color-text-heading)',
                   borderRadius: '2px',
-                  transition: 'opacity 0.2s',
-                  opacity: mobileOpen && i === 1 ? 0 : 1,
+                  transform: open ? 'translateY(0) rotate(45deg)' : 'translateY(-7px)',
+                  transition: 'transform 0.25s cubic-bezier(0.4,0,0.2,1)',
                 }}
               />
-            ))}
-          </button>
-        </nav>
-
-        {/* Mobile menu */}
-        {mobileOpen && (
-          <div
-            className="flex md:hidden"
-            style={{
-              flexDirection: 'column',
-              borderTop: '1px solid var(--color-border)',
-              paddingBottom: '16px',
-            }}
-          >
-            {NAV_LINKS.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileOpen(false)}
+              {/* Bar 2 — fades out */}
+              <span
                 style={{
-                  padding: '12px 0',
-                  fontSize: '1rem',
-                  color: 'var(--color-text-primary)',
-                  textDecoration: 'none',
-                  borderBottom: '1px solid var(--color-border-subtle)',
+                  position: 'absolute',
+                  display: 'block',
+                  width: '22px',
+                  height: '2px',
+                  backgroundColor: 'var(--color-text-heading)',
+                  borderRadius: '2px',
+                  opacity: open ? 0 : 1,
+                  transition: 'opacity 0.2s ease',
                 }}
-              >
-                {link.label}
-              </Link>
-            ))}
+              />
+              {/* Bar 3 — rotates to bottom arm of X */}
+              <span
+                style={{
+                  position: 'absolute',
+                  display: 'block',
+                  width: '22px',
+                  height: '2px',
+                  backgroundColor: 'var(--color-text-heading)',
+                  borderRadius: '2px',
+                  transform: open ? 'translateY(0) rotate(-45deg)' : 'translateY(7px)',
+                  transition: 'transform 0.25s cubic-bezier(0.4,0,0.2,1)',
+                }}
+              />
+            </button>
+          </nav>
+        </div>
+
+        {/* ── Mobile slide-down menu ── */}
+        <div
+          className="md:hidden"
+          style={{
+            overflow: 'hidden',
+            maxHeight: open ? '480px' : '0',
+            transition: 'max-height 0.3s cubic-bezier(0.4,0,0.2,1)',
+            borderTop: open ? '1px solid var(--color-border)' : 'none',
+            backgroundColor: 'rgba(255,255,255,0.97)',
+          }}
+        >
+          <div style={{ padding: '8px 24px 20px' }}>
+            {NAV_LINKS.map((link) => {
+              const active = pathname === link.href;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onClick={close}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '13px 0',
+                    fontSize: '1rem',
+                    fontWeight: active ? 600 : 400,
+                    color: active ? 'var(--color-text-heading)' : 'var(--color-text-primary)',
+                    textDecoration: 'none',
+                    borderBottom: '1px solid var(--color-border-subtle)',
+                    gap: '10px',
+                  }}
+                >
+                  {active && (
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        width: '4px',
+                        height: '4px',
+                        borderRadius: '50%',
+                        backgroundColor: 'var(--color-accent)',
+                        flexShrink: 0,
+                      }}
+                    />
+                  )}
+                  {link.label}
+                </Link>
+              );
+            })}
             <Link
               href="/engine"
-              onClick={() => setMobileOpen(false)}
+              onClick={close}
               className="btn-primary"
-              style={{ marginTop: '16px', justifyContent: 'center' }}
+              style={{ marginTop: '16px', justifyContent: 'center', display: 'flex' }}
             >
               Access Engine →
             </Link>
           </div>
-        )}
-      </div>
-    </header>
+        </div>
+      </header>
+    </>
   );
 }
