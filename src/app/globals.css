@@ -1,26 +1,289 @@
 @import "tailwindcss";
 
+/* ─── PivotOrder Design Tokens ─────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Backgrounds */
+  --color-bg:              #FFFFFF;
+  --color-bg-subtle:       #F4F6F8;
+  --color-bg-dark:         #0D0D0D;
+  --color-bg-code:         #111318;
+
+  /* Borders */
+  --color-border:          #E8EAED;
+  --color-border-subtle:   #F1F3F5;
+
+  /* Text */
+  --color-text-primary:    #4A4A4A;
+  --color-text-heading:    #1F2937;
+  --color-text-secondary:  #8A8A8A;
+  --color-text-muted:      #B0B4BC;
+  --color-text-inverse:    #FFFFFF;
+
+  /* Accent — Gene Yellow (from Logo DNA helix) */
+  --color-accent:          #FFD700;
+  --color-accent-hover:    #F5CB00;
+  --color-accent-dim:      #FFF8CC;
+  --color-accent-ultra:    rgba(255, 215, 0, 0.08);
+
+  /* Status */
+  --color-online:          #22C55E;
 }
 
+/* ─── Tailwind v4 Theme Registration ───────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Map CSS vars into Tailwind utility classes */
+  --color-bg:              var(--color-bg);
+  --color-bg-subtle:       var(--color-bg-subtle);
+  --color-bg-dark:         var(--color-bg-dark);
+  --color-bg-code:         var(--color-bg-code);
+  --color-border:          var(--color-border);
+  --color-border-subtle:   var(--color-border-subtle);
+  --color-text-primary:    var(--color-text-primary);
+  --color-text-heading:    var(--color-text-heading);
+  --color-text-secondary:  var(--color-text-secondary);
+  --color-text-muted:      var(--color-text-muted);
+  --color-text-inverse:    var(--color-text-inverse);
+  --color-accent:          var(--color-accent);
+  --color-accent-hover:    var(--color-accent-hover);
+  --color-accent-dim:      var(--color-accent-dim);
+  --color-online:          var(--color-online);
+
+  /* Typography scale */
+  --font-sans: 'Inter', 'PingFang SC', 'Noto Sans SC', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Custom font sizes matching architecture spec */
+  --text-display-xl: 7rem;      /* 112px desktop */
+  --text-display-l:  4rem;      /* 64px */
+  --text-h1:         2.75rem;   /* 44px */
+  --text-h2:         2rem;      /* 32px */
+  --text-h3:         1.375rem;  /* 22px */
+  --text-body-l:     1.125rem;  /* 18px */
+  --text-body-m:     1rem;      /* 16px */
+  --text-caption:    0.75rem;   /* 12px */
+  --text-mono:       0.875rem;  /* 14px */
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base Reset & Global Styles ───────────────────────────────────── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+}
+
+/* ─── Typography Utilities ──────────────────────────────────────────── */
+.text-display-xl {
+  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.0;
+  color: var(--color-text-heading);
+}
+
+.text-display-l {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--color-text-heading);
+}
+
+.text-h1 {
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--color-text-heading);
+}
+
+.text-h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+  color: var(--color-text-heading);
+}
+
+.text-h3 {
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+}
+
+.text-body-l {
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 400;
+  line-height: 1.75;
+  color: var(--color-text-primary);
+}
+
+.text-body-m {
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.65;
+  color: var(--color-text-secondary);
+}
+
+.text-caption {
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+}
+
+.font-mono {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+}
+
+/* ─── Layout Utilities ──────────────────────────────────────────────── */
+.container-site {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.section-padding {
+  padding-top: 128px;
+  padding-bottom: 128px;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+}
+
+/* ─── Component Utilities ───────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--color-accent);
+  color: var(--color-text-heading);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 12px 24px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-hover);
+  transform: translateX(2px);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--color-text-heading);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 11px 24px;
+  border-radius: 8px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-accent);
+  color: var(--color-text-heading);
+}
+
+.btn-secondary-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: transparent;
+  color: var(--color-text-inverse);
+  font-weight: 600;
+  font-size: 0.9375rem;
+  padding: 11px 24px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.btn-secondary-dark:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ─── Footer & Nav link hover (CSS-only, server-component safe) ──────── */
+.footer-link {
+  font-size: 0.875rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-link:hover {
+  color: var(--color-text-primary);
+}
+
+.footer-legal-link {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.footer-legal-link:hover {
+  color: var(--color-text-secondary);
+}
+
+/* ─── Animations ────────────────────────────────────────────────────── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(0.85); }
+}
+
+@keyframes bounce-arrow {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(6px); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-pulse-dot {
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+.animate-bounce-arrow {
+  animation: bounce-arrow 2s ease-in-out infinite;
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out forwards;
 }
