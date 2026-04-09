@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { motion, animate } from 'framer-motion';
 import Toast from '@/components/ui/Toast';
 
@@ -867,7 +868,8 @@ export default function EngineForm() {
               ← Run New Analysis
             </button>
 
-            <button
+            <Link
+              href="/solutions"
               style={{
                 flex: 1,
                 minWidth: '160px',
@@ -879,8 +881,12 @@ export default function EngineForm() {
                 fontSize: '0.9rem',
                 fontWeight: 700,
                 cursor: 'pointer',
-                transition: 'background-color 0.2s',
+                transition: 'background-color 0.2s ease',
                 fontFamily: 'inherit',
+                textDecoration: 'none',
+                display: 'inline-flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
               onMouseEnter={(e) =>
                 ((e.currentTarget as HTMLElement).style.backgroundColor = '#F5CB00')
@@ -890,7 +896,7 @@ export default function EngineForm() {
               }
             >
               View Solutions →
-            </button>
+            </Link>
           </div>
 
           {/* Disclaimer */}
