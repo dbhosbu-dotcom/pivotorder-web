@@ -4,18 +4,20 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
-
-const NAV_LINKS = [
-  { label: 'Home',       href: '/' },
-  { label: 'The Engine', href: '/engine' },
-  { label: 'Solutions',  href: '/solutions' },
-  { label: 'Science',    href: '/science' },
-  { label: 'Enterprise', href: '/enterprise' },
-];
+import { useLanguage } from '@/context/LanguageContext';
 
 export default function Navbar() {
-  const pathname   = usePathname();
-  const [open, setOpen] = useState(false);
+  const pathname          = usePathname();
+  const [open, setOpen]   = useState(false);
+  const { t, toggleLanguage } = useLanguage();
+
+  const NAV_LINKS = [
+    { label: t.nav.home,       href: '/' },
+    { label: t.nav.engine,     href: '/engine' },
+    { label: t.nav.solutions,  href: '/solutions' },
+    { label: t.nav.science,    href: '/science' },
+    { label: t.nav.enterprise, href: '/enterprise' },
+  ];
 
   const close = () => setOpen(false);
 
@@ -91,10 +93,39 @@ export default function Navbar() {
               })}
             </ul>
 
-            {/* ── Desktop CTA ── */}
-            <div className="hidden md:flex" style={{ alignItems: 'center', gap: '16px' }}>
+            {/* ── Desktop CTA + Language toggle ── */}
+            <div className="hidden md:flex" style={{ alignItems: 'center', gap: '12px' }}>
+              {/* Language toggle */}
+              <button
+                onClick={toggleLanguage}
+                aria-label="Switch language"
+                style={{
+                  background: 'none',
+                  border: '1px solid var(--color-border)',
+                  borderRadius: '6px',
+                  padding: '5px 11px',
+                  fontFamily: 'var(--font-mono, monospace)',
+                  fontSize: '0.75rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.04em',
+                  color: 'var(--color-text-secondary)',
+                  cursor: 'pointer',
+                  transition: 'border-color 0.2s, color 0.2s',
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-accent)';
+                  (e.currentTarget as HTMLElement).style.color = 'var(--color-text-heading)';
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLElement).style.borderColor = 'var(--color-border)';
+                  (e.currentTarget as HTMLElement).style.color = 'var(--color-text-secondary)';
+                }}
+              >
+                {t.nav.langLabel}
+              </button>
+
               <Link href="/engine" className="btn-primary">
-                Access Engine <span style={{ fontSize: '1rem' }}>→</span>
+                {t.nav.access} <span style={{ fontSize: '1rem' }}>→</span>
               </Link>
             </div>
 
@@ -208,13 +239,34 @@ export default function Navbar() {
                 </Link>
               );
             })}
+            {/* Language toggle in mobile menu */}
+            <button
+              onClick={() => { toggleLanguage(); close(); }}
+              style={{
+                marginTop: '12px',
+                width: '100%',
+                padding: '11px',
+                borderRadius: '8px',
+                border: '1px solid var(--color-border)',
+                backgroundColor: 'transparent',
+                color: 'var(--color-text-secondary)',
+                fontFamily: 'var(--font-mono, monospace)',
+                fontSize: '0.8125rem',
+                fontWeight: 600,
+                letterSpacing: '0.06em',
+                cursor: 'pointer',
+              }}
+            >
+              {t.nav.langLabel === 'EN' ? '切换至 EN' : 'Switch to 中文'}
+            </button>
+
             <Link
               href="/engine"
               onClick={close}
               className="btn-primary"
-              style={{ marginTop: '16px', justifyContent: 'center', display: 'flex' }}
+              style={{ marginTop: '10px', justifyContent: 'center', display: 'flex' }}
             >
-              Access Engine →
+              {t.nav.access} →
             </Link>
           </div>
         </div>

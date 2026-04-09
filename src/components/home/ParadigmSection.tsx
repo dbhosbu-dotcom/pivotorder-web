@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { useT } from '@/context/LanguageContext';
 
 const COMPARE_ROWS = [
   { dimension: 'Data Points', standard: '~20 markers', engine: '200+ multi-omic markers' },
@@ -12,6 +14,7 @@ const COMPARE_ROWS = [
 ];
 
 export default function ParadigmSection() {
+  const t = useT();
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -41,7 +44,7 @@ export default function ParadigmSection() {
             color: 'var(--color-accent)',
           }}
         >
-          The 0.1% Paradigm &nbsp;·&nbsp; 顶尖 0.1% 的认知范式
+          {t.paradigm.section_label}
         </p>
 
         {/* Section title */}
@@ -49,8 +52,7 @@ export default function ParadigmSection() {
           className="text-h1"
           style={{ marginBottom: '72px', maxWidth: '640px' }}
         >
-          The Standard Checkup vs.{' '}
-          <span style={{ color: 'var(--color-accent)' }}>The Living Model</span>
+          {t.paradigm.headline}
         </h2>
 
         {/* Left / Right split comparison */}
@@ -83,7 +85,7 @@ export default function ParadigmSection() {
                 marginBottom: '24px',
               }}
             >
-              The Standard Paradigm &nbsp;·&nbsp; 传统医学范式
+              {t.paradigm.left_title}
             </p>
 
             <div style={{ marginBottom: '32px' }}>
@@ -169,7 +171,7 @@ export default function ParadigmSection() {
                 color: 'var(--color-accent)',
               }}
             >
-              The PivotOrder Engine &nbsp;·&nbsp; PivotOrder 算法引擎
+              {t.paradigm.right_title}
             </p>
 
             <div style={{ marginBottom: '32px' }}>

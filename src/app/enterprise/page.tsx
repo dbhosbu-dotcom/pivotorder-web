@@ -2,76 +2,36 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useT } from '@/context/LanguageContext';
 
-/* ─── Data ───────────────────────────────────────────────────────────── */
-const SERVICES = [
-  {
-    id:       'api',
-    index:    '01',
-    tag:      'Integration Layer',
-    title:    'API Access',
-    titleZh:  'API 接口接入',
-    body:
-      'RESTful JSON API with sub-2s latency. Submit a multi-omic biomarker payload and receive a ' +
-      'consensus biological age delta plus ranked EBM intervention pathways. ' +
-      'Rate limits and SLA tiers negotiated per institution.',
-    bodyZh:   '低延迟 RESTful JSON API，提交多组学生物标志物，返回共识生物年龄落差及循证干预路径，速率限制与 SLA 按机构协商。',
-    specs: [
-      { label: 'Protocol',    value: 'REST / JSON  ·  HTTPS only' },
-      { label: 'Latency',     value: '< 2 000 ms p99' },
-      { label: 'Auth',        value: 'API Key  ·  mTLS available' },
-      { label: 'Data Return', value: 'age_delta · pathways · evidence_refs' },
-    ],
-  },
-  {
-    id:       'whitelabel',
-    index:    '02',
-    tag:      'Report Layer',
-    title:    'White-Label Report Generation',
-    titleZh:  '白标报告生成',
-    body:
-      'Generate PHI-scrubbed, institution-branded clinical strategy reports in PDF or structured JSON. ' +
-      'Fully neutral — no PivotOrder branding surfaces to end patients unless requested. ' +
-      'Custom header, logo, and disclaimer fields supported.',
-    bodyZh:   '生成 PHI 脱敏的机构品牌临床策略报告（PDF 或结构化 JSON），完全中立，可配置机构抬头、Logo 与免责声明字段。',
-    specs: [
-      { label: 'Output',      value: 'PDF  ·  JSON  ·  HL7 FHIR R4' },
-      { label: 'Branding',    value: 'White-label or co-branded' },
-      { label: 'Languages',   value: 'English  ·  Simplified Chinese' },
-      { label: 'Compliance',  value: 'HIPAA-ready  ·  GDPR-ready' },
-    ],
-  },
-  {
-    id:       'cohort',
-    index:    '03',
-    tag:      'Research Layer',
-    title:    'Cohort Analysis',
-    titleZh:  '研究队列分析',
-    body:
-      'Aggregate anonymised biological age trajectories across patient cohorts. ' +
-      'Identify intervention response clusters, outlier populations, and longitudinal drift patterns. ' +
-      'Delivered as structured data exports or interactive dashboard access.',
-    bodyZh:   '聚合患者队列匿名化生物年龄轨迹，识别干预响应聚类、异常人群与纵向漂移模式，以结构化数据导出或交互式仪表板形式交付。',
-    specs: [
-      { label: 'Min Cohort',  value: '50 individuals' },
-      { label: 'Output',      value: 'CSV  ·  Parquet  ·  Dashboard' },
-      { label: 'Anonymity',   value: 'k-Anonymity ≥ 5  ·  Differential Privacy' },
-      { label: 'Turnaround',  value: 'Batch: 24 h  ·  Streaming: real-time' },
-    ],
-  },
+/* Per-service technical specs (not translated — purely technical identifiers) */
+const SERVICE_SPECS = [
+  [
+    { label: 'Protocol',    value: 'REST / JSON  ·  HTTPS only' },
+    { label: 'Latency',     value: '< 2 000 ms p99' },
+    { label: 'Auth',        value: 'API Key  ·  mTLS available' },
+    { label: 'Data Return', value: 'age_delta · pathways · evidence_refs' },
+  ],
+  [
+    { label: 'Output',     value: 'PDF  ·  JSON  ·  HL7 FHIR R4' },
+    { label: 'Branding',   value: 'White-label or co-branded' },
+    { label: 'Languages',  value: 'English  ·  Simplified Chinese' },
+    { label: 'Compliance', value: 'HIPAA-ready  ·  GDPR-ready' },
+  ],
+  [
+    { label: 'Min Cohort',  value: '50 individuals' },
+    { label: 'Output',      value: 'CSV  ·  Parquet  ·  Dashboard' },
+    { label: 'Anonymity',   value: 'k-Anonymity ≥ 5  ·  Differential Privacy' },
+    { label: 'Turnaround',  value: 'Batch: 24 h  ·  Streaming: real-time' },
+  ],
 ];
 
-const INTEGRATORS = [
-  'Hospital Information Systems (HIS)',
-  'Electronic Medical Records (EMR / EHR)',
-  'Preventive Health Platforms',
-  'Clinical Research Organisations (CRO)',
-  'Longevity & Wellness Clinics',
-  'Medical Device OEM',
-];
+const SERVICE_IDS = ['api', 'whitelabel', 'cohort'];
+const SERVICE_INDICES = ['01', '02', '03'];
 
 /* ─── Beta modal ─────────────────────────────────────────────────────── */
 function BetaModal({ onClose }: { onClose: () => void }) {
+  const t = useT();
   return (
     <div
       role="dialog"
@@ -143,7 +103,7 @@ function BetaModal({ onClose }: { onClose: () => void }) {
               letterSpacing: '0.08em',
             }}
           >
-            PRIVATE BETA
+            {t.enterprise.modal_badge}
           </span>
         </div>
 
@@ -156,12 +116,11 @@ function BetaModal({ onClose }: { onClose: () => void }) {
             marginBottom: '12px',
           }}
         >
-          API Access is Currently in Private Beta
+          {t.enterprise.modal_headline}
         </h3>
 
         <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.72, marginBottom: '8px' }}>
-          We are onboarding a limited cohort of clinical institutions and research organisations.
-          Access is by application only — no self-service sign-up during beta.
+          {t.enterprise.modal_sub}
         </p>
         <p
           style={{
@@ -194,7 +153,7 @@ function BetaModal({ onClose }: { onClose: () => void }) {
               textTransform: 'uppercase',
             }}
           >
-            To request access, contact:
+            {t.enterprise.modal_contact_label}
           </p>
           <p
             style={{
@@ -213,7 +172,7 @@ function BetaModal({ onClose }: { onClose: () => void }) {
               marginTop: '4px',
             }}
           >
-            Include: institution name · use case · estimated monthly call volume
+            {t.enterprise.modal_contact_detail}
           </p>
         </div>
 
@@ -233,7 +192,7 @@ function BetaModal({ onClose }: { onClose: () => void }) {
             transition: 'border-color 0.2s, color 0.2s',
           }}
         >
-          Close
+          {t.enterprise.modal_close}
         </button>
       </div>
     </div>
@@ -242,6 +201,7 @@ function BetaModal({ onClose }: { onClose: () => void }) {
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 export default function EnterprisePage() {
+  const t = useT();
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -288,7 +248,7 @@ export default function EnterprisePage() {
               color: 'rgba(255,255,255,0.35)',
             }}
           >
-            B2B Clinical Integration · 机构接入
+            {t.enterprise.badge}
           </span>
         </div>
 
@@ -303,15 +263,9 @@ export default function EnterprisePage() {
             marginBottom: '24px',
           }}
         >
-          Enterprise API &{' '}
-          <span
-            style={{
-              background: 'linear-gradient(135deg, #FFD700 0%, #F5CB00 100%)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-            }}
-          >
-            Clinical Integration
+          {t.enterprise.headline}{' '}
+          <span style={{ background: 'linear-gradient(135deg, #FFD700 0%, #F5CB00 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
+            {t.enterprise.headline_accent}
           </span>
         </h1>
 
@@ -324,8 +278,7 @@ export default function EnterprisePage() {
             marginBottom: '8px',
           }}
         >
-          Empower your clinic or research facility with the 0.1% biological age engine.
-          Neutral computing power and structured interfaces — no product routing, no commercial conflict.
+          {t.enterprise.sub}
         </p>
         <p
           style={{
@@ -402,141 +355,37 @@ export default function EnterprisePage() {
             marginBottom: '48px',
           }}
         >
-          Integration Tiers · 接入层级
+          {t.enterprise.tiers_label}
         </p>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-          {SERVICES.map((svc) => (
+          {t.enterprise.services.map((svc, idx) => (
             <div
-              key={svc.id}
-              style={{
-                backgroundColor: '#111318',
-                border: '1px solid rgba(255,255,255,0.07)',
-                borderRadius: '12px',
-                padding: 'clamp(24px,4vw,36px)',
-                display: 'grid',
-                gridTemplateColumns: 'clamp(52px,6vw,80px) 1fr',
-                gap: '0 32px',
-              }}
+              key={SERVICE_IDS[idx]}
+              style={{ backgroundColor: '#111318', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: 'clamp(24px,4vw,36px)', display: 'grid', gridTemplateColumns: 'clamp(52px,6vw,80px) 1fr', gap: '0 32px' }}
             >
-              {/* Index */}
               <div>
-                <span
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: 'clamp(1.25rem,2.5vw,2rem)',
-                    fontWeight: 700,
-                    color: 'rgba(255,255,255,0.1)',
-                    letterSpacing: '-0.02em',
-                  }}
-                >
-                  {svc.index}
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(1.25rem,2.5vw,2rem)', fontWeight: 700, color: 'rgba(255,255,255,0.1)', letterSpacing: '-0.02em' }}>
+                  {SERVICE_INDICES[idx]}
                 </span>
               </div>
 
               <div>
-                {/* Tag */}
-                <p
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.6875rem',
-                    fontWeight: 600,
-                    letterSpacing: '0.1em',
-                    textTransform: 'uppercase',
-                    color: 'rgba(255,215,0,0.6)',
-                    marginBottom: '8px',
-                  }}
-                >
+                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,215,0,0.6)', marginBottom: '8px' }}>
                   {svc.tag}
                 </p>
-
-                <h2
-                  style={{
-                    fontSize: 'clamp(1.125rem,2vw,1.375rem)',
-                    fontWeight: 700,
-                    color: '#FFFFFF',
-                    letterSpacing: '-0.015em',
-                    marginBottom: '3px',
-                  }}
-                >
+                <h2 style={{ fontSize: 'clamp(1.125rem,2vw,1.375rem)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.015em', marginBottom: '16px' }}>
                   {svc.title}
                 </h2>
-                <p
-                  style={{
-                    fontFamily: 'var(--font-mono)',
-                    fontSize: '0.75rem',
-                    color: 'rgba(255,255,255,0.22)',
-                    marginBottom: '16px',
-                  }}
-                >
-                  {svc.titleZh}
-                </p>
-
-                <p
-                  style={{
-                    fontSize: '0.875rem',
-                    color: 'rgba(255,255,255,0.46)',
-                    lineHeight: 1.72,
-                    maxWidth: '560px',
-                    marginBottom: '6px',
-                  }}
-                >
+                <p style={{ fontSize: '0.875rem', color: 'rgba(255,255,255,0.46)', lineHeight: 1.72, maxWidth: '560px', marginBottom: '24px' }}>
                   {svc.body}
                 </p>
-                <p
-                  style={{
-                    fontSize: '0.775rem',
-                    color: 'rgba(255,255,255,0.2)',
-                    lineHeight: 1.65,
-                    maxWidth: '520px',
-                    marginBottom: '24px',
-                  }}
-                >
-                  {svc.bodyZh}
-                </p>
 
-                {/* Spec rows */}
-                <div
-                  style={{
-                    backgroundColor: 'rgba(255,255,255,0.02)',
-                    border: '1px solid rgba(255,255,255,0.06)',
-                    borderRadius: '8px',
-                    overflow: 'hidden',
-                  }}
-                >
-                  {svc.specs.map((sp, i) => (
-                    <div
-                      key={sp.label}
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: '130px 1fr',
-                        gap: '0 16px',
-                        padding: '9px 14px',
-                        borderBottom:
-                          i < svc.specs.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
-                      }}
-                    >
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '0.6875rem',
-                          color: 'rgba(255,255,255,0.25)',
-                          fontWeight: 600,
-                          letterSpacing: '0.06em',
-                          textTransform: 'uppercase',
-                        }}
-                      >
-                        {sp.label}
-                      </span>
-                      <span
-                        style={{
-                          fontFamily: 'var(--font-mono)',
-                          fontSize: '0.75rem',
-                          color: 'rgba(255,255,255,0.6)',
-                        }}
-                      >
-                        {sp.value}
-                      </span>
+                <div style={{ backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', overflow: 'hidden' }}>
+                  {SERVICE_SPECS[idx].map((sp, i) => (
+                    <div key={sp.label} style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '0 16px', padding: '9px 14px', borderBottom: i < SERVICE_SPECS[idx].length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{sp.label}</span>
+                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>{sp.value}</span>
                     </div>
                   ))}
                 </div>
@@ -568,7 +417,7 @@ export default function EnterprisePage() {
               marginBottom: '28px',
             }}
           >
-            Designed for · 适用机构类型
+            {t.enterprise.integrators_label}
           </p>
 
           <div
@@ -578,7 +427,7 @@ export default function EnterprisePage() {
               gap: '10px',
             }}
           >
-            {INTEGRATORS.map((label) => (
+            {t.enterprise.integrators.map((label) => (
               <div
                 key={label}
                 style={{
@@ -636,7 +485,7 @@ export default function EnterprisePage() {
             marginBottom: '20px',
           }}
         >
-          Private Beta · 私密测试
+          {t.enterprise.cta_label}
         </p>
         <h2
           style={{
@@ -647,7 +496,7 @@ export default function EnterprisePage() {
             marginBottom: '16px',
           }}
         >
-          Ready to integrate the engine?
+          {t.enterprise.cta_headline}
         </h2>
         <p
           style={{
@@ -657,28 +506,13 @@ export default function EnterprisePage() {
             marginBottom: '32px',
           }}
         >
-          API access is currently invite-only. Reach out with your institution details
-          and use case to begin the onboarding process.
+          {t.enterprise.cta_sub}
         </p>
         <button
           onClick={() => setModalOpen(true)}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '10px',
-            padding: '14px 30px',
-            borderRadius: '8px',
-            border: 'none',
-            backgroundColor: '#FFD700',
-            color: '#0D0D0D',
-            fontWeight: 700,
-            fontSize: '0.9375rem',
-            cursor: 'pointer',
-            fontFamily: 'inherit',
-            transition: 'background-color 0.2s',
-          }}
+          style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 30px', borderRadius: '8px', border: 'none', backgroundColor: '#FFD700', color: '#0D0D0D', fontWeight: 700, fontSize: '0.9375rem', cursor: 'pointer', fontFamily: 'inherit', transition: 'background-color 0.2s' }}
         >
-          Request API Documentation
+          {t.enterprise.btn_request}
         </button>
       </section>
 

@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useT } from '@/context/LanguageContext';
 
 /* ── CountUp hook ─────────────────────────────────────────────────── */
 function useCountDown(from: number, to: number, duration: number, started: boolean) {
@@ -27,9 +28,7 @@ function useCountDown(from: number, to: number, duration: number, started: boole
   return value;
 }
 
-/* ── Tooltip content ──────────────────────────────────────────────── */
-const TOOLTIP_LINES = [
-  'Calculated via:',
+const TOOLTIP_DETAILS = [
   '• Horvath 2.0 Methylation Clock',
   '• Metabolomic Panel · 12 markers',
   '• Gut Microbiome Diversity Index',
@@ -37,6 +36,7 @@ const TOOLTIP_LINES = [
 ];
 
 export default function HeroSection() {
+  const t = useT();
   const [animStarted, setAnimStarted] = useState(false);
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [fadeIn, setFadeIn] = useState(false);
@@ -131,7 +131,7 @@ export default function HeroSection() {
                 color: 'var(--color-text-muted)',
               }}
             >
-              Chronological Age &nbsp;·&nbsp; 时序年龄
+              {t.hero.chrono_label}
             </p>
             <span
               className="text-display-xl"
@@ -166,7 +166,7 @@ export default function HeroSection() {
                 color: 'var(--color-text-muted)',
               }}
             >
-              Phenotypic Age &nbsp;·&nbsp; 表型年龄（多组学重构）
+              {t.hero.bio_label}
             </p>
             <span
               className="text-display-xl"
@@ -199,19 +199,11 @@ export default function HeroSection() {
                   zIndex: 50,
                 }}
               >
-                {TOOLTIP_LINES.map((line, i) => (
-                  <p
-                    key={i}
-                    style={{
-                      fontSize: '0.8125rem',
-                      color: i === 0
-                        ? 'var(--color-text-heading)'
-                        : 'var(--color-text-secondary)',
-                      fontWeight: i === 0 ? 600 : 400,
-                      lineHeight: 1.7,
-                      margin: 0,
-                    }}
-                  >
+                <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-heading)', fontWeight: 600, lineHeight: 1.7, margin: 0 }}>
+                  {t.hero.tooltip_title}
+                </p>
+                {TOOLTIP_DETAILS.map((line, i) => (
+                  <p key={i} style={{ fontSize: '0.8125rem', color: 'var(--color-text-secondary)', fontWeight: 400, lineHeight: 1.7, margin: 0 }}>
                     {line}
                   </p>
                 ))}
@@ -229,37 +221,15 @@ export default function HeroSection() {
             marginBottom: '16px',
           }}
         >
-          <p
-            className="text-h2"
-            style={{
-              color: 'var(--color-text-heading)',
-              marginBottom: '6px',
-            }}
-          >
-            Nine years. Reclaimed by data.
+          <p className="text-h2" style={{ color: 'var(--color-text-heading)', marginBottom: '6px' }}>
+            {t.hero.headline1}
+          </p>
+          <p className="text-h2" style={{ color: 'var(--color-text-heading)', marginBottom: '6px' }}>
+            {t.hero.headline2}
           </p>
         </div>
 
         {/* Slogan */}
-        <div
-          style={{
-            opacity: fadeIn ? 1 : 0,
-            transition: 'opacity 0.6s ease-out 0.35s',
-            marginBottom: '12px',
-          }}
-        >
-          <p
-            style={{
-              fontSize: '1rem',
-              color: 'var(--color-text-secondary)',
-              fontStyle: 'italic',
-              letterSpacing: '0.03em',
-            }}
-          >
-            Decoding the Data, Restoring the Order.
-          </p>
-        </div>
-
         {/* Sub-copy */}
         <div
           style={{
@@ -270,21 +240,13 @@ export default function HeroSection() {
           }}
         >
           <p className="text-body-m" style={{ lineHeight: 1.75 }}>
-            Most health systems measure what has already happened.<br />
-            PivotOrder predicts what hasn&apos;t happened yet —{' '}
-            <br className="hidden md:block" />
-            and models the intervention before it does.
+            {t.hero.sub}
           </p>
           <p
             className="text-caption"
-            style={{
-              marginTop: '8px',
-              textTransform: 'none',
-              letterSpacing: 0,
-              color: 'var(--color-text-muted)',
-            }}
+            style={{ marginTop: '8px', textTransform: 'none', letterSpacing: 0, color: 'var(--color-text-muted)' }}
           >
-            时序年龄对比表型年龄 · 差距由算法计算 · 不由体检报告估算
+            {t.hero.footnote}
           </p>
         </div>
 
@@ -299,10 +261,10 @@ export default function HeroSection() {
           }}
         >
           <Link href="/engine" className="btn-primary">
-            Run Biological Analysis <span>→</span>
+            {t.hero.btn_engine} <span>→</span>
           </Link>
           <Link href="/engine?mode=mock" className="btn-secondary">
-            <span>⚡</span> Explore with Mock Data
+            <span>⚡</span> {t.hero.btn_demo}
           </Link>
         </div>
       </div>

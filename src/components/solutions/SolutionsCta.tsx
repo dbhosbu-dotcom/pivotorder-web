@@ -2,17 +2,13 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useT } from '@/context/LanguageContext';
 
-/* ─── Stat strip ─────────────────────────────────────────────────────── */
-const STATS = [
-  { value: '10,247+', label: 'EBM Citations',          labelZh: '循证引文' },
-  { value: '4',       label: 'Intervention Pathways',  labelZh: '干预路径' },
-  { value: '< 2s',   label: 'Report Compile Time',     labelZh: '报告生成' },
-  { value: '0',       label: 'Commercial Affiliations', labelZh: '商业关联' },
-];
+const STAT_VALUES = ['10,247+', '4', '< 2s', '0'];
 
 /* ════════════════════════════════════════════════════════════════════════ */
 export default function SolutionsCta() {
+  const t = useT();
   const [hovered,    setHovered]    = useState(false);
   const [apiHovered, setApiHovered] = useState(false);
 
@@ -48,32 +44,21 @@ export default function SolutionsCta() {
             marginBottom: '56px',
           }}
         >
-          {STATS.map((s) => (
+          {[
+            [STAT_VALUES[0], t.solutions.stat_citations],
+            [STAT_VALUES[1], t.solutions.stat_pathways],
+            [STAT_VALUES[2], t.solutions.stat_compile],
+            [STAT_VALUES[3], t.solutions.stat_affil],
+          ].map(([value, label]) => (
             <div
-              key={s.label}
-              style={{
-                backgroundColor: '#0D0F14',
-                padding: '28px 24px',
-                textAlign: 'center',
-              }}
+              key={label}
+              style={{ backgroundColor: '#0D0F14', padding: '28px 24px', textAlign: 'center' }}
             >
-              <div
-                style={{
-                  fontFamily: '"JetBrains Mono", monospace',
-                  fontSize: 'clamp(1.375rem, 2.5vw, 1.75rem)',
-                  fontWeight: 700,
-                  color: '#FFD700',
-                  letterSpacing: '-0.02em',
-                  marginBottom: '6px',
-                }}
-              >
-                {s.value}
+              <div style={{ fontFamily: '"JetBrains Mono", monospace', fontSize: 'clamp(1.375rem, 2.5vw, 1.75rem)', fontWeight: 700, color: '#FFD700', letterSpacing: '-0.02em', marginBottom: '6px' }}>
+                {value}
               </div>
               <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.36)', fontWeight: 500 }}>
-                {s.label}
-              </div>
-              <div style={{ fontSize: '0.6875rem', color: 'rgba(255,255,255,0.18)', marginTop: '2px' }}>
-                {s.labelZh}
+                {label}
               </div>
             </div>
           ))}
@@ -98,7 +83,7 @@ export default function SolutionsCta() {
               marginBottom: '20px',
             }}
           >
-            Export &nbsp;·&nbsp; 导出报告
+            {t.solutions.cta_label}
           </p>
 
           {/* Heading */}
@@ -112,10 +97,10 @@ export default function SolutionsCta() {
               marginBottom: '16px',
             }}
           >
-            Download Your Clinical Strategy
+            {t.solutions.cta_headline}
           </h2>
           <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.38)', marginBottom: '36px' }}>
-            PHI Scrubbed &nbsp;·&nbsp; No commercial affiliation &nbsp;·&nbsp; EBM-graded
+            {t.solutions.cta_sub}
           </p>
 
           {/* Button row */}
@@ -155,7 +140,7 @@ export default function SolutionsCta() {
                   stroke="#0D0D0D" strokeWidth="1.75"
                   strokeLinecap="round" strokeLinejoin="round" />
               </svg>
-              Export Clinical Strategy (PDF)
+              {t.solutions.btn_export}
             </button>
 
             {/* Secondary — API Docs */}
@@ -182,7 +167,7 @@ export default function SolutionsCta() {
                 <path d="M2 2h5v2H4v7h7V8h2v5H2V2z" fill="currentColor" opacity=".5" />
                 <path d="M8 2h5v5h-2V5.41L6.71 9.7 5.3 8.3 9.59 4H8V2z" fill="currentColor" />
               </svg>
-              API Documentation
+              {t.solutions.btn_api}
             </button>
           </div>
 
@@ -197,10 +182,7 @@ export default function SolutionsCta() {
               margin: '28px auto 0',
             }}
           >
-            All pathways are derived exclusively from peer-reviewed evidence (PubMed · Cochrane · NEJM).
-            PivotOrder does not endorse, manufacture, or distribute any specific product or therapy.
-            <br />
-            所有干预路径均源自同行评审证据，PivotOrder 不背书任何商业产品或疗法。
+            {t.solutions.methodology_note}
           </p>
         </motion.div>
       </div>

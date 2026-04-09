@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { motion, animate } from 'framer-motion';
 import Toast from '@/components/ui/Toast';
+import { useT } from '@/context/LanguageContext';
 
 /* ─── Types ──────────────────────────────────────────────────────────── */
 interface FormState {
@@ -127,6 +128,7 @@ function PriorityBadge({ priority }: { priority?: string }) {
    Main Component
 ═══════════════════════════════════════════════════════════════════════ */
 export default function EngineForm() {
+  const t = useT();
   const [form, setForm] = useState<FormState>({
     currentAge: 47,
     targetAge: 38,
@@ -283,7 +285,7 @@ export default function EngineForm() {
                   fontFamily: 'var(--font-jetbrains, monospace)',
                 }}
               >
-                System Online · Engine v2.4.1
+                {t.engine.status} · Engine v2.4.1
               </span>
             </div>
 
@@ -297,7 +299,7 @@ export default function EngineForm() {
                 lineHeight: 1.2,
               }}
             >
-              Precision Pivot Analysis
+              {t.engine.headline}
             </h2>
             <p
               style={{
@@ -306,12 +308,7 @@ export default function EngineForm() {
                 lineHeight: 1.6,
               }}
             >
-              Enter your parameters. The engine will compute your multi-omic
-              biological age vector and generate an intervention map.
-              <br />
-              <span style={{ color: 'rgba(255,255,255,0.25)', fontSize: '0.8125rem' }}>
-                输入参数，引擎将生成你的多组学生物年龄向量与干预路线图。
-              </span>
+              {t.engine.sub}
             </p>
           </div>
 
@@ -320,7 +317,7 @@ export default function EngineForm() {
             {/* Current Age */}
             <div>
               <label style={labelStyle}>
-                Current Age &nbsp;·&nbsp; 时序年龄
+                {t.engine.label_age}
               </label>
               <input
                 type="number"
@@ -343,7 +340,7 @@ export default function EngineForm() {
             {/* Target Age */}
             <div>
               <label style={labelStyle}>
-                Target Biological Age &nbsp;·&nbsp; 目标生物年龄
+                {t.engine.label_target}
               </label>
               <input
                 type="number"
@@ -365,7 +362,7 @@ export default function EngineForm() {
 
             {/* Gender */}
             <div>
-              <label style={labelStyle}>Biological Sex &nbsp;·&nbsp; 生理性别</label>
+              <label style={labelStyle}>{t.engine.label_gender}</label>
               <div style={{ position: 'relative' }}>
                 <select
                   value={form.gender}
@@ -383,15 +380,9 @@ export default function EngineForm() {
                     (e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)')
                   }
                 >
-                  <option value="Male" style={{ backgroundColor: '#111318' }}>
-                    Male
-                  </option>
-                  <option value="Female" style={{ backgroundColor: '#111318' }}>
-                    Female
-                  </option>
-                  <option value="Other" style={{ backgroundColor: '#111318' }}>
-                    Other / Prefer not to say
-                  </option>
+                  <option value="Male" style={{ backgroundColor: '#111318' }}>{t.engine.opt_male}</option>
+                  <option value="Female" style={{ backgroundColor: '#111318' }}>{t.engine.opt_female}</option>
+                  <option value="Other" style={{ backgroundColor: '#111318' }}>{t.engine.opt_other}</option>
                 </select>
                 {/* Chevron */}
                 <span
@@ -439,7 +430,7 @@ export default function EngineForm() {
               animation: 'breath-glow 3s ease-in-out infinite',
             }}
           >
-            Initiate Precision Pivot
+            {t.engine.btn_run}
             <span style={{ marginLeft: '8px', fontSize: '1rem' }}>→</span>
           </button>
 
@@ -452,8 +443,7 @@ export default function EngineForm() {
               lineHeight: 1.6,
             }}
           >
-            All computation local. Zero PHI transmitted.&nbsp;
-            所有运算本地执行，零个人健康信息传输。
+            {t.hero.footnote}
           </p>
         </motion.div>
       )}
@@ -597,7 +587,7 @@ export default function EngineForm() {
                 marginBottom: '8px',
               }}
             >
-              Predicted Biological Age &nbsp;·&nbsp; 预测生物年龄
+              {t.engine.result_label}
             </p>
 
             {/* Big animated number */}
@@ -750,7 +740,7 @@ export default function EngineForm() {
                   Intervention Priority Map
                 </p>
                 <p style={{ fontSize: '1rem', fontWeight: 600, color: '#FFFFFF' }}>
-                  Optimization Plan &nbsp;·&nbsp; 干预优化方案
+                  {t.engine.result_plan}
                 </p>
               </div>
               <span
@@ -871,7 +861,7 @@ export default function EngineForm() {
                   'rgba(255,255,255,0.6)';
               }}
             >
-              ← Run New Analysis
+              ← {t.engine.btn_reset}
             </button>
 
             <Link
@@ -901,7 +891,7 @@ export default function EngineForm() {
                 ((e.currentTarget as HTMLElement).style.backgroundColor = '#FFD700')
               }
             >
-              View Solutions →
+              {t.engine.btn_solutions}
             </Link>
           </div>
 

@@ -1,15 +1,18 @@
+'use client';
+
 /**
  * PrintReport.tsx
  * Visible ONLY during @media print.
- * Renders a clean A4 medical report — white background, black text,
- * full Chinese + English content, no dark UI artefacts.
+ * Renders a clean A4 medical report in the active language.
  */
 
 import { PATHWAYS } from '@/lib/pathwayData';
+import { useT } from '@/context/LanguageContext';
 
 const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
 
 export default function PrintReport() {
+  const t = useT();
   return (
     <div className="print-only print-report">
 
@@ -31,8 +34,8 @@ export default function PrintReport() {
 
       {/* ── Report title ── */}
       <div className="pr-title-block">
-        <h1 className="pr-h1">Clinical Intervention Pathways</h1>
-        <p className="pr-h1-zh">临床干预路径报告</p>
+        <h1 className="pr-h1">{t.solutions.hero_headline}</h1>
+        <p className="pr-h1-zh">{t.solutions.grid_label}</p>
       </div>
 
       {/* ── Meta table ── */}
@@ -59,16 +62,7 @@ export default function PrintReport() {
       {/* ── Executive summary ── */}
       <section className="pr-section">
         <h2 className="pr-section-label">EXECUTIVE SUMMARY · 执行摘要</h2>
-        <p className="pr-body">
-          This report presents four evidence-based clinical intervention pathways generated exclusively
-          from multi-omic biomarker analysis. Each pathway is derived from peer-reviewed literature and
-          calibrated against the individual biological age delta computed by the PivotOrder Engine.
-          No commercial products, brands, or therapies are endorsed herein.
-        </p>
-        <p className="pr-body-zh">
-          本报告呈现四项基于循证医学的临床干预路径，完全源自多组学生物标志物分析。每项路径均依据同行评审文献推导，
-          并针对 PivotOrder 引擎计算的个体生物年龄落差进行校准。本报告不背书任何具体商业产品、品牌或疗法。
-        </p>
+        <p className="pr-body">{t.solutions.methodology_note}</p>
       </section>
 
       <hr className="pr-rule" />
@@ -77,7 +71,7 @@ export default function PrintReport() {
           PATHWAY CARDS (01 – 04)
       ══════════════════════════════════════════════════════ */}
       <section className="pr-section">
-        <h2 className="pr-section-label">MULTI-OMIC INTERVENTION MATRIX · 多组学干预矩阵</h2>
+        <h2 className="pr-section-label">{t.solutions.grid_label.toUpperCase()}</h2>
 
         {PATHWAYS.map((pw) => (
           <div key={pw.id} className="pr-pathway">

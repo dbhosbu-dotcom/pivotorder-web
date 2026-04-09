@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { PATHWAYS, type Pathway } from '@/lib/pathwayData';
+import { useT } from '@/context/LanguageContext';
 
 /* ─── Card ───────────────────────────────────────────────────────────── */
 function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
@@ -227,6 +228,7 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
 
 /* ─── Grid ───────────────────────────────────────────────────────────── */
 export default function SolutionsGrid() {
+  const t = useT();
   return (
     <section
       style={{
@@ -261,7 +263,7 @@ export default function SolutionsGrid() {
               marginBottom: '8px',
             }}
           >
-            Multi-Omic Intervention Matrix &nbsp;·&nbsp; 多组学干预矩阵
+            {t.solutions.grid_label}
           </p>
           <h2
             style={{
@@ -271,10 +273,7 @@ export default function SolutionsGrid() {
               color: '#FFFFFF',
             }}
           >
-            4 Clinical Pathways &nbsp;
-            <span style={{ color: 'rgba(255,255,255,0.3)', fontWeight: 400 }}>
-              · derived from engine output
-            </span>
+            {t.solutions.grid_headline}
           </h2>
         </div>
 
@@ -306,7 +305,7 @@ export default function SolutionsGrid() {
               letterSpacing: '0.06em',
             }}
           >
-            Source: PivotOrder Engine v2.4.1
+            {t.solutions.grid_source}
           </span>
         </div>
       </motion.div>

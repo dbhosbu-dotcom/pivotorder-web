@@ -2,8 +2,10 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { useT } from '@/context/LanguageContext';
 
 export default function CtaSection() {
+  const t = useT();
   const ref = useRef<HTMLElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -66,7 +68,7 @@ export default function CtaSection() {
             transition: 'opacity 0.6s ease-out',
           }}
         >
-          Begin Your Analysis &nbsp;·&nbsp; 开始你的分析
+          {t.cta.section_label}
         </p>
 
         {/* Headline */}
@@ -84,10 +86,9 @@ export default function CtaSection() {
             transition: 'opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s',
           }}
         >
-          Your Biology Is Not an Average.
+          {t.cta.headline1}
           <br />
-          It&apos;s a{' '}
-          <span style={{ color: 'var(--color-accent)' }}>Coordinate.</span>
+          <span style={{ color: 'var(--color-accent)' }}>{t.cta.headline2}</span>
         </h2>
 
         {/* Sub-copy EN */}
@@ -102,8 +103,7 @@ export default function CtaSection() {
             transition: 'opacity 0.6s ease-out 0.2s',
           }}
         >
-          Run a full multi-omic analysis — or load mock data and experience the
-          complete engine output in 60 seconds. No account required.
+          {t.cta.sub}
         </p>
 
         {/* Sub-copy ZH */}
@@ -118,7 +118,7 @@ export default function CtaSection() {
             transition: 'opacity 0.6s ease-out 0.25s',
           }}
         >
-          运行完整多组学分析，或加载模拟数据，在 60 秒内体验引擎完整输出。无需注册账户。
+          {''}
         </p>
 
         {/* CTA Buttons */}
@@ -159,14 +159,14 @@ export default function CtaSection() {
               el.style.boxShadow = 'none';
             }}
           >
-            Access The Engine <span style={{ fontSize: '1rem' }}>→</span>
+            {t.cta.btn_engine} <span style={{ fontSize: '1rem' }}>→</span>
           </Link>
 
           <Link
             href="/engine?mode=mock"
             className="btn-secondary-dark"
           >
-            <span>⚡</span> Run Mock Demo
+            <span>⚡</span> {t.cta.btn_demo}
           </Link>
         </div>
 
@@ -180,8 +180,7 @@ export default function CtaSection() {
             transition: 'opacity 0.6s ease-out 0.5s',
           }}
         >
-          All data processed locally. Zero PHI transmitted. &nbsp;·&nbsp;
-          所有数据本地处理，零个人健康信息传输。
+          {t.cta.footnote}
         </p>
       </div>
     </section>
