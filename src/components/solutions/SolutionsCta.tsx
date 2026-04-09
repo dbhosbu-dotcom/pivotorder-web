@@ -2,23 +2,26 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { PATHWAYS } from '@/lib/pathwayData';
+import { generateClinicalPDF } from '@/lib/generateClinicalPDF';
 
-/* ─── Inline toast (no external dep) ─────────────────────────────────── */
+/* ─── Inline toast ───────────────────────────────────────────────────── */
 function InlineToast({
   visible,
   message,
+  isError = false,
 }: {
   visible: boolean;
   message: string;
+  isError?: boolean;
 }) {
+  const borderColor = isError ? 'rgba(239,68,68,0.4)' : 'rgba(255,255,255,0.12)';
+  const iconColor   = isError ? '#EF4444' : '#FFD700';
+
   return (
     <motion.div
       initial={false}
-      animate={{
-        opacity: visible ? 1 : 0,
-        y: visible ? 0 : 8,
-        scale: visible ? 1 : 0.97,
-      }}
+      animate={{ opacity: visible ? 1 : 0, y: visible ? 0 : 8, scale: visible ? 1 : 0.97 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
       style={{
         position: 'fixed',
@@ -32,7 +35,7 @@ function InlineToast({
       <div
         style={{
           backgroundColor: '#111318',
-          border: '1px solid rgba(255,255,255,0.12)',
+          border: `1px solid ${borderColor}`,
           borderRadius: '10px',
           padding: '14px 22px',
           display: 'flex',
@@ -42,30 +45,26 @@ function InlineToast({
           whiteSpace: 'nowrap',
         }}
       >
-        {/* Spinner */}
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          style={{ animation: 'spin-ring 1s linear infinite', flexShrink: 0 }}
-        >
-          <circle cx="8" cy="8" r="6" fill="none" stroke="rgba(255,215,0,0.2)" strokeWidth="2" />
-          <circle
-            cx="8"
-            cy="8"
-            r="6"
-            fill="none"
-            stroke="#FFD700"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeDasharray="10 28"
-          />
-        </svg>
+        {isError ? (
+          /* Error icon */
+          <span style={{ color: '#EF4444', fontWeight: 700, fontSize: '0.875rem', flexShrink: 0 }}>✕</span>
+        ) : (
+          /* Spinner */
+          <svg
+            width="16" height="16" viewBox="0 0 16 16"
+            style={{ animation: 'spin-ring 1s linear infinite', flexShrink: 0 }}
+          >
+            <circle cx="8" cy="8" r="6" fill="none" stroke="rgba(255,215,0,0.2)" strokeWidth="2" />
+            <circle cx="8" cy="8" r="6" fill="none" stroke={iconColor}
+              strokeWidth="2" strokeLinecap="round" strokeDasharray="10 28" />
+          </svg>
+        )}
+
         <span
           style={{
             fontFamily: '"JetBrains Mono", monospace',
             fontSize: '0.8125rem',
-            color: 'rgba(255,255,255,0.75)',
+            color: isError ? '#FCA5A5' : 'rgba(255,255,255,0.75)',
             letterSpacing: '0.03em',
           }}
         >
@@ -88,20 +87,39 @@ const STATS = [
 /* ═══════════════════════════════════════════════════════════════════════ */
 export default function SolutionsCta() {
   const [toastVisible, setToastVisible] = useState(false);
+  const [toastMsg, setToastMsg]         = useState('Generating anonymous clinical report...');
+  const [toastErr, setToastErr]         = useState(false);
   const [hovered, setHovered]           = useState(false);
   const [apiHovered, setApiHovered]     = useState(false);
+  const [exporting, setExporting]       = useState(false);
 
-  function handleExport() {
-    if (toastVisible) return;
+  async function handleExport() {
+    if (exporting) return;
+    setExporting(true);
+    setToastErr(false);
+    setToastMsg('Generating anonymous clinical report...');
     setToastVisible(true);
-    setTimeout(() => setToastVisible(false), 3600);
+
+    try {
+      await generateClinicalPDF(PATHWAYS);
+      // Success: keep toast visible briefly then fade
+      setTimeout(() => setToastVisible(false), 2000);
+    } catch (err) {
+      console.error('[PDF Export]', err);
+      setToastErr(true);
+      setToastMsg('Export Failed: Please try again.');
+      setTimeout(() => setToastVisible(false), 4000);
+    } finally {
+      setExporting(false);
+    }
   }
 
   return (
     <>
       <InlineToast
         visible={toastVisible}
-        message="Generating anonymous clinical report..."
+        message={toastMsg}
+        isError={toastErr}
       />
 
       <section
@@ -271,6 +289,7 @@ export default function SolutionsCta() {
             {/* Primary — Export */}
             <button
               onClick={handleExport}
+              disabled={exporting}
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
               style={{
@@ -280,29 +299,35 @@ export default function SolutionsCta() {
                 padding: '15px 30px',
                 borderRadius: '8px',
                 border: 'none',
-              backgroundColor: hovered ? '#F5CB00' : '#FFD700',
-              color: '#0D0D0D',
-              fontWeight: 700,
-              fontSize: '0.9375rem',
-              cursor: 'pointer',
-              fontFamily: 'inherit',
-              letterSpacing: '0.01em',
-              transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
-              boxShadow: hovered
+                backgroundColor: exporting ? '#C9A800' : (hovered ? '#F5CB00' : '#FFD700'),
+                color: '#0D0D0D',
+                fontWeight: 700,
+                fontSize: '0.9375rem',
+                cursor: exporting ? 'not-allowed' : 'pointer',
+                fontFamily: 'inherit',
+                letterSpacing: '0.01em',
+                opacity: exporting ? 0.8 : 1,
+                transition: 'background-color 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease',
+                boxShadow: hovered && !exporting
                   ? '0 0 32px rgba(255,215,0,0.28)'
                   : '0 0 0 rgba(255,215,0,0)',
               } as React.CSSProperties}
             >
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                <path
-                  d="M8 2v8M4 7l4 4 4-4M2 12h12"
-                  stroke="#0D0D0D"
-                  strokeWidth="1.75"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              Export Clinical Strategy (PDF)
+              {exporting ? (
+                <svg width="16" height="16" viewBox="0 0 16 16"
+                  style={{ animation: 'spin-ring 0.9s linear infinite' }}>
+                  <circle cx="8" cy="8" r="6" fill="none" stroke="rgba(0,0,0,0.25)" strokeWidth="2" />
+                  <circle cx="8" cy="8" r="6" fill="none" stroke="#0D0D0D"
+                    strokeWidth="2" strokeLinecap="round" strokeDasharray="10 28" />
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8 2v8M4 7l4 4 4-4M2 12h12"
+                    stroke="#0D0D0D" strokeWidth="1.75"
+                    strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              )}
+              {exporting ? 'Generating...' : 'Export Clinical Strategy (PDF)'}
             </button>
 
             {/* Secondary — API Docs */}
