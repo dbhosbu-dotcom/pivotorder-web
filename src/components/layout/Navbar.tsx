@@ -15,11 +15,11 @@ export default function Navbar() {
 
   const NAV_LINKS = [
     { label: t.nav.home,       href: '/' },
-    { label: t.nav.pillars,    href: '/pillars' },
     { label: t.nav.engine,     href: '/engine' },
     { label: t.nav.solutions,  href: '/solutions' },
     { label: t.nav.science,    href: '/science' },
     { label: t.nav.enterprise, href: '/enterprise' },
+    { label: t.nav.pricing,    href: '/pricing' },
   ];
 
   const close = () => setOpen(false);
@@ -261,7 +261,7 @@ export default function Navbar() {
           className="md:hidden"
           style={{
             overflow: 'hidden',
-            maxHeight: open ? '480px' : '0',
+            maxHeight: open ? '600px' : '0',
             transition: 'max-height 0.3s cubic-bezier(0.4,0,0.2,1)',
             borderTop: open ? '1px solid var(--color-border)' : 'none',
             backgroundColor: 'rgba(255,255,255,0.97)',

@@ -9,6 +9,8 @@ export interface Dict {
     solutions:    string;
     science:      string;
     enterprise:   string;
+    pricing:      string;
+    about:        string;
     access:       string;
     dashboard:    string;
     signIn:       string;

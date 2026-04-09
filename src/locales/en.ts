@@ -8,6 +8,8 @@ const en: Dict = {
     solutions:   'Solutions',
     science:     'Science',
     enterprise:  'Enterprise',
+    pricing:     'Pricing',
+    about:       'About',
     access:      'Access Engine',
     dashboard:   'Dashboard',
     signIn:      'Sign In',

@@ -8,6 +8,8 @@ const zh: Dict = {
     solutions:   '干预方案',
     science:     '科学依据',
     enterprise:  '机构接入',
+    pricing:     '定价',
+    about:       '关于我们',
     access:      '访问算力引擎',
     dashboard:   '我的仪表盘',
     signIn:      '登录',
