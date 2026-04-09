@@ -151,7 +151,11 @@ export default function EngineForm() {
     setLogIndex(0);
     setResult(null);
 
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL;
+    // Strip any trailing slash and deduplicate in case the env var was set incorrectly
+    const rawBase = (process.env.NEXT_PUBLIC_API_URL ?? '').replace(/\/+$/, '');
+    // Guard against a doubled value like "http://...http://..." (env-file corruption)
+    const httpIdx = rawBase.indexOf('http', 1);
+    const baseUrl = httpIdx !== -1 ? rawBase.slice(httpIdx) : rawBase;
 
     // If no API URL configured → run mock immediately
     if (!baseUrl) {
@@ -161,8 +165,10 @@ export default function EngineForm() {
       return;
     }
 
+    const apiUrl = `${baseUrl}/predict`;
+
     try {
-      const res = await fetch(`${baseUrl}/predict`, {
+      const res = await fetch(apiUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
