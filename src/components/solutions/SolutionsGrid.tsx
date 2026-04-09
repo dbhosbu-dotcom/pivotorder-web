@@ -87,14 +87,14 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
         </span>
       </div>
 
-      {/* Domain tag */}
+      {/* Domain tag — Chinese needs larger size */}
       <div style={{ marginBottom: '14px' }}>
         <span
           style={{
-            fontSize: '0.6875rem',
+            fontSize: isZh ? '0.875rem' : '0.6875rem',
             fontWeight: 600,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
+            letterSpacing: isZh ? '0.02em' : '0.1em',
+            textTransform: isZh ? 'none' : 'uppercase',
             color: pathway.tagColor,
           }}
         >
@@ -115,12 +115,14 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
       >
         {pathway.title}
       </h3>
+      {/* Chinese subtitle — was 0.75rem, needs to be readable */}
       <p
         style={{
-          fontSize: '0.75rem',
-          color: 'rgba(255,255,255,0.22)',
+          fontSize: '0.875rem',
+          color: 'rgba(255,255,255,0.35)',
           marginBottom: '18px',
-          letterSpacing: '0.02em',
+          letterSpacing: '0.01em',
+          lineHeight: 1.5,
         }}
       >
         {pathway.titleZh}
@@ -129,22 +131,22 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
       {/* Description EN */}
       <p
         style={{
-          fontSize: '0.875rem',
-          color: 'rgba(255,255,255,0.48)',
-          lineHeight: 1.72,
-          marginBottom: '8px',
+          fontSize: '0.9rem',
+          color: 'rgba(255,255,255,0.52)',
+          lineHeight: 1.75,
+          marginBottom: '10px',
           flex: 1,
         }}
       >
         {pathway.description}
       </p>
 
-      {/* Description ZH */}
+      {/* Description ZH — was 0.75rem, Chinese needs 0.9rem */}
       <p
         style={{
-          fontSize: '0.75rem',
-          color: 'rgba(255,255,255,0.2)',
-          lineHeight: 1.6,
+          fontSize: '0.9rem',
+          color: 'rgba(255,255,255,0.32)',
+          lineHeight: 1.7,
           marginBottom: '28px',
         }}
       >
@@ -166,13 +168,14 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
               gap: '12px',
             }}
           >
+            {/* Metric label — Chinese needs larger size */}
             <span
               style={{
-                fontSize: '0.6875rem',
-                color: 'rgba(255,255,255,0.28)',
+                fontSize: isZh ? '0.8125rem' : '0.6875rem',
+                color: 'rgba(255,255,255,0.35)',
                 fontWeight: 500,
-                letterSpacing: '0.06em',
-                textTransform: 'uppercase',
+                letterSpacing: isZh ? '0.01em' : '0.06em',
+                textTransform: isZh ? 'none' : 'uppercase',
                 flexShrink: 0,
               }}
             >
@@ -214,11 +217,13 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
             opacity: 0.8,
           }}
         />
+        {/* Clock target — Chinese content needs larger size */}
         <span
           style={{
-            fontFamily: '"JetBrains Mono", monospace',
-            fontSize: '0.6875rem',
-            color: 'rgba(255,255,255,0.3)',
+            fontSize: isZh ? '0.8125rem' : '0.6875rem',
+            fontFamily: isZh ? 'inherit' : '"JetBrains Mono", monospace',
+            color: 'rgba(255,255,255,0.38)',
+            lineHeight: 1.4,
           }}
         >
           {isZh ? `时钟靶点：${pathway.clockTargetZh}` : `Clock Target: ${pathway.clockTarget}`}
@@ -255,13 +260,13 @@ export default function SolutionsGrid() {
         }}
       >
         <div>
+          {/* Grid section label — was 0.6875rem, Chinese needs 0.9375rem */}
           <p
             style={{
-              fontFamily: '"JetBrains Mono", monospace',
-              fontSize: '0.6875rem',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.28)',
+              fontSize: '0.9375rem',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              color: 'rgba(255,255,255,0.45)',
               marginBottom: '8px',
             }}
           >

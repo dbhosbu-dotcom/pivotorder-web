@@ -97,10 +97,10 @@ function BetaModal({ onClose }: { onClose: () => void }) {
           />
           <span
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6875rem',
-              color: 'rgba(255,215,0,0.8)',
-              letterSpacing: '0.08em',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              color: 'rgba(255,215,0,0.9)',
+              letterSpacing: '0.04em',
             }}
           >
             {t.enterprise.modal_badge}
@@ -241,11 +241,10 @@ export default function EnterprisePage() {
           />
           <span
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6875rem',
-              letterSpacing: '0.1em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.35)',
+              fontSize: '0.875rem',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              color: 'rgba(255,255,255,0.5)',
             }}
           >
             {t.enterprise.badge}
@@ -347,12 +346,11 @@ export default function EnterprisePage() {
       >
         <p
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.6875rem',
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.25)',
-            marginBottom: '48px',
+            fontSize: '0.9375rem',
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            color: 'rgba(255,255,255,0.4)',
+            marginBottom: '40px',
           }}
         >
           {t.enterprise.tiers_label}
@@ -371,7 +369,7 @@ export default function EnterprisePage() {
               </div>
 
               <div>
-                <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', fontWeight: 600, letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,215,0,0.6)', marginBottom: '8px' }}>
+                <p style={{ fontSize: '0.875rem', fontWeight: 600, letterSpacing: '0.02em', color: 'rgba(255,215,0,0.75)', marginBottom: '8px' }}>
                   {svc.tag}
                 </p>
                 <h2 style={{ fontSize: 'clamp(1.125rem,2vw,1.375rem)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.015em', marginBottom: '16px' }}>
@@ -413,11 +411,10 @@ export default function EnterprisePage() {
         <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
           <p
             style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.6875rem',
-              letterSpacing: '0.14em',
-              textTransform: 'uppercase',
-              color: 'rgba(255,255,255,0.22)',
+              fontSize: '0.9375rem',
+              fontWeight: 600,
+              letterSpacing: '0.04em',
+              color: 'rgba(255,255,255,0.38)',
               marginBottom: '28px',
             }}
           >
@@ -481,11 +478,10 @@ export default function EnterprisePage() {
       >
         <p
           style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.6875rem',
-            letterSpacing: '0.14em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.2)',
+            fontSize: '0.9375rem',
+            fontWeight: 600,
+            letterSpacing: '0.04em',
+            color: 'rgba(255,255,255,0.38)',
             marginBottom: '20px',
           }}
         >

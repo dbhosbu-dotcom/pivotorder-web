@@ -44,20 +44,25 @@ export default function PillarsPreviewSection() {
       style={{ backgroundColor: 'var(--color-bg-subtle)' }}
     >
       <div className="container-site">
-        {/* Section label */}
-        <p
-          className="text-caption"
-          style={{
-            textTransform: 'uppercase',
-            letterSpacing: '0.14em',
-            marginBottom: '20px',
+        {/* Section label — was text-caption 0.75rem, now 0.9375rem */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '10px',
+          marginBottom: '20px',
+          opacity: visible ? 1 : 0,
+          transition: 'opacity 0.6s ease-out',
+        }}>
+          <span style={{
+            display: 'inline-block', width: '20px', height: '2px',
+            backgroundColor: 'var(--color-accent)', flexShrink: 0,
+          }} />
+          <p style={{
+            margin: 0, fontSize: '0.9375rem', fontWeight: 600,
+            letterSpacing: '0.04em',
             color: 'var(--color-accent)',
-            opacity: visible ? 1 : 0,
-            transition: 'opacity 0.6s ease-out',
-          }}
-        >
-          {lang === 'zh' ? '十大代谢支柱协议' : 'THE 10-PILLAR METABOLIC PROTOCOL'}
-        </p>
+          }}>
+            {lang === 'zh' ? '十大代谢支柱协议' : 'THE 10-PILLAR METABOLIC PROTOCOL'}
+          </p>
+        </div>
 
         {/* Headline */}
         <h2
@@ -133,7 +138,7 @@ export default function PillarsPreviewSection() {
                 {p.id}
               </span>
 
-              {/* Case label */}
+              {/* Case label — decorative English-only, 0.6875rem OK */}
               <span
                 style={{
                   fontSize: '0.6875rem',
@@ -211,10 +216,9 @@ export default function PillarsPreviewSection() {
         >
           <p
             style={{
-              fontSize: '0.75rem',
+              fontSize: '0.9rem',
               fontWeight: 700,
-              letterSpacing: '0.12em',
-              textTransform: 'uppercase',
+              letterSpacing: '0.04em',
               color: 'var(--color-accent)',
               marginBottom: '14px',
             }}

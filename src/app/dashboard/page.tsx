@@ -385,14 +385,14 @@ function AnalysisCard({ analysis, isZh }: { analysis: SavedAnalysis; isZh: boole
       {/* Date + type */}
       <div style={{ minWidth: '120px' }}>
         <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-heading)', margin: 0 }}>{analysis.date}</p>
-        <span style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: '"JetBrains Mono", monospace' }}>
+        <span style={{ fontSize: '0.8125rem', fontWeight: 600, letterSpacing: '0.02em', color: 'var(--color-text-muted)' }}>
           {analysis.type === 'mock' ? (isZh ? '模拟分析' : 'Mock') : (isZh ? '报告上传' : 'Upload')}
         </span>
       </div>
 
       {/* Bio age */}
       <div style={{ textAlign: 'center', flex: '0 0 auto' }}>
-        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', margin: '0 0 2px', letterSpacing: '0.04em' }}>
           {isZh ? '生物年龄' : 'Bio Age'}
         </p>
         <p style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-accent)', margin: 0 }}>
@@ -402,7 +402,7 @@ function AnalysisCard({ analysis, isZh }: { analysis: SavedAnalysis; isZh: boole
 
       {/* Delta */}
       <div style={{ textAlign: 'center', flex: '0 0 auto' }}>
-        <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+        <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', margin: '0 0 2px', letterSpacing: '0.04em' }}>
           {isZh ? '落差' : 'Delta'}
         </p>
         <p style={{ fontSize: '1.25rem', fontWeight: 700, color: deltaColor, margin: 0 }}>
@@ -413,12 +413,12 @@ function AnalysisCard({ analysis, isZh }: { analysis: SavedAnalysis; isZh: boole
       {/* Flags */}
       {analysis.topFlags.length > 0 && (
         <div style={{ flex: 1 }}>
-          <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', margin: '0 0 6px', letterSpacing: '0.02em' }}>
             {isZh ? '主要标记' : 'Top Flags'}
           </p>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
             {analysis.topFlags.map((f, i) => (
-              <span key={i} style={{ fontSize: '0.75rem', fontFamily: '"JetBrains Mono", monospace', backgroundColor: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)', borderRadius: '4px', padding: '2px 8px', color: 'var(--color-text-secondary)' }}>
+              <span key={i} style={{ fontSize: '0.8125rem', fontFamily: '"JetBrains Mono", monospace', backgroundColor: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)', borderRadius: '4px', padding: '2px 8px', color: 'var(--color-text-secondary)' }}>
                 {f}
               </span>
             ))}

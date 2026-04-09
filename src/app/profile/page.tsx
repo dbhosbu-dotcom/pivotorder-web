@@ -122,7 +122,7 @@ function ProfilePage() {
               border: `1px solid ${remaining! > 0 ? 'rgba(255,215,0,0.3)' : 'var(--color-border)'}`,
               borderRadius: '10px', padding: '14px', marginBottom: '20px', textAlign: 'center',
             }}>
-              <p style={{ fontSize: '0.6875rem', fontWeight: 700, color: remaining! > 0 ? 'var(--color-accent)' : 'var(--color-text-muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '4px' }}>
+              <p style={{ fontSize: '0.875rem', fontWeight: 700, color: remaining! > 0 ? 'var(--color-accent)' : 'var(--color-text-muted)', letterSpacing: '0.04em', marginBottom: '4px' }}>
                 {isZh ? '免费版' : 'FREE TIER'}
               </p>
               <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', margin: 0 }}>
@@ -414,14 +414,14 @@ function ReportCard({
           <p style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--color-text-heading)', margin: 0 }}>
             {analysis.date}
           </p>
-          <span style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--color-text-muted)', fontFamily: '"JetBrains Mono", monospace' }}>
+          <span style={{ fontSize: '0.8125rem', fontWeight: 600, letterSpacing: '0.02em', color: 'var(--color-text-muted)' }}>
             {analysis.type === 'mock' ? (isZh ? '模拟演示' : 'Demo') : (isZh ? '报告上传' : 'Upload')}
           </span>
         </div>
 
         {/* Bio age */}
         <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', margin: '0 0 2px', letterSpacing: '0.02em' }}>
             {isZh ? '生物年龄' : 'Bio Age'}
           </p>
           <p style={{ fontSize: '1.5rem', fontWeight: 700, color: 'var(--color-accent)', margin: 0 }}>
@@ -431,7 +431,7 @@ function ReportCard({
 
         {/* Delta */}
         <div style={{ textAlign: 'center' }}>
-          <p style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', margin: '0 0 2px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+          <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', margin: '0 0 2px', letterSpacing: '0.02em' }}>
             {isZh ? '年龄落差' : 'Delta'}
           </p>
           <p style={{ fontSize: '1.25rem', fontWeight: 700, color: deltaColor, margin: 0 }}>
@@ -442,12 +442,12 @@ function ReportCard({
         {/* Top flags */}
         {analysis.topFlags.length > 0 && (
           <div style={{ flex: 1 }}>
-            <p style={{ fontSize: '0.6875rem', color: 'var(--color-text-muted)', margin: '0 0 6px', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+            <p style={{ fontSize: '0.8125rem', color: 'var(--color-text-muted)', margin: '0 0 6px', letterSpacing: '0.02em' }}>
               {isZh ? '触发标记' : 'Flags'}
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
               {analysis.topFlags.map((f, i) => (
-                <span key={i} style={{ fontSize: '0.75rem', fontFamily: '"JetBrains Mono", monospace', backgroundColor: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)', borderRadius: '4px', padding: '2px 7px', color: 'var(--color-text-secondary)' }}>
+                <span key={i} style={{ fontSize: '0.8125rem', fontFamily: '"JetBrains Mono", monospace', backgroundColor: 'var(--color-bg-subtle)', border: '1px solid var(--color-border)', borderRadius: '4px', padding: '2px 7px', color: 'var(--color-text-secondary)' }}>
                   {f}
                 </span>
               ))}
@@ -468,7 +468,7 @@ function ReportCard({
           {/* Pillar summary */}
           {analysis.pillarSummary && analysis.pillarSummary.length > 0 && (
             <div style={{ padding: '20px 24px', borderBottom: '1px solid var(--color-border-subtle)' }}>
-              <p style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '14px' }}>
+              <p style={{ fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.02em', color: 'var(--color-text-secondary)', marginBottom: '14px' }}>
                 {isZh ? '十大支柱风险概览' : '10-Pillar Risk Summary'}
               </p>
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
@@ -482,7 +482,7 @@ function ReportCard({
                     <span style={{ fontSize: '0.8125rem', fontWeight: 500, color: 'var(--color-text-heading)' }}>
                       {isZh ? p.nameZh : p.nameEn}
                     </span>
-                    <span style={{ fontSize: '0.6875rem', color: riskColor(p.risk), fontWeight: 600 }}>
+                    <span style={{ fontSize: '0.8125rem', color: riskColor(p.risk), fontWeight: 600 }}>
                       {riskLabel(p.risk)}
                     </span>
                   </div>
@@ -494,7 +494,7 @@ function ReportCard({
           {/* Optimization plan */}
           {analysis.optimizationItems && analysis.optimizationItems.length > 0 && (
             <div style={{ padding: '20px 24px' }}>
-              <p style={{ fontSize: '0.6875rem', fontWeight: 700, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'var(--color-text-muted)', marginBottom: '14px' }}>
+              <p style={{ fontSize: '0.875rem', fontWeight: 700, letterSpacing: '0.02em', color: 'var(--color-text-secondary)', marginBottom: '14px' }}>
                 {isZh ? '干预优化方案' : 'Intervention Plan'}
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
@@ -504,7 +504,7 @@ function ReportCard({
                       flexShrink: 0, width: '24px', height: '24px', borderRadius: '50%',
                       border: '1px solid rgba(255,215,0,0.5)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
-                      fontSize: '0.6875rem', fontWeight: 700, color: 'var(--color-accent)',
+                      fontSize: '0.75rem', fontWeight: 700, color: 'var(--color-accent)',
                     }}>
                       {i + 1}
                     </span>

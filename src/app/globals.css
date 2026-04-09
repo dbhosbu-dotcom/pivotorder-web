@@ -13,11 +13,15 @@
   --color-border-subtle:   #F1F3F5;
 
   /* Text */
-  --color-text-primary:    #4A4A4A;
-  --color-text-heading:    #1F2937;
-  --color-text-secondary:  #8A8A8A;
-  --color-text-muted:      #B0B4BC;
+  --color-text-primary:    #3D3D3D;   /* was #4A4A4A — darker for Chinese readability */
+  --color-text-heading:    #111827;   /* was #1F2937 — higher contrast */
+  --color-text-secondary:  #6B7280;   /* was #8A8A8A — now WCAG AA compliant 4.6:1 */
+  --color-text-muted:      #9CA3AF;   /* was #B0B4BC */
   --color-text-inverse:    #FFFFFF;
+
+  /* Typography scale */
+  --text-label:  0.875rem;    /* section overlines / overline labels — min for Chinese */
+  --text-micro:  0.8125rem;   /* stat sub-labels, metadata — was 0.6875rem globally */
 
   /* Accent — Gene Yellow (from Logo DNA helix) */
   --color-accent:          #FFD700;
@@ -139,10 +143,27 @@ body {
 }
 
 .text-caption {
-  font-size: 0.75rem;
+  font-size: 0.8125rem;     /* was 0.75rem — min readable for Chinese */
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.06em;   /* was 0.12em — tighter for Chinese characters */
   color: var(--color-text-muted);
+}
+
+/* Section overline labels — replaces scattered 0.6875rem mono-caps pattern */
+.section-label {
+  font-size: var(--text-label);   /* 0.875rem = 14px */
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+}
+
+/* Micro metadata (stat sub-labels, REF badges, etc.) */
+.text-micro {
+  font-size: var(--text-micro);   /* 0.8125rem = 13px */
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  line-height: 1.4;
 }
 
 .font-mono {
