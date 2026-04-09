@@ -362,9 +362,9 @@ export default function EnterprisePage() {
           {t.enterprise.services.map((svc, idx) => (
             <div
               key={SERVICE_IDS[idx]}
-              style={{ backgroundColor: '#111318', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '12px', padding: 'clamp(24px,4vw,36px)', display: 'grid', gridTemplateColumns: 'clamp(52px,6vw,80px) 1fr', gap: '0 32px' }}
+              className="svc-card"
             >
-              <div>
+              <div className="svc-index">
                 <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(1.25rem,2.5vw,2rem)', fontWeight: 700, color: 'rgba(255,255,255,0.1)', letterSpacing: '-0.02em' }}>
                   {SERVICE_INDICES[idx]}
                 </span>
@@ -383,9 +383,13 @@ export default function EnterprisePage() {
 
                 <div style={{ backgroundColor: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '8px', overflow: 'hidden' }}>
                   {SERVICE_SPECS[idx].map((sp, i) => (
-                    <div key={sp.label} style={{ display: 'grid', gridTemplateColumns: '130px 1fr', gap: '0 16px', padding: '9px 14px', borderBottom: i < SERVICE_SPECS[idx].length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'rgba(255,255,255,0.25)', fontWeight: 600, letterSpacing: '0.06em', textTransform: 'uppercase' }}>{sp.label}</span>
-                      <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'rgba(255,255,255,0.6)' }}>{sp.value}</span>
+                    <div
+                      key={sp.label}
+                      className="spec-row"
+                      style={{ borderBottom: i < SERVICE_SPECS[idx].length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none' }}
+                    >
+                      <span className="spec-label">{sp.label}</span>
+                      <span className="spec-value">{sp.value}</span>
                     </div>
                   ))}
                 </div>
@@ -518,6 +522,74 @@ export default function EnterprisePage() {
 
       {/* ── Beta modal ── */}
       {modalOpen && <BetaModal onClose={() => setModalOpen(false)} />}
+
+      <style>{`
+        /* Service card — two-column layout desktop, single-column mobile */
+        .svc-card {
+          background-color: #111318;
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 12px;
+          padding: clamp(24px,4vw,36px);
+          display: grid;
+          grid-template-columns: clamp(52px,6vw,80px) 1fr;
+          gap: 0 32px;
+        }
+
+        /* Spec table row — label + value side by side desktop */
+        .spec-row {
+          display: grid;
+          grid-template-columns: 130px 1fr;
+          gap: 0 16px;
+          padding: 9px 14px;
+          align-items: baseline;
+        }
+        .spec-label {
+          font-family: var(--font-mono, monospace);
+          font-size: 0.6875rem;
+          color: rgba(255,255,255,0.25);
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          white-space: nowrap;
+        }
+        .spec-value {
+          font-family: var(--font-mono, monospace);
+          font-size: 0.75rem;
+          color: rgba(255,255,255,0.6);
+          overflow-wrap: break-word;
+          word-break: break-word;
+          min-width: 0;
+        }
+
+        /* ── Mobile: collapse both grids ── */
+        @media (max-width: 560px) {
+          .svc-card {
+            grid-template-columns: 1fr;
+            gap: 0;
+          }
+          .svc-index {
+            display: none;   /* hide decorative number on small screens */
+          }
+          .spec-row {
+            grid-template-columns: 1fr;
+            gap: 2px;
+            padding: 10px 12px;
+          }
+          .spec-label {
+            font-size: 0.625rem;
+            color: rgba(255,255,255,0.2);
+          }
+          .spec-value {
+            font-size: 0.8125rem;
+            color: rgba(255,255,255,0.65);
+          }
+        }
+
+        @keyframes pulse-dot {
+          0%, 100% { opacity: 1; }
+          50%       { opacity: 0.4; }
+        }
+      `}</style>
     </main>
   );
 }
