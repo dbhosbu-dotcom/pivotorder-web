@@ -1,6 +1,7 @@
 import SolutionsHero from '@/components/solutions/SolutionsHero';
 import SolutionsGrid from '@/components/solutions/SolutionsGrid';
-import SolutionsCta from '@/components/solutions/SolutionsCta';
+import SolutionsCta  from '@/components/solutions/SolutionsCta';
+import PrintReport   from '@/components/solutions/PrintReport';
 
 export const metadata = {
   title: 'Clinical Intervention Pathways — PivotOrder',
@@ -10,10 +11,16 @@ export const metadata = {
 
 export default function SolutionsPage() {
   return (
-    <div style={{ backgroundColor: '#0A0C10', minHeight: 'calc(100vh - 68px)' }}>
-      <SolutionsHero />
-      <SolutionsGrid />
-      <SolutionsCta />
-    </div>
+    <>
+      {/* ── Screen view (dark clinical UI) ── */}
+      <div className="no-print" style={{ backgroundColor: '#0A0C10', minHeight: 'calc(100vh - 68px)' }}>
+        <SolutionsHero />
+        <SolutionsGrid />
+        <SolutionsCta />
+      </div>
+
+      {/* ── Print-only A4 medical report ── */}
+      <PrintReport />
+    </>
   );
 }
