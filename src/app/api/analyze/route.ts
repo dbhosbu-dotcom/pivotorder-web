@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
+export const maxDuration = 60; // Vercel Pro: allow up to 60s for Claude Vision analysis
+
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 /* ─── Pillar definitions with trigger thresholds ────────────────────── */
@@ -307,7 +309,7 @@ export async function POST(req: NextRequest) {
     messageContent.push({ type: 'text', text: prompt });
 
     const response = await client.messages.create({
-      model: 'claude-opus-4-5',
+      model: 'claude-sonnet-4-6',
       max_tokens: 4096,
       messages: [
         {
