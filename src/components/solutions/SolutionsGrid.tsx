@@ -205,19 +205,10 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
           border: '1px solid rgba(255,255,255,0.06)',
           borderRadius: '6px',
           padding: '8px 12px',
+          marginBottom: '8px',
         }}
       >
-        <span
-          style={{
-            width: '5px',
-            height: '5px',
-            borderRadius: '50%',
-            backgroundColor: pathway.tagColor,
-            flexShrink: 0,
-            opacity: 0.8,
-          }}
-        />
-        {/* Clock target — Chinese content needs larger size */}
+        <span style={{ width: '5px', height: '5px', borderRadius: '50%', backgroundColor: pathway.tagColor, flexShrink: 0, opacity: 0.8 }} />
         <span
           style={{
             fontSize: isZh ? '0.8125rem' : '0.6875rem',
@@ -227,6 +218,16 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
           }}
         >
           {isZh ? `时钟靶点：${pathway.clockTargetZh}` : `Clock Target: ${pathway.clockTarget}`}
+        </span>
+      </div>
+
+      {/* Engine module badge */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+        <span style={{ fontSize: '0.625rem', fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.18)', letterSpacing: '0.06em' }}>
+          {isZh ? '引擎：' : 'Engine: '}
+        </span>
+        <span style={{ fontSize: '0.625rem', fontFamily: '"JetBrains Mono", monospace', color: pathway.tagColor, opacity: 0.7, letterSpacing: '0.04em' }}>
+          {isZh ? pathway.engineModuleZh : pathway.engineModule}
         </span>
       </div>
     </motion.div>

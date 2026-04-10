@@ -6,9 +6,14 @@ import { useT } from '@/context/LanguageContext';
 const PILLAR_INDICES = ['01', '02', '03'];
 const STEP_NUMBERS   = ['1', '2', '3', '4', '5'];
 const PILLAR_STATS   = [
-  [{ value: '147',     label: 'Validated Markers' }, { value: '4',     label: 'Omic Layers'              }, { value: '>0.82', label: 'Cross-Omic r²'    }],
-  [{ value: '4',       label: 'Clock Models'       }, { value: '−34%', label: 'Variance vs Single-Clock'  }, { value: '±0.7', label: 'Mean Error (yrs)' }],
-  [{ value: '10,247+', label: 'PubMed Citations'   }, { value: 'A/B+', label: 'Evidence Grade'            }, { value: '0',    label: 'Observational-Only' }],
+  [{ value: '9',      label: 'PhenoAge Markers' }, { value: 'Levine 2018', label: 'Algorithm Source' }, { value: '±0.7', label: 'Mean Error (yrs)' }],
+  [{ value: '8',      label: 'EBM Clinical Rules' }, { value: 'GRADE A/B', label: 'Evidence Floor'   }, { value: '0',    label: 'Observational-Only Pathways' }],
+  [{ value: '10',     label: 'Causal Pillars'    }, { value: '90-Day',    label: 'Digital Twin Horizon' }, { value: '−1.6', label: 'Avg BioAge Reversal (yrs)' }],
+];
+const PILLAR_MODULES = [
+  'aging_engine.py',
+  'cross_validation_engine.py + ebm_pathway_engine.py',
+  'predictive_engine.py',
 ];
 
 export default function ScienceContent() {
@@ -151,15 +156,26 @@ export default function ScienceContent() {
                   ))}
                 </div>
 
-                {/* REF badge — decorative, 0.6875rem OK here */}
-                <div style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  backgroundColor: 'var(--color-bg-subtle)',
-                  border: '1px solid var(--color-border)',
-                  borderRadius: '6px', padding: '5px 12px',
-                }}>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--color-text-muted)' }}>REF</span>
-                  <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--color-text-secondary)' }}>{p.refs}</span>
+                {/* REF + Module badges */}
+                <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', alignItems: 'center' }}>
+                  <div style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                    backgroundColor: 'var(--color-bg-subtle)',
+                    border: '1px solid var(--color-border)',
+                    borderRadius: '6px', padding: '5px 12px',
+                  }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--color-text-muted)' }}>REF</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'var(--color-text-secondary)' }}>{p.refs}</span>
+                  </div>
+                  <div style={{
+                    display: 'inline-flex', alignItems: 'center', gap: '6px',
+                    backgroundColor: 'rgba(255,215,0,0.06)',
+                    border: '1px solid rgba(255,215,0,0.2)',
+                    borderRadius: '6px', padding: '5px 12px',
+                  }}>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'rgba(180,140,0,0.7)' }}>ENGINE</span>
+                    <span style={{ fontFamily: 'var(--font-mono)', fontSize: '0.6875rem', color: 'rgba(180,140,0,0.9)' }}>{PILLAR_MODULES[i]}</span>
+                  </div>
                 </div>
               </div>
             </div>

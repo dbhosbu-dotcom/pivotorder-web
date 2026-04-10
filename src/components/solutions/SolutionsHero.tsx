@@ -1,10 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useT } from '@/context/LanguageContext';
+import { useT, useLanguage } from '@/context/LanguageContext';
+import { ENGINE_TRIAD } from '@/lib/pathwayData';
 
 export default function SolutionsHero() {
   const t = useT();
+  const { lang } = useLanguage();
+  const isZh = lang === 'zh';
   return (
     <div
       style={{
@@ -118,14 +121,14 @@ export default function SolutionsHero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.45, delay: 0.3 }}
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '6px 18px' }}
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '6px 18px', marginBottom: '56px' }}
           >
             {[
-              { label: 'Engine Analysis', active: false },
-              { label: '→',              active: false },
-              { label: 'Intervention Map', active: true  },
-              { label: '→',              active: false },
-              { label: 'Protocol Export', active: false },
+              { label: isZh ? '引擎分析' : 'Engine Analysis', active: false },
+              { label: '→', active: false },
+              { label: isZh ? '干预路线图' : 'Intervention Map', active: true },
+              { label: '→', active: false },
+              { label: isZh ? '协议导出' : 'Protocol Export', active: false },
             ].map((item, i) => (
               <span key={i} style={{ fontSize: '0.6875rem', fontWeight: item.active ? 600 : 400, letterSpacing: '0.04em', color: item.active ? '#FFD700' : 'rgba(255,255,255,0.25)' }}>
                 {item.label}
@@ -133,6 +136,48 @@ export default function SolutionsHero() {
             ))}
           </motion.div>
       </div>
+
+      {/* ── Engine Triad ─────────────────────────────────────────────── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.4 }}
+        style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}
+      >
+        <p style={{ fontSize: '0.625rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginBottom: '20px', fontFamily: '"JetBrains Mono", monospace' }}>
+          {isZh ? '三大核心算力引擎 — 驱动所有临床路径输出' : 'THREE CORE COMPUTATION ENGINES — POWERING ALL CLINICAL PATHWAYS'}
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '12px' }}>
+          {ENGINE_TRIAD.map((engine) => (
+            <div key={engine.id} style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: `1px solid ${engine.color}22`, borderTop: `2px solid ${engine.color}55`, borderRadius: '10px', padding: '20px 22px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
+                <span style={{ fontSize: '1.25rem' }}>{engine.icon}</span>
+                <div>
+                  <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
+                    {isZh ? engine.nameZh : engine.name}
+                  </p>
+                  <p style={{ fontSize: '0.625rem', fontFamily: '"JetBrains Mono", monospace', color: engine.color, margin: 0, letterSpacing: '0.05em' }}>
+                    {engine.module}
+                  </p>
+                </div>
+              </div>
+              <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.65, margin: '0 0 12px' }}>
+                {isZh ? engine.descZh : engine.desc}
+              </p>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '10px' }}>
+                {engine.params.map((p) => (
+                  <span key={p} style={{ fontSize: '0.625rem', fontFamily: 'monospace', backgroundColor: `${engine.color}10`, border: `1px solid ${engine.color}25`, borderRadius: '3px', padding: '2px 6px', color: engine.color, opacity: 0.8 }}>
+                    {p}
+                  </span>
+                ))}
+              </div>
+              <p style={{ fontSize: '0.625rem', fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.2)', margin: 0 }}>
+                {engine.endpoint}
+              </p>
+            </div>
+          ))}
+        </div>
+      </motion.div>
     </div>
   );
 }
