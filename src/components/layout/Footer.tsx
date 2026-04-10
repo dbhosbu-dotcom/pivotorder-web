@@ -24,7 +24,6 @@ export default function Footer() {
       { label: isZh ? '关于我们' : 'About Us', href: '/about' },
       { label: isZh ? '科学依据' : 'Science', href: '/science' },
       { label: isZh ? '机构接入' : 'Enterprise', href: '/enterprise' },
-      { label: isZh ? '博客' : 'Blog', href: '/blog' },
     ],
   };
 
