@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useT } from '@/context/LanguageContext';
+import { useT, useLanguage } from '@/context/LanguageContext';
 
 /* Per-service technical specs (not translated — purely technical identifiers) */
 const SERVICE_SPECS = [
@@ -202,6 +202,8 @@ function BetaModal({ onClose }: { onClose: () => void }) {
 /* ─── Page ───────────────────────────────────────────────────────────── */
 export default function EnterprisePage() {
   const t = useT();
+  const { lang } = useLanguage();
+  const isZh = lang === 'zh';
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -310,7 +312,7 @@ export default function EnterprisePage() {
               transition: 'background-color 0.2s',
             }}
           >
-            Request API Documentation
+            {isZh ? '申请 API 文档' : 'Request API Documentation'}
           </button>
           <Link
             href="/science"

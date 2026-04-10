@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -14,8 +14,12 @@ const REGIONS_ZH = ['中国大陆', '香港 / 澳门 / 台湾', '北美', '欧�
 
 export default function RegisterPage() {
   const { lang } = useLanguage();
-  const { register } = useAuth();
+  const { register, user } = useAuth();
   const router = useRouter();
+
+  useEffect(() => {
+    if (user) router.replace('/dashboard');
+  }, [user, router]);
 
   const [form, setForm] = useState({
     name: '',
@@ -36,7 +40,9 @@ export default function RegisterPage() {
     if (res.ok) {
       router.push('/engine');
     } else {
-      setError(res.error ?? 'Registration failed.');
+      const raw = res.error ?? '|Registration failed.';
+      const parts = raw.split('|');
+      setError(lang === 'zh' ? (parts[0] || parts[1]) : (parts[1] || parts[0]));
       setLoading(false);
     }
   };
@@ -82,8 +88,8 @@ export default function RegisterPage() {
         {/* Tier comparison */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
           {[
-            { label: isZh ? '免费版' : 'Free', detail: isZh ? '1次完整分析 · 十大支柱报告' : '1 full analysis · 10-Pillar report', active: true },
-            { label: isZh ? '专业版 ¥99/月' : 'Pro ¥99/mo', detail: isZh ? '无限次分析 · 历史追踪 · 趋势图' : 'Unlimited analyses · history · trends', active: false },
+            { label: isZh ? '免费版' : 'Free', detail: isZh ? '3次完整分析 · 十大支柱报告' : '3 full analyses · 10-Pillar report', active: true },
+            { label: isZh ? '专业版 ¥29/月起' : 'Pro from ¥29/mo', detail: isZh ? '无限次分析 · 历史追踪 · 趋势图' : 'Unlimited analyses · history · trends', active: false },
             { label: isZh ? '企业版' : 'Enterprise', detail: isZh ? 'API 接入 · 白标部署' : 'API access · white-label deployment', active: false },
           ].map((tier, i) => (
             <div

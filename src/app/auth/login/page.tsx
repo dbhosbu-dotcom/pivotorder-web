@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
@@ -8,7 +8,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export default function LoginPage() {
   const { lang } = useLanguage();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const router = useRouter();
 
   const [email, setEmail] = useState('');
@@ -17,6 +17,10 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
 
   const isZh = lang === 'zh';
+
+  useEffect(() => {
+    if (user) router.replace('/dashboard');
+  }, [user, router]);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

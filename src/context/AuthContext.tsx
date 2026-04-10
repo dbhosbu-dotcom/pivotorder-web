@@ -165,10 +165,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const register = useCallback(async (data: RegisterData): Promise<{ ok: boolean; error?: string }> => {
     const accounts = getAccounts();
     if (accounts[data.email]) {
-      return { ok: false, error: '该邮箱已注册账户。' };
+      return { ok: false, error: '该邮箱已注册账户。|This email is already registered.' };
     }
     if (data.password.length < 8) {
-      return { ok: false, error: '密码至少需要 8 位字符。' };
+      return { ok: false, error: '密码至少需要 8 位字符。|Password must be at least 8 characters.' };
     }
 
     const newUser: AuthUser = {

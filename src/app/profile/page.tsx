@@ -79,7 +79,7 @@ function ProfilePage() {
   return (
     <div style={{ minHeight: 'calc(100vh - 68px)', backgroundColor: 'var(--color-bg-subtle)' }}>
       <div
-        className="container-site"
+        className="container-site profile-layout"
         style={{ padding: '48px 24px', display: 'grid', gridTemplateColumns: '260px 1fr', gap: '32px', alignItems: 'start' }}
       >
         {/* ── Sidebar ── */}
@@ -334,8 +334,8 @@ function ProfilePage() {
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @media (max-width: 768px) {
-          .container-site > div { grid-template-columns: 1fr !important; }
-          aside { position: static !important; }
+          .profile-layout { grid-template-columns: 1fr !important; }
+          .profile-layout aside { position: static !important; }
         }
       `}</style>
     </div>

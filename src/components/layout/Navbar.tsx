@@ -188,13 +188,6 @@ export default function Navbar() {
   const isZh = lang === 'zh';
   const close = () => { setMobileOpen(false); setExploreOpenMobile(false); };
 
-  /* Top-level desktop links (excluding Explore group) */
-  const TOP_LINKS = [
-    { label: t.nav.engine,     href: '/engine' },
-    { label: t.nav.enterprise, href: '/enterprise' },
-    { label: t.nav.pricing,    href: '/pricing' },
-  ];
-
   const EXPLORE_PATHS = ['/pillars', '/solutions', '/science', '/about'];
   const exploreItems = useExploreItems(isZh);
 

@@ -35,7 +35,7 @@ export default function DashboardPage() {
 
   return (
     <div style={{ minHeight: 'calc(100vh - 68px)', backgroundColor: 'var(--color-bg-subtle)' }}>
-      <div className="container-site" style={{ padding: '48px 24px', display: 'grid', gridTemplateColumns: '280px 1fr', gap: '32px', alignItems: 'start' }}>
+      <div className="container-site dashboard-layout" style={{ padding: '48px 24px', display: 'grid', gridTemplateColumns: '280px 1fr', gap: '32px', alignItems: 'start' }}>
 
         {/* ── Sidebar ── */}
         <aside
@@ -268,7 +268,7 @@ export default function DashboardPage() {
                   },
                   {
                     name: isZh ? '专业版' : 'Pro',
-                    price: '¥99/mo',
+                    price: isZh ? '¥29/月起' : 'from ¥29/mo',
                     features: isZh ? ['无限次分析', '历史记录追踪', '趋势分析图', '优先级干预排序'] : ['Unlimited analyses', 'History tracking', 'Trend charts', 'Priority intervention ranking'],
                     current: user.plan === 'pro',
                     cta: isZh ? '升级至专业版' : 'Upgrade to Pro',
@@ -336,8 +336,8 @@ export default function DashboardPage() {
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         @media (max-width: 768px) {
-          .container-site > div { grid-template-columns: 1fr !important; }
-          aside { position: static !important; }
+          .dashboard-layout { grid-template-columns: 1fr !important; }
+          .dashboard-layout aside { position: static !important; }
         }
       `}</style>
     </div>
@@ -433,14 +433,15 @@ function TrendChart({ analyses, isZh }: { analyses: SavedAnalysis[]; isZh: boole
   const sorted = [...analyses].sort((a, b) => a.date.localeCompare(b.date));
   const maxAge = Math.max(...sorted.map((a) => a.chronologicalAge));
   const minAge = Math.min(...sorted.map((a) => a.biologicalAge)) - 2;
-  const range = maxAge - minAge;
+  const rawRange = maxAge - minAge;
+  const range = rawRange === 0 ? 10 : rawRange;
 
   const W = 600; const H = 200; const PAD = 40;
   const chartW = W - PAD * 2;
   const chartH = H - PAD * 2;
 
   const toY = (age: number) => PAD + chartH - ((age - minAge) / range) * chartH;
-  const toX = (i: number) => PAD + (i / (sorted.length - 1)) * chartW;
+  const toX = (i: number) => sorted.length <= 1 ? PAD + chartW / 2 : PAD + (i / (sorted.length - 1)) * chartW;
 
   const bioPoints = sorted.map((a, i) => ({ x: toX(i), y: toY(a.biologicalAge), age: a.biologicalAge, date: a.date }));
   const bioPath = bioPoints.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`).join(' ');
