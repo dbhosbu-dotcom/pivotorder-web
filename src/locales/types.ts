@@ -196,12 +196,24 @@ export interface Dict {
     cta_sub:          string;
     btn_request:      string;
     btn_science:      string;
-    modal_badge:      string;
-    modal_headline:   string;
-    modal_sub:        string;
-    modal_contact_label: string;
-    modal_contact_detail: string;
-    modal_close:      string;
+    /* Self-service key modal */
+    modal_badge:          string;
+    modal_headline:       string;
+    modal_sub:            string;
+    modal_label_org:      string;
+    modal_label_name:     string;
+    modal_label_email:    string;
+    modal_label_usecase:  string;
+    modal_btn_submit:     string;
+    modal_btn_loading:    string;
+    modal_close:          string;
+    modal_success_badge:    string;
+    modal_success_headline: string;
+    modal_success_sub:      string;
+    modal_success_copy:     string;
+    modal_success_copied:   string;
+    modal_success_done:     string;
+    modal_error_generic:    string;
     services:         Array<{
       tag:   string;
       title: string;

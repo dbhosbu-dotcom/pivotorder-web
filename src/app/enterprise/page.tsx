@@ -4,6 +4,8 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useT, useLanguage } from '@/context/LanguageContext';
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://api.pivotorder.com';
+
 /* Per-service technical specs (not translated — purely technical identifiers) */
 const SERVICE_SPECS = [
   [
@@ -29,182 +31,67 @@ const SERVICE_SPECS = [
 const SERVICE_IDS = ['api', 'whitelabel', 'cohort'];
 const SERVICE_INDICES = ['01', '02', '03'];
 
-/* ─── Beta modal ─────────────────────────────────────────────────────── */
-function BetaModal({ onClose }: { onClose: () => void }) {
-  const t = useT();
-  return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="API Beta Access"
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 200,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: '24px',
-      }}
-      onClick={onClose}
-    >
-      {/* Backdrop */}
-      <div
-        style={{
-          position: 'absolute',
-          inset: 0,
-          backgroundColor: 'rgba(0,0,0,0.7)',
-          backdropFilter: 'blur(4px)',
-        }}
-      />
-
-      {/* Modal card */}
-      <div
-        role="document"
-        onClick={(e) => e.stopPropagation()}
-        style={{
-          position: 'relative',
-          zIndex: 1,
-          backgroundColor: '#111318',
-          border: '1px solid rgba(255,255,255,0.1)',
-          borderRadius: '16px',
-          padding: 'clamp(28px,5vw,44px)',
-          maxWidth: '520px',
-          width: '100%',
-          boxShadow: '0 32px 80px rgba(0,0,0,0.6)',
-        }}
-      >
-        {/* Top badge */}
-        <div
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '8px',
-            backgroundColor: 'rgba(255,215,0,0.08)',
-            border: '1px solid rgba(255,215,0,0.2)',
-            borderRadius: '20px',
-            padding: '5px 14px',
-            marginBottom: '20px',
-          }}
-        >
-          <span
-            style={{
-              width: '6px', height: '6px',
-              borderRadius: '50%',
-              backgroundColor: '#FFD700',
-              animation: 'pulse-dot 2s ease-in-out infinite',
-            }}
-          />
-          <span
-            style={{
-              fontSize: '0.875rem',
-              fontWeight: 600,
-              color: 'rgba(255,215,0,0.9)',
-              letterSpacing: '0.04em',
-            }}
-          >
-            {t.enterprise.modal_badge}
-          </span>
-        </div>
-
-        <h3
-          style={{
-            fontSize: 'clamp(1.125rem,2.5vw,1.5rem)',
-            fontWeight: 700,
-            color: '#FFFFFF',
-            letterSpacing: '-0.02em',
-            marginBottom: '12px',
-          }}
-        >
-          {t.enterprise.modal_headline}
-        </h3>
-
-        <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.5)', lineHeight: 1.72, marginBottom: '8px' }}>
-          {t.enterprise.modal_sub}
-        </p>
-        <p
-          style={{
-            fontFamily: 'var(--font-mono)',
-            fontSize: '0.8125rem',
-            color: 'rgba(255,255,255,0.28)',
-            lineHeight: 1.65,
-            marginBottom: '28px',
-          }}
-        >
-          API 访问目前处于私密测试阶段，仅向申请通过的临床机构和研究组织开放，不提供自助注册。
-        </p>
-
-        <div
-          style={{
-            backgroundColor: 'rgba(255,255,255,0.03)',
-            border: '1px solid rgba(255,255,255,0.07)',
-            borderRadius: '10px',
-            padding: '16px 18px',
-            marginBottom: '28px',
-          }}
-        >
-          <p
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
-              color: 'rgba(255,255,255,0.36)',
-              marginBottom: '8px',
-              letterSpacing: '0.06em',
-              textTransform: 'uppercase',
-            }}
-          >
-            {t.enterprise.modal_contact_label}
-          </p>
-          <p
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.875rem',
-              color: 'rgba(255,215,0,0.75)',
-            }}
-          >
-            enterprise@pivotorder.com
-          </p>
-          <p
-            style={{
-              fontFamily: 'var(--font-mono)',
-              fontSize: '0.75rem',
-              color: 'rgba(255,255,255,0.22)',
-              marginTop: '4px',
-            }}
-          >
-            {t.enterprise.modal_contact_detail}
-          </p>
-        </div>
-
-        <button
-          onClick={onClose}
-          style={{
-            width: '100%',
-            padding: '13px',
-            borderRadius: '8px',
-            border: '1px solid rgba(255,255,255,0.12)',
-            backgroundColor: 'transparent',
-            color: 'rgba(255,255,255,0.5)',
-            fontWeight: 500,
-            fontSize: '0.9375rem',
-            cursor: 'pointer',
-            fontFamily: 'inherit',
-            transition: 'border-color 0.2s, color 0.2s',
-          }}
-        >
-          {t.enterprise.modal_close}
-        </button>
-      </div>
-    </div>
-  );
-}
+/* ─── Shared input style ─────────────────────────────────────────── */
+const inputStyle: React.CSSProperties = {
+  width: '100%',
+  padding: '11px 14px',
+  borderRadius: '8px',
+  border: '1px solid rgba(255,255,255,0.1)',
+  backgroundColor: 'rgba(255,255,255,0.04)',
+  color: '#FFFFFF',
+  fontSize: '0.9375rem',
+  fontFamily: 'inherit',
+  outline: 'none',
+  boxSizing: 'border-box',
+};
 
 /* ─── Page ───────────────────────────────────────────────────────────── */
 export default function EnterprisePage() {
   const t = useT();
   const { lang } = useLanguage();
   const isZh = lang === 'zh';
-  const [modalOpen, setModalOpen] = useState(false);
+  const e = t.enterprise;
+
+  const [org,     setOrg]     = useState('');
+  const [email,   setEmail]   = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error,   setError]   = useState('');
+  const [apiKey,  setApiKey]  = useState('');
+  const [copied,  setCopied]  = useState(false);
+
+  async function handleSubmit(ev: React.FormEvent) {
+    ev.preventDefault();
+    if (!org.trim() || !email.trim()) return;
+    setLoading(true);
+    setError('');
+    try {
+      const res = await fetch(`${API_BASE}/api/v1/enterprise/apply`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          org_name: org.trim(),
+          email:    email.trim(),
+        }),
+      });
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}));
+        throw new Error(body?.detail ?? e.modal_error_generic);
+      }
+      const data = await res.json();
+      setApiKey(data.api_key);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : e.modal_error_generic);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function handleCopy() {
+    navigator.clipboard.writeText(apiKey).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    });
+  }
 
   return (
     <main style={{ backgroundColor: '#0A0C10', minHeight: 'calc(100vh - 68px)', color: '#FFFFFF' }}>
@@ -293,8 +180,8 @@ export default function EnterprisePage() {
         </p>
 
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
-          <button
-            onClick={() => setModalOpen(true)}
+          <a
+            href="#apply"
             style={{
               display: 'inline-flex',
               alignItems: 'center',
@@ -309,11 +196,12 @@ export default function EnterprisePage() {
               cursor: 'pointer',
               fontFamily: 'inherit',
               letterSpacing: '0.01em',
+              textDecoration: 'none',
               transition: 'background-color 0.2s',
             }}
           >
-            {isZh ? '申请 API 文档' : 'Request API Documentation'}
-          </button>
+            {t.enterprise.btn_request}
+          </a>
           <Link
             href="/science"
             style={{
@@ -468,58 +356,122 @@ export default function EnterprisePage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          CTA
+          SELF-SERVICE API KEY FORM (inline)
       ══════════════════════════════════════════ */}
       <section
+        id="apply"
         style={{
           padding: 'clamp(64px,8vw,96px) 24px',
-          textAlign: 'center',
           maxWidth: '640px',
           margin: '0 auto',
         }}
       >
-        <p
-          style={{
-            fontSize: '0.9375rem',
-            fontWeight: 600,
-            letterSpacing: '0.04em',
-            color: 'rgba(255,255,255,0.38)',
-            marginBottom: '20px',
-          }}
-        >
-          {t.enterprise.cta_label}
-        </p>
-        <h2
-          style={{
-            fontSize: 'clamp(1.375rem,2.8vw,1.875rem)',
-            fontWeight: 700,
-            color: '#FFFFFF',
-            letterSpacing: '-0.02em',
-            marginBottom: '16px',
-          }}
-        >
-          {t.enterprise.cta_headline}
-        </h2>
-        <p
-          style={{
-            fontSize: '0.9375rem',
-            color: 'rgba(255,255,255,0.36)',
-            lineHeight: 1.7,
-            marginBottom: '32px',
-          }}
-        >
-          {t.enterprise.cta_sub}
-        </p>
-        <button
-          onClick={() => setModalOpen(true)}
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '14px 30px', borderRadius: '8px', border: 'none', backgroundColor: '#FFD700', color: '#0D0D0D', fontWeight: 700, fontSize: '0.9375rem', cursor: 'pointer', fontFamily: 'inherit', transition: 'background-color 0.2s' }}
-        >
-          {t.enterprise.btn_request}
-        </button>
-      </section>
+        {/* Badge */}
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: 'rgba(255,215,0,0.08)', border: '1px solid rgba(255,215,0,0.2)', borderRadius: '20px', padding: '5px 14px', marginBottom: '24px' }}>
+          <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#FFD700', animation: 'pulse-dot 2s ease-in-out infinite' }} />
+          <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'rgba(255,215,0,0.9)', letterSpacing: '0.04em' }}>
+            {e.modal_badge}
+          </span>
+        </div>
 
-      {/* ── Beta modal ── */}
-      {modalOpen && <BetaModal onClose={() => setModalOpen(false)} />}
+        {apiKey ? (
+          /* ── Success state ── */
+          <>
+            <h2 style={{ fontSize: 'clamp(1.375rem,2.8vw,1.875rem)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.02em', marginBottom: '8px' }}>
+              {e.modal_success_headline}
+            </h2>
+            <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.36)', lineHeight: 1.7, marginBottom: '24px' }}>
+              {e.modal_success_sub}
+            </p>
+
+            {/* Key display */}
+            <div style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,215,0,0.2)', borderRadius: '10px', padding: '14px 16px', marginBottom: '16px' }}>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                X-PivotOrder-API-Key
+              </p>
+              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.875rem', color: '#FFD700', wordBreak: 'break-all', lineHeight: 1.5 }}>
+                {apiKey}
+              </p>
+            </div>
+
+            <button
+              onClick={handleCopy}
+              style={{ width: '100%', padding: '13px', borderRadius: '8px', border: 'none', backgroundColor: copied ? 'rgba(34,197,94,0.15)' : '#FFD700', color: copied ? '#22C55E' : '#0D0D0D', fontWeight: 700, fontSize: '0.9375rem', cursor: 'pointer', fontFamily: 'inherit', transition: 'background-color 0.2s, color 0.2s' }}
+            >
+              {copied ? e.modal_success_copied : e.modal_success_copy}
+            </button>
+          </>
+        ) : (
+          /* ── Form state ── */
+          <>
+            <h2
+              style={{
+                fontSize: 'clamp(1.375rem,2.8vw,1.875rem)',
+                fontWeight: 700,
+                color: '#FFFFFF',
+                letterSpacing: '-0.02em',
+                marginBottom: '8px',
+              }}
+            >
+              {e.cta_headline}
+            </h2>
+            <p
+              style={{
+                fontSize: '0.9375rem',
+                color: 'rgba(255,255,255,0.36)',
+                lineHeight: 1.7,
+                marginBottom: '32px',
+              }}
+            >
+              {e.modal_sub}
+            </p>
+
+            <form onSubmit={handleSubmit}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                    {e.modal_label_org} *
+                  </label>
+                  <input
+                    required
+                    value={org}
+                    onChange={ev => setOrg(ev.target.value)}
+                    placeholder="e.g. ABTIDE · Vancouver General Hospital"
+                    style={inputStyle}
+                  />
+                </div>
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
+                    {e.modal_label_email} *
+                  </label>
+                  <input
+                    required
+                    type="email"
+                    value={email}
+                    onChange={ev => setEmail(ev.target.value)}
+                    placeholder="contact@institution.com"
+                    style={inputStyle}
+                  />
+                </div>
+              </div>
+
+              {error && (
+                <p style={{ fontSize: '0.875rem', color: '#F87171', marginBottom: '16px', lineHeight: 1.5 }}>
+                  ⚠ {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                style={{ width: '100%', padding: '14px', borderRadius: '8px', border: 'none', backgroundColor: loading ? 'rgba(255,215,0,0.4)' : '#FFD700', color: '#0D0D0D', fontWeight: 700, fontSize: '0.9375rem', cursor: loading ? 'wait' : 'pointer', fontFamily: 'inherit', transition: 'background-color 0.2s' }}
+              >
+                {loading ? e.modal_btn_loading : e.modal_btn_submit}
+              </button>
+            </form>
+          </>
+        )}
+      </section>
 
       <style>{`
         /* Service card — two-column layout desktop, single-column mobile */
