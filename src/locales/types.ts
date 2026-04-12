@@ -196,6 +196,7 @@ export interface Dict {
     cta_sub:          string;
     btn_request:      string;
     btn_science:      string;
+    apply_email_cta:  string;
     /* Self-service key modal */
     modal_badge:          string;
     modal_headline:       string;

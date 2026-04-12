@@ -1,10 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
-import { useT, useLanguage } from '@/context/LanguageContext';
-
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL ?? 'https://api.pivotorder.com';
+import { useT } from '@/context/LanguageContext';
 
 /* Per-service technical specs (not translated — purely technical identifiers) */
 const SERVICE_SPECS = [
@@ -31,67 +28,10 @@ const SERVICE_SPECS = [
 const SERVICE_IDS = ['api', 'whitelabel', 'cohort'];
 const SERVICE_INDICES = ['01', '02', '03'];
 
-/* ─── Shared input style ─────────────────────────────────────────── */
-const inputStyle: React.CSSProperties = {
-  width: '100%',
-  padding: '11px 14px',
-  borderRadius: '8px',
-  border: '1px solid rgba(255,255,255,0.1)',
-  backgroundColor: 'rgba(255,255,255,0.04)',
-  color: '#FFFFFF',
-  fontSize: '0.9375rem',
-  fontFamily: 'inherit',
-  outline: 'none',
-  boxSizing: 'border-box',
-};
-
 /* ─── Page ───────────────────────────────────────────────────────────── */
 export default function EnterprisePage() {
   const t = useT();
-  const { lang } = useLanguage();
-  const isZh = lang === 'zh';
   const e = t.enterprise;
-
-  const [org,     setOrg]     = useState('');
-  const [email,   setEmail]   = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error,   setError]   = useState('');
-  const [apiKey,  setApiKey]  = useState('');
-  const [copied,  setCopied]  = useState(false);
-
-  async function handleSubmit(ev: React.FormEvent) {
-    ev.preventDefault();
-    if (!org.trim() || !email.trim()) return;
-    setLoading(true);
-    setError('');
-    try {
-      const res = await fetch(`${API_BASE}/api/v1/enterprise/apply`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          org_name: org.trim(),
-          email:    email.trim(),
-        }),
-      });
-      if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
-        throw new Error(body?.detail ?? e.modal_error_generic);
-      }
-      const data = await res.json();
-      setApiKey(data.api_key);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : e.modal_error_generic);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  function handleCopy() {
-    navigator.clipboard.writeText(apiKey).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
-    });
-  }
 
   return (
     <main style={{ backgroundColor: '#0A0C10', minHeight: 'calc(100vh - 68px)', color: '#FFFFFF' }}>
@@ -356,7 +296,7 @@ export default function EnterprisePage() {
       </section>
 
       {/* ══════════════════════════════════════════
-          SELF-SERVICE API KEY FORM (inline)
+          API access — invite only (self-service key generation off)
       ══════════════════════════════════════════ */}
       <section
         id="apply"
@@ -366,111 +306,56 @@ export default function EnterprisePage() {
           margin: '0 auto',
         }}
       >
-        {/* Badge */}
         <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: 'rgba(255,215,0,0.08)', border: '1px solid rgba(255,215,0,0.2)', borderRadius: '20px', padding: '5px 14px', marginBottom: '24px' }}>
           <span style={{ width: '6px', height: '6px', borderRadius: '50%', backgroundColor: '#FFD700', animation: 'pulse-dot 2s ease-in-out infinite' }} />
           <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'rgba(255,215,0,0.9)', letterSpacing: '0.04em' }}>
-            {e.modal_badge}
+            {e.cta_label}
           </span>
         </div>
 
-        {apiKey ? (
-          /* ── Success state ── */
-          <>
-            <h2 style={{ fontSize: 'clamp(1.375rem,2.8vw,1.875rem)', fontWeight: 700, color: '#FFFFFF', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-              {e.modal_success_headline}
-            </h2>
-            <p style={{ fontSize: '0.9375rem', color: 'rgba(255,255,255,0.36)', lineHeight: 1.7, marginBottom: '24px' }}>
-              {e.modal_success_sub}
-            </p>
+        <h2
+          style={{
+            fontSize: 'clamp(1.375rem,2.8vw,1.875rem)',
+            fontWeight: 700,
+            color: '#FFFFFF',
+            letterSpacing: '-0.02em',
+            marginBottom: '8px',
+          }}
+        >
+          {e.cta_headline}
+        </h2>
+        <p
+          style={{
+            fontSize: '0.9375rem',
+            color: 'rgba(255,255,255,0.36)',
+            lineHeight: 1.7,
+            marginBottom: '28px',
+          }}
+        >
+          {e.cta_sub}
+        </p>
 
-            {/* Key display */}
-            <div style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,215,0,0.2)', borderRadius: '10px', padding: '14px 16px', marginBottom: '16px' }}>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8125rem', color: 'rgba(255,255,255,0.28)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                X-PivotOrder-API-Key
-              </p>
-              <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.875rem', color: '#FFD700', wordBreak: 'break-all', lineHeight: 1.5 }}>
-                {apiKey}
-              </p>
-            </div>
-
-            <button
-              onClick={handleCopy}
-              style={{ width: '100%', padding: '13px', borderRadius: '8px', border: 'none', backgroundColor: copied ? 'rgba(34,197,94,0.15)' : '#FFD700', color: copied ? '#22C55E' : '#0D0D0D', fontWeight: 700, fontSize: '0.9375rem', cursor: 'pointer', fontFamily: 'inherit', transition: 'background-color 0.2s, color 0.2s' }}
-            >
-              {copied ? e.modal_success_copied : e.modal_success_copy}
-            </button>
-          </>
-        ) : (
-          /* ── Form state ── */
-          <>
-            <h2
-              style={{
-                fontSize: 'clamp(1.375rem,2.8vw,1.875rem)',
-                fontWeight: 700,
-                color: '#FFFFFF',
-                letterSpacing: '-0.02em',
-                marginBottom: '8px',
-              }}
-            >
-              {e.cta_headline}
-            </h2>
-            <p
-              style={{
-                fontSize: '0.9375rem',
-                color: 'rgba(255,255,255,0.36)',
-                lineHeight: 1.7,
-                marginBottom: '32px',
-              }}
-            >
-              {e.modal_sub}
-            </p>
-
-            <form onSubmit={handleSubmit}>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '14px', marginBottom: '20px' }}>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                    {e.modal_label_org} *
-                  </label>
-                  <input
-                    required
-                    value={org}
-                    onChange={ev => setOrg(ev.target.value)}
-                    placeholder="e.g. ABTIDE · Vancouver General Hospital"
-                    style={inputStyle}
-                  />
-                </div>
-                <div>
-                  <label style={{ display: 'block', fontSize: '0.75rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)', letterSpacing: '0.06em', textTransform: 'uppercase', marginBottom: '6px' }}>
-                    {e.modal_label_email} *
-                  </label>
-                  <input
-                    required
-                    type="email"
-                    value={email}
-                    onChange={ev => setEmail(ev.target.value)}
-                    placeholder="contact@institution.com"
-                    style={inputStyle}
-                  />
-                </div>
-              </div>
-
-              {error && (
-                <p style={{ fontSize: '0.875rem', color: '#F87171', marginBottom: '16px', lineHeight: 1.5 }}>
-                  ⚠ {error}
-                </p>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                style={{ width: '100%', padding: '14px', borderRadius: '8px', border: 'none', backgroundColor: loading ? 'rgba(255,215,0,0.4)' : '#FFD700', color: '#0D0D0D', fontWeight: 700, fontSize: '0.9375rem', cursor: loading ? 'wait' : 'pointer', fontFamily: 'inherit', transition: 'background-color 0.2s' }}
-              >
-                {loading ? e.modal_btn_loading : e.modal_btn_submit}
-              </button>
-            </form>
-          </>
-        )}
+        <a
+          href="mailto:contact@pivotorder.com?subject=Enterprise%20API%20access"
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '100%',
+            padding: '14px',
+            borderRadius: '8px',
+            border: 'none',
+            backgroundColor: '#FFD700',
+            color: '#0D0D0D',
+            fontWeight: 700,
+            fontSize: '0.9375rem',
+            fontFamily: 'inherit',
+            textDecoration: 'none',
+            transition: 'background-color 0.2s',
+          }}
+        >
+          {e.apply_email_cta}
+        </a>
       </section>
 
       <style>{`
