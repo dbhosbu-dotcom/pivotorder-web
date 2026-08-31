@@ -22,6 +22,7 @@ export default function Footer() {
     title: isZh ? '公司' : 'Company',
     links: [
       { label: isZh ? '关于我们' : 'About Us', href: '/about' },
+      { label: isZh ? '联系我们' : 'Contact', href: '/contact' },
       { label: isZh ? '科学依据' : 'Science', href: '/science' },
       { label: isZh ? '机构接入' : 'Enterprise', href: '/enterprise' },
     ],
@@ -149,14 +150,34 @@ export default function Footer() {
               : 'Research Origin: Vancouver, Canada · 49.2827° N, 123.1207° W'}
           </p>
 
-          <p style={{
-            fontSize: '0.75rem',
-            color: 'var(--color-text-muted)',
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            gap: '6px',
           }}>
-            {isZh
-              ? `© 2025 PivotOrder. 保留所有权利。`
-              : `© 2025 PivotOrder. All rights reserved.`}
-          </p>
+            <p style={{
+              fontSize: '0.75rem',
+              color: 'var(--color-text-muted)',
+              margin: 0,
+            }}>
+              © 2026 枢序（北京）科技有限公司 All rights reserved.
+            </p>
+            <p style={{
+              fontSize: '0.75rem',
+              color: 'var(--color-text-muted)',
+              margin: 0,
+            }}>
+              <a
+                href="https://beian.miit.gov.cn/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: 'inherit', textDecoration: 'none' }}
+              >
+                京ICP备2026032531号-1
+              </a>
+            </p>
+          </div>
         </div>
 
       </div>
