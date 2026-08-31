@@ -177,6 +177,12 @@ export default function ContactPage() {
                 <p>
                   注册地址以国家企业信用信息公示系统登记的住所为准。客服联络：support@pivotorder.cn（本页不作为法律文书送达地址）。
                 </p>
+                <p>
+                  商务合作：
+                  <a href="mailto:bd@pivotorder.cn" style={{ color: 'var(--color-text-heading)', fontWeight: 600 }}>
+                    bd@pivotorder.cn
+                  </a>
+                </p>
               </div>
             </div>
           </div>
