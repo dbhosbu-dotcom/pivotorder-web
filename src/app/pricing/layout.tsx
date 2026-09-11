@@ -1,9 +1,9 @@
 import { buildPageMetadata } from '@/lib/seo';
 
 export const metadata = buildPageMetadata({
-  title: '营养师工作室定价：¥99 / ¥299 / ¥899｜枢序健康',
+  title: '一条咨询费，对照工作台月费｜枢序健康',
   description:
-    '枢序健康工作室档位：独立档 ¥99/月、专业档 ¥299/月、机构档 ¥899/月。H5 留资、报价与白标草稿同一工作台，确认后发送。不承诺获客单数。',
+    '独立 ¥99 / 工作室 ¥299 / 机构 ¥899。咨询费 × 月成交单数是公式演示，不是保证接到 5 单。H5 只是留资页。',
   path: '/pricing',
 });
 

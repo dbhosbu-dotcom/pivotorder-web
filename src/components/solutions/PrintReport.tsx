@@ -52,7 +52,7 @@ export default function PrintReport() {
             {isZh ? '第三方健康管理参考' : 'THIRD-PARTY HEALTH-MANAGEMENT REFERENCE'}
           </div>
           <div className="pr-tag">
-            {isZh ? '循证等级 A · 已脱敏' : 'EVIDENCE LEVEL A · PHI SCRUBBED'}
+            {isZh ? '已脱敏' : 'PHI SCRUBBED'}
           </div>
         </div>
       </div>
@@ -131,13 +131,9 @@ export default function PrintReport() {
         {PATHWAYS.map((pw) => (
           <div key={pw.id} className="pr-pathway">
 
-            {/* Index + Evidence badge */}
             <div className="pr-pathway-header">
               <span className="pr-pathway-index">
                 {isZh ? `干预路径 ${pw.index}` : `PATHWAY ${pw.index}`}
-              </span>
-              <span className="pr-pathway-evidence">
-                {isZh ? `循证等级 ${pw.evidenceLevel}` : `Evidence ${pw.evidenceLevel}`}
               </span>
             </div>
 

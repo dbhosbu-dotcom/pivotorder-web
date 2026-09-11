@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import ComplianceNotice from '@/components/compliance/ComplianceNotice';
+import MoneyMathStrip from '@/components/home/MoneyMathStrip';
 import { workbenchRegisterUrl } from '@/lib/site';
 
 const STEPS = ['发 H5 获客', '按咨询报价成交', '白标报告跟进（确认后发送）'] as const;
@@ -76,7 +77,7 @@ export default function WorkbenchHero() {
             gap: '10px',
             listStyle: 'none',
             padding: 0,
-            margin: '0 0 36px',
+            margin: '0 0 20px',
           }}
         >
           {STEPS.map((step, index) => (
@@ -102,6 +103,8 @@ export default function WorkbenchHero() {
             </li>
           ))}
         </ol>
+
+        <MoneyMathStrip />
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', alignItems: 'center' }}>
           <a href={workbenchRegisterUrl} className="btn-primary">

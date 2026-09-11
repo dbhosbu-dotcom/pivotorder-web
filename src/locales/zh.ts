@@ -113,13 +113,13 @@ const zh: Dict = {
   },
 
   cta: {
-    section_label: '开始分析',
-    headline1:     '你的生物学不是平均值，',
-    headline2:     '它是一个坐标。',
-    sub:           '运行完整多组学分析，或加载模拟数据，在 60 秒内体验引擎完整输出。无需注册账户。',
+    section_label: '工作室开张',
+    headline1:     '先发出第一条 H5，再谈第一条付费咨询',
+    headline2:     '',
+    sub:           '链接先发到自己微信。有人留资再报价，成交后再出报告。',
     btn_engine:    '免费搭建工作室',
-    btn_demo:      '先体验模拟演示',
-    footnote:      '所有数据本地处理，零个人健康信息传输。',
+    btn_demo:      '看营养师指南',
+    footnote:      '报告仅供健康管理参考。你确认后才发给客户。',
   },
 
   engine: {
@@ -208,8 +208,8 @@ const zh: Dict = {
   enterprise: {
     badge:            'B2B 机构接入',
     headline:         '企业级 API &',
-    headline_accent:  '临床集成',
-    sub:              '为你的工作室或研究机构接入 0.1% 生物年龄引擎。纯算力与接口，无商业产品导流，无利益冲突。',
+    headline_accent:  '白标交付',
+    sub:              '为工作室或机构统一白标交付',
     tiers_label:      '接入层级',
     integrators_label: '适用机构类型',
     cta_label:        '私密测试',
@@ -244,7 +244,7 @@ const zh: Dict = {
       {
         tag:   '报告层',
         title: '白标报告生成',
-        body:  '生成 PHI 脱敏的机构品牌临床策略报告（PDF 或结构化 JSON）。完全中立，可配置机构抬头、Logo 与免责声明字段。',
+        body:  '生成 PHI 脱敏的机构品牌健康管理参考报告（PDF 或结构化 JSON）。完全中立，可配置机构抬头、Logo 与免责声明字段。',
       },
       {
         tag:   '研究层',
@@ -256,7 +256,7 @@ const zh: Dict = {
       '医院信息系统（HIS）',
       '电子病历系统（EMR / EHR）',
       '预防医学健康平台',
-      '临床研究机构（CRO）',
+      '研究协作机构（CRO）',
       '抗衰老与健康管理工作室',
       '医疗器械 OEM',
     ],

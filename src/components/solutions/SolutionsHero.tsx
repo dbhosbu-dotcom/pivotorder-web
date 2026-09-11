@@ -2,7 +2,6 @@
 
 import { motion } from 'framer-motion';
 import { useT, useLanguage } from '@/context/LanguageContext';
-import { ENGINE_TRIAD } from '@/lib/pathwayData';
 import SolutionsFunnelCards from '@/components/solutions/SolutionsFunnelCards';
 
 export default function SolutionsHero() {
@@ -80,7 +79,7 @@ export default function SolutionsHero() {
               color: 'rgba(255,255,255,0.4)',
             }}
           >
-            {t.solutions.hero_badge} &nbsp;·&nbsp; Evidence Level A
+            {t.solutions.hero_badge}
           </span>
         </motion.div>
 
@@ -98,7 +97,7 @@ export default function SolutionsHero() {
             marginBottom: '22px',
           }}
         >
-          {t.solutions.hero_headline}
+          获客、收费、交付，持证营养师的开张三步
         </motion.h1>
 
         {/* Subtitle EN */}
@@ -139,48 +138,6 @@ export default function SolutionsHero() {
       </div>
 
       <SolutionsFunnelCards />
-
-      {/* ── Engine Triad ─────────────────────────────────────────────── */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.55, delay: 0.4 }}
-        style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}
-      >
-        <p style={{ fontSize: '0.625rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginBottom: '20px', fontFamily: '"JetBrains Mono", monospace' }}>
-          {isZh ? '三大核心算力引擎 — 驱动健康管理参考草稿' : 'THREE CORE COMPUTATION ENGINES — DRAFTING HEALTH-MANAGEMENT REFERENCES'}
-        </p>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '12px' }}>
-          {ENGINE_TRIAD.map((engine) => (
-            <div key={engine.id} style={{ backgroundColor: 'rgba(255,255,255,0.03)', border: `1px solid ${engine.color}22`, borderTop: `2px solid ${engine.color}55`, borderRadius: '10px', padding: '20px 22px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '10px' }}>
-                <span style={{ fontSize: '1.25rem' }}>{engine.icon}</span>
-                <div>
-                  <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#FFFFFF', margin: 0 }}>
-                    {isZh ? engine.nameZh : engine.name}
-                  </p>
-                  <p style={{ fontSize: '0.625rem', fontFamily: '"JetBrains Mono", monospace', color: engine.color, margin: 0, letterSpacing: '0.05em' }}>
-                    {engine.module}
-                  </p>
-                </div>
-              </div>
-              <p style={{ fontSize: '0.8125rem', color: 'rgba(255,255,255,0.4)', lineHeight: 1.65, margin: '0 0 12px' }}>
-                {isZh ? engine.descZh : engine.desc}
-              </p>
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '10px' }}>
-                {engine.params.map((p) => (
-                  <span key={p} style={{ fontSize: '0.625rem', fontFamily: 'monospace', backgroundColor: `${engine.color}10`, border: `1px solid ${engine.color}25`, borderRadius: '3px', padding: '2px 6px', color: engine.color, opacity: 0.8 }}>
-                    {p}
-                  </span>
-                ))}
-              </div>
-              <p style={{ fontSize: '0.625rem', fontFamily: '"JetBrains Mono", monospace', color: 'rgba(255,255,255,0.2)', margin: 0 }}>
-                {engine.endpoint}
-              </p>
-            </div>
-          ))}
-        </div>
-      </motion.div>
     </div>
   );
 }

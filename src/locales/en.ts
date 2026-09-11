@@ -113,13 +113,13 @@ const en: Dict = {
   },
 
   cta: {
-    section_label: 'Begin Your Analysis',
-    headline1:     'Your Biology Is Not an Average.',
-    headline2:     "It's a Coordinate.",
-    sub:           'Run a full multi-omic analysis — or load mock data and experience the complete engine output in 60 seconds. No account required.',
+    section_label: 'Open the studio',
+    headline1:     'Send the first H5 before the first paid consult',
+    headline2:     '',
+    sub:           'Share the link in your own WeChat first. Quote after a lead comes in. Send the report after a paid consult.',
     btn_engine:    'Open a studio free',
-    btn_demo:      'Try Mock Demo First',
-    footnote:      'All data processed locally. Zero PHI transmitted.',
+    btn_demo:      'Read the nutritionist guides',
+    footnote:      'Health-management reference only. You confirm before sending.',
   },
 
   engine: {
@@ -206,10 +206,10 @@ const en: Dict = {
   },
 
   enterprise: {
-    badge:            'B2B Clinical Integration',
+    badge:            'B2B studio integration',
     headline:         'Enterprise API &',
-    headline_accent:  'Clinical Integration',
-    sub:              'Empower your studio or research facility with the 0.1% biological age engine. Neutral computing power and structured interfaces — no product routing, no commercial conflict.',
+    headline_accent:  'White-label delivery',
+    sub:              'Unified white-label delivery for studios and organizations',
     tiers_label:      'Integration Tiers',
     integrators_label: 'Designed for',
     cta_label:        'Private Beta',
@@ -244,7 +244,7 @@ const en: Dict = {
       {
         tag:   'Report Layer',
         title: 'White-Label Report Generation',
-        body:  'Generate PHI-scrubbed, institution-branded clinical strategy reports in PDF or structured JSON. Fully neutral — no PivotOrder branding surfaces to end patients unless requested. Custom header, logo, and disclaimer fields supported.',
+        body:  'Generate PHI-scrubbed, institution-branded health-management reference reports in PDF or structured JSON. Fully neutral — no PivotOrder branding surfaces to end patients unless requested. Custom header, logo, and disclaimer fields supported.',
       },
       {
         tag:   'Research Layer',
@@ -256,7 +256,7 @@ const en: Dict = {
       'Hospital Information Systems (HIS)',
       'Electronic Medical Records (EMR / EHR)',
       'Preventive Health Platforms',
-      'Clinical Research Organisations (CRO)',
+      'Research organisations (CRO)',
       'Longevity & wellness studios',
       'Medical Device OEM',
     ],

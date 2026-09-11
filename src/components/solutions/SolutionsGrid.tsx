@@ -49,7 +49,7 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
         }}
       />
 
-      {/* Index + Evidence badge */}
+      {/* Pathway index */}
       <div
         style={{
           display: 'flex',
@@ -68,22 +68,6 @@ function PathwayCard({ pathway, index }: { pathway: Pathway; index: number }) {
           }}
         >
           PATHWAY {pathway.index}
-        </span>
-        <span
-          style={{
-            fontFamily: '"JetBrains Mono", monospace',
-            fontSize: '0.625rem',
-            fontWeight: 700,
-            letterSpacing: '0.1em',
-            textTransform: 'uppercase',
-            color: pathway.tagColor,
-            backgroundColor: pathway.tagColor + '14',
-            border: `1px solid ${pathway.tagColor}30`,
-            borderRadius: '4px',
-            padding: '2px 8px',
-          }}
-        >
-          Evidence {pathway.evidenceLevel}
         </span>
       </div>
 

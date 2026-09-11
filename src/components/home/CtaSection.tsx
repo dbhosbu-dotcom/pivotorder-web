@@ -28,20 +28,6 @@ export default function CtaSection() {
       }}
     >
       <div className="container-site" style={{ position: 'relative', zIndex: 1 }}>
-        <p
-          className="text-caption"
-          style={{
-            textTransform: 'uppercase',
-            letterSpacing: '0.14em',
-            marginBottom: '24px',
-            color: 'var(--color-text-muted)',
-            opacity: visible ? 1 : 0,
-            transition: 'opacity 0.6s ease-out',
-          }}
-        >
-          获客 · 开张
-        </p>
-
         <h2
           style={{
             fontSize: 'clamp(2rem, 4vw, 3rem)',
@@ -50,15 +36,13 @@ export default function CtaSection() {
             lineHeight: 1.2,
             color: '#FFFFFF',
             marginBottom: '12px',
-            maxWidth: '680px',
+            maxWidth: '720px',
             opacity: visible ? 1 : 0,
             transform: visible ? 'translateY(0)' : 'translateY(20px)',
             transition: 'opacity 0.6s ease-out 0.1s, transform 0.6s ease-out 0.1s',
           }}
         >
-          先搭工作室，
-          <br />
-          <span style={{ color: 'var(--color-accent)' }}>再谈客户从哪来。</span>
+          先发出第一条 H5，再谈第一条付费咨询
         </h2>
 
         <p
@@ -72,7 +56,7 @@ export default function CtaSection() {
             transition: 'opacity 0.6s ease-out 0.2s',
           }}
         >
-          H5 留资、报价路径、白标草稿放进同一张工作台。你确认后才发给客户。不承诺获客单数。
+          链接先发到自己微信。有人留资再报价，成交后再出报告。
         </p>
 
         <div
@@ -101,25 +85,13 @@ export default function CtaSection() {
               whiteSpace: 'nowrap',
             }}
           >
-            免费搭建工作室 <span style={{ fontSize: '1rem' }}>→</span>
+            免费搭建工作室
           </a>
 
           <Link href="/guides" className="btn-secondary-dark">
-            营养师指南
+            看营养师指南
           </Link>
         </div>
-
-        <p
-          style={{
-            marginTop: '40px',
-            fontSize: '0.8125rem',
-            color: 'rgba(255,255,255,0.28)',
-            opacity: visible ? 1 : 0,
-            transition: 'opacity 0.6s ease-out 0.5s',
-          }}
-        >
-          报告仅供健康管理参考。跟进须人工确认；不自动私信、不保证成交。
-        </p>
       </div>
     </section>
   );

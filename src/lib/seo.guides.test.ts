@@ -61,32 +61,61 @@ test('GTM acceptance blockers stay patched', () => {
   const cta = readSrc('components/home/CtaSection.tsx');
   const pricing = readSrc('app/pricing/page.tsx');
   const solutionsHero = readSrc('components/solutions/SolutionsHero.tsx');
+  const funnel = readSrc('components/solutions/SolutionsFunnelCards.tsx');
   const printReport = readSrc('components/solutions/PrintReport.tsx');
+  const solutionsGrid = readSrc('components/solutions/SolutionsGrid.tsx');
+  const homepage = readSrc('app/page.tsx');
+  const hero = readSrc('components/home/WorkbenchHero.tsx');
 
+  assert.match(math, /一条咨询费，对照工作台月费/);
   assert.match(math, /咨询费 × 月成交单数/);
-  assert.match(math, /200元/);
-  assert.match(math, /5单/);
-  assert.match(math, /1000元/);
-  assert.match(math, /对照独立档 ¥99\/月/);
-  assert.match(math, /公式演示，不是保证接到 5 单/);
-  assert.match(math, /H5 只是留资页/);
+  assert.match(math, /演示 200 元 × 5 单 = 1000 元，对照独立档 99 元\/月/);
+  assert.match(math, /这是公式，不是保证接到 5 单/);
+  assert.match(math, /H5 只是留资页，客户不会自动进来/);
 
   assert.equal(delivery.includes('38.2'), false);
   assert.equal(/\b47\b/.test(delivery), false);
-  assert.match(delivery, /未确认 · 不发送/);
-  assert.match(delivery, /健康管理参考草稿/);
+  assert.match(delivery, /交得出去/);
+  assert.match(delivery, /上传检验单/);
+  assert.match(delivery, /AI 整理/);
+  assert.match(delivery, /白标草稿/);
+  assert.match(delivery, /确认后发送/);
+  assert.match(delivery, /报告仅供健康管理参考，发送前须你确认/);
 
+  assert.match(cta, /先发出第一条 H5，再谈第一条付费咨询/);
+  assert.match(cta, /链接先发到自己微信。有人留资再报价，成交后再出报告。/);
   assert.match(cta, /免费搭建工作室/);
+  assert.match(cta, /看营养师指南/);
+  assert.match(cta, /href="\/guides"/);
   assert.equal(cta.includes('上传体检报告'), false);
+  assert.equal(cta.includes('开始分析'), false);
+  assert.equal(cta.includes('你的生物学不是平均值'), false);
   assert.match(cta, /workbenchRegisterUrl/);
 
+  assert.match(pricing, /一条咨询费，对照工作台月费/);
+  assert.match(pricing, /独立/);
+  assert.match(pricing, /工作室/);
+  assert.match(pricing, /机构/);
   assert.match(pricing, /¥99/);
   assert.match(pricing, /¥299/);
   assert.match(pricing, /¥899/);
   assert.match(pricing, /免费搭建工作室/);
-  assert.match(pricing, /个人体验（非开张方案）/);
+  assert.match(pricing, /也可先体验解读质量，不是工作室主生意。/);
+  assert.equal(pricing.includes('专业版'), false);
+  assert.equal(/¥29(?!\d)/.test(pricing), false);
 
+  assert.match(funnel, /给考证后还没客源的人/);
+  assert.match(funnel, /第一条付费咨询怎么成交/);
   assert.equal(solutionsHero.includes('临床路径'), false);
+  assert.equal(solutionsHero.includes('三大核心算力引擎'), false);
+  assert.equal(solutionsHero.includes('ENGINE_TRIAD'), false);
   assert.equal(printReport.includes('临床路径'), false);
   assert.equal(printReport.includes('诊所'), false);
+  assert.equal(printReport.includes('Evidence Level A'), false);
+  assert.equal(printReport.includes('EVIDENCE LEVEL A'), false);
+  assert.equal(solutionsGrid.includes('Evidence '), false);
+
+  assert.equal(homepage.includes('前 3 次体检报告解读，完全免费'), false);
+  assert.equal(hero.includes('前 3 次体检报告解读，完全免费'), false);
+  assert.equal(cta.includes('前 3 次体检报告解读，完全免费'), false);
 });

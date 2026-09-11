@@ -1004,7 +1004,7 @@ export default function EngineForm() {
               onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#F5CB00')}
               onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.backgroundColor = '#FFD700')}
             >
-              {isZh ? '查看临床路径 →' : 'View Solutions →'}
+              {isZh ? '查看解决方案 →' : 'View Solutions →'}
             </Link>
           </div>
 

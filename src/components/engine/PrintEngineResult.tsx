@@ -91,8 +91,8 @@ export default function PrintEngineResult({
           </div>
           <div className="pr-tag">
             {isZh
-              ? isMock ? '模拟数据 · 仅供参考' : '引擎 v2.4.1 · 循证等级 A'
-              : isMock ? 'DEMO DATA · FOR REFERENCE ONLY' : 'ENGINE v2.4.1 · EVIDENCE LEVEL A'}
+              ? isMock ? '模拟数据 · 仅供参考' : '引擎 v2.4.1 · 仅供健康管理参考'
+              : isMock ? 'DEMO DATA · FOR REFERENCE ONLY' : 'ENGINE v2.4.1 · HEALTH-MANAGEMENT REFERENCE'}
           </div>
         </div>
       </div>
