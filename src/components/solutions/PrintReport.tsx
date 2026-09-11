@@ -49,7 +49,7 @@ export default function PrintReport() {
         </div>
         <div className="pr-header-right">
           <div className="pr-tag">
-            {isZh ? '第三方临床评估报告' : 'THIRD-PARTY CLINICAL ASSESSMENT'}
+            {isZh ? '第三方健康管理参考' : 'THIRD-PARTY HEALTH-MANAGEMENT REFERENCE'}
           </div>
           <div className="pr-tag">
             {isZh ? '循证等级 A · 已脱敏' : 'EVIDENCE LEVEL A · PHI SCRUBBED'}
@@ -62,10 +62,10 @@ export default function PrintReport() {
       {/* ── TITLE BLOCK ── */}
       <div className="pr-title-block">
         <h1 className="pr-h1">
-          {isZh ? '临床干预路径报告' : t.solutions.hero_headline}
+          {isZh ? '健康管理参考路径报告' : t.solutions.hero_headline}
         </h1>
         <p className="pr-h1-zh">
-          {isZh ? 'Clinical Intervention Pathways' : t.solutions.grid_label}
+          {isZh ? 'Health-management reference paths' : t.solutions.grid_label}
         </p>
       </div>
 
@@ -91,12 +91,12 @@ export default function PrintReport() {
         {isZh ? (
           <>
             <p className="pr-body">
-              本报告呈现四项基于循证医学的临床干预路径，完全源自多组学生物标志物分析。
+              本报告呈现四项基于循证医学的健康管理参考路径，完全源自多组学生物标志物分析。
               每项路径均依据同行评审文献推导，并针对 PivotOrder 引擎计算的个体生物年龄落差进行校准。
               本报告不背书任何具体商业产品、品牌或疗法。
             </p>
             <p className="pr-body-zh">
-              This report presents four evidence-based clinical intervention pathways generated exclusively
+              This report presents four evidence-based health-management reference paths generated exclusively
               from multi-omic biomarker analysis. Each pathway is derived from peer-reviewed literature and
               calibrated against the individual biological age delta computed by the PivotOrder Engine.
               No commercial products, brands, or therapies are endorsed herein.
@@ -105,13 +105,13 @@ export default function PrintReport() {
         ) : (
           <>
             <p className="pr-body">
-              This report presents four evidence-based clinical intervention pathways generated exclusively
+              This report presents four evidence-based health-management reference paths generated exclusively
               from multi-omic biomarker analysis. Each pathway is derived from peer-reviewed literature and
               calibrated against the individual biological age delta computed by the PivotOrder Engine.
               No commercial products, brands, or therapies are endorsed herein.
             </p>
             <p className="pr-body-zh">
-              本报告呈现四项基于循证医学的临床干预路径，完全源自多组学生物标志物分析。
+              本报告呈现四项基于循证医学的健康管理参考路径，完全源自多组学生物标志物分析。
               不背书任何商业产品或疗法。
             </p>
           </>
@@ -203,12 +203,12 @@ export default function PrintReport() {
             <p className="pr-body">
               本报告所有干预路径均源自同行评审证据（PubMed · Cochrane · NEJM · Lancet）与个人多组学引擎输出。
               PivotOrder 不背书、不生产、不分发任何具体产品、补剂或疗法。
-              本报告仅用于科研与临床决策辅助目的，不替代专业医疗建议、诊断或治疗。
+              本报告仅用于健康管理参考，不替代专业医疗建议、诊断或治疗。
             </p>
             <p className="pr-body-zh">
               All pathways are derived exclusively from peer-reviewed evidence and individual multi-omic engine output.
               PivotOrder does not endorse, manufacture, or distribute any specific product, supplement, or therapy.
-              For research and clinical decision-support purposes only.
+              Health-management reference only — not a diagnosis.
             </p>
           </>
         ) : (
@@ -217,12 +217,12 @@ export default function PrintReport() {
               All intervention pathways presented in this report are derived exclusively from peer-reviewed
               evidence (PubMed · Cochrane · NEJM · Lancet) and individual multi-omic engine output.
               PivotOrder does not endorse, manufacture, or distribute any specific product, supplement, or therapy.
-              This report is for research and clinical decision-support purposes only.
+              This report is a health-management reference only.
               It is not a substitute for professional medical advice, diagnosis, or treatment.
             </p>
             <p className="pr-body-zh">
               本报告所有干预路径均源自同行评审证据与个人多组学引擎输出。不背书任何具体产品或疗法。
-              仅供科研与临床决策辅助，不替代专业医疗建议。
+              仅供健康管理参考，不替代专业医疗建议。
             </p>
           </>
         )}
@@ -232,8 +232,8 @@ export default function PrintReport() {
       <div className="pr-footer">
         <span>
           {isZh
-            ? `PivotOrder 临床干预路径报告 · 生成日期：${todayZh} · 引擎 v2.4.1 · 机密文件`
-            : `PivotOrder Clinical Strategy Report · Generated ${today} · Engine v2.4.1 · CONFIDENTIAL`}
+            ? `PivotOrder 健康管理参考报告 · 生成日期：${todayZh} · 引擎 v2.4.1 · 机密文件`
+            : `PivotOrder health-management reference · Generated ${today} · Engine v2.4.1 · CONFIDENTIAL`}
         </span>
         <span>
           {isZh

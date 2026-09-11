@@ -52,5 +52,41 @@ test('hero and solutions keep GTM-locked acquisition copy', () => {
   assert.match(hero, /证拿到了。客户从哪来，咨询费怎么收？/);
   assert.match(hero, /免费搭建工作室/);
   assert.match(hero, /发 H5 获客/);
-  assert.match(solutions, /获客、收费、交付，放进同一张工作台/);
+  assert.match(solutions, /获客、收费、交付，持证营养师的开张三步/);
+});
+
+test('GTM acceptance blockers stay patched', () => {
+  const math = readSrc('components/home/MoneyMathStrip.tsx');
+  const delivery = readSrc('components/home/DeliveryProofSection.tsx');
+  const cta = readSrc('components/home/CtaSection.tsx');
+  const pricing = readSrc('app/pricing/page.tsx');
+  const solutionsHero = readSrc('components/solutions/SolutionsHero.tsx');
+  const printReport = readSrc('components/solutions/PrintReport.tsx');
+
+  assert.match(math, /咨询费 × 月成交单数/);
+  assert.match(math, /200元/);
+  assert.match(math, /5单/);
+  assert.match(math, /1000元/);
+  assert.match(math, /对照独立档 ¥99\/月/);
+  assert.match(math, /公式演示，不是保证接到 5 单/);
+  assert.match(math, /H5 只是留资页/);
+
+  assert.equal(delivery.includes('38.2'), false);
+  assert.equal(/\b47\b/.test(delivery), false);
+  assert.match(delivery, /未确认 · 不发送/);
+  assert.match(delivery, /健康管理参考草稿/);
+
+  assert.match(cta, /免费搭建工作室/);
+  assert.equal(cta.includes('上传体检报告'), false);
+  assert.match(cta, /workbenchRegisterUrl/);
+
+  assert.match(pricing, /¥99/);
+  assert.match(pricing, /¥299/);
+  assert.match(pricing, /¥899/);
+  assert.match(pricing, /免费搭建工作室/);
+  assert.match(pricing, /个人体验（非开张方案）/);
+
+  assert.equal(solutionsHero.includes('临床路径'), false);
+  assert.equal(printReport.includes('临床路径'), false);
+  assert.equal(printReport.includes('诊所'), false);
 });

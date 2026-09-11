@@ -1,5 +1,5 @@
 /**
- * pathwayData.ts — Single source of truth for clinical pathway content.
+ * pathwayData.ts — Single source of truth for health-management reference path content.
  * Imported by both SolutionsGrid (display) and PrintReport (browser print).
  */
 
@@ -43,7 +43,7 @@ export const ENGINE_TRIAD = [
     name:     'EBM Cross-Validation Matrix',
     nameZh:   'EBM 循证交叉验证矩阵',
     module:   'cross_validation_engine.py + ebm_pathway_engine.py',
-    desc:     '8 evidence-based clinical rules (GRADE A/B). Detects TG/HDL insulin resistance, HOMA-IR, TSH/fT3 discordance, inflammation cascade patterns, and causal upstream blockers.',
+    desc:     '8 evidence-based rules (GRADE A/B). Detects TG/HDL insulin resistance, HOMA-IR, TSH/fT3 discordance, inflammation cascade patterns, and causal upstream blockers.',
     descZh:   '8 条 GRADE A/B 循证医学规则。检测 TG/HDL 胰岛素抵抗、HOMA-IR、TSH/fT3 不协调、炎症级联模式与上游因果阻断因素。',
     params:   ['TG/HDL Ratio', 'HOMA-IR', 'TSH×fT3', 'hsCRP×NLR', 'Hcy×B12', 'Cascade Risk'],
     endpoint: 'POST /api/v1/analyze/v4 → cross_validation_insights',

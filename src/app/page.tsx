@@ -1,4 +1,5 @@
 import WorkbenchHero from '@/components/home/WorkbenchHero';
+import MoneyMathStrip from '@/components/home/MoneyMathStrip';
 import DeliveryProofSection from '@/components/home/DeliveryProofSection';
 import ParadigmSection from '@/components/home/ParadigmSection';
 import PillarsPreviewSection from '@/components/home/PillarsPreviewSection';
@@ -16,6 +17,7 @@ export default function HomePage() {
   return (
     <>
       <WorkbenchHero />
+      <MoneyMathStrip />
       <DeliveryProofSection />
       <ParadigmSection />
       <PillarsPreviewSection />

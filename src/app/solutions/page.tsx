@@ -14,7 +14,7 @@ export const metadata = buildPageMetadata({
 export default function SolutionsPage() {
   return (
     <>
-      {/* ── Screen view (dark clinical UI) ── */}
+      {/* ── Screen view ── */}
       <div className="no-print" style={{ backgroundColor: '#0A0C10', minHeight: 'calc(100vh - 68px)' }}>
         <SolutionsHero />
         <SolutionsGrid />

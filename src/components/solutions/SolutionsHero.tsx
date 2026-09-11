@@ -148,7 +148,7 @@ export default function SolutionsHero() {
         style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}
       >
         <p style={{ fontSize: '0.625rem', fontWeight: 700, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.2)', textAlign: 'center', marginBottom: '20px', fontFamily: '"JetBrains Mono", monospace' }}>
-          {isZh ? '三大核心算力引擎 — 驱动所有临床路径输出' : 'THREE CORE COMPUTATION ENGINES — POWERING ALL CLINICAL PATHWAYS'}
+          {isZh ? '三大核心算力引擎 — 驱动健康管理参考草稿' : 'THREE CORE COMPUTATION ENGINES — DRAFTING HEALTH-MANAGEMENT REFERENCES'}
         </p>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 320px), 1fr))', gap: '12px' }}>
           {ENGINE_TRIAD.map((engine) => (

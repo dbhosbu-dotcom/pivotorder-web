@@ -116,7 +116,7 @@ export default function EnterprisePage() {
             marginBottom: '40px',
           }}
         >
-          为您的诊所或研究机构接入 0.1% 生物年龄引擎 — 纯算力与接口，无商业产品导流，无利益冲突。
+          为您的工作室或研究机构接入 0.1% 生物年龄引擎 — 纯算力与接口，无商业产品导流，无利益冲突。
         </p>
 
         <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
