@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useCallback } from 'react';
+import { createContext, useCallback, useContext, useEffect, useState, type ReactNode } from 'react';
 import type { Lang, Dict } from '@/locales/types';
 import { en, zh } from '@/locales';
 
@@ -15,17 +15,29 @@ interface LangCtx {
 }
 
 const LanguageContext = createContext<LangCtx>({
-  lang:           'en',
-  t:              en,
+  lang:           'zh',
+  t:              zh,
   toggleLanguage: () => {},
 });
 
 /* ─── Provider ───────────────────────────────────────────────────────── */
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>('en');
+export function LanguageProvider({ children }: { children: ReactNode }) {
+  const [lang, setLang] = useState<Lang>('zh');
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem('pivotorder-lang');
+    if (stored === 'en' || stored === 'zh') {
+      setLang(stored);
+    }
+  }, []);
 
   const toggleLanguage = useCallback(
-    () => setLang((l) => (l === 'en' ? 'zh' : 'en')),
+    () =>
+      setLang((current) => {
+        const next = current === 'en' ? 'zh' : 'en';
+        window.localStorage.setItem('pivotorder-lang', next);
+        return next;
+      }),
     [],
   );
 

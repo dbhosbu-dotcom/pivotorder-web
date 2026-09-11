@@ -147,9 +147,9 @@ const zh: Dict = {
   },
 
   solutions: {
-    hero_badge:     '独立第三方评估',
-    hero_headline:  '个性化干预方案',
-    hero_sub:       '由 PivotOrder 引擎基于你的体检报告生成的客观、数据驱动干预方案，无商业产品推荐，独立第三方出具。',
+    hero_badge:     '营养师工作台',
+    hero_headline:  '获客、收费、交付，放进同一张工作台',
+    hero_sub:       'H5 测评留资、咨询报价路径、白标报告确认后发送。健康管理参考，不构成医学诊断，不承诺获客效果。',
     grid_label:     '多组学干预矩阵',
     grid_headline:  '4 条干预路径',
     grid_source:    '来源：PivotOrder 引擎 v2.4.1',

@@ -28,6 +28,16 @@ export default function Footer() {
     ],
   };
 
+  const COL_HELP = {
+    title: isZh ? '帮助' : 'Help',
+    links: [
+      { label: '营养师指南', href: '/guides' },
+      { label: isZh ? '获客留资' : 'Get clients', href: '/guides/nutritionist-get-clients' },
+      { label: isZh ? '咨询收费' : 'Pricing consults', href: '/guides/how-to-price-consult' },
+      { label: isZh ? '白标报告' : 'White-label reports', href: '/guides/white-label-report' },
+    ],
+  };
+
   const COL_LEGAL = {
     title: isZh ? '法律' : 'Legal',
     links: [
@@ -36,7 +46,7 @@ export default function Footer() {
     ],
   };
 
-  const COLUMNS = [COL_PRODUCT, COL_COMPANY, COL_LEGAL];
+  const COLUMNS = [COL_PRODUCT, COL_COMPANY, COL_HELP, COL_LEGAL];
 
   return (
     <footer style={{
@@ -48,7 +58,7 @@ export default function Footer() {
         {/* Top section: brand + columns */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'minmax(220px, 1fr) repeat(3, auto)',
+          gridTemplateColumns: 'minmax(220px, 1fr) repeat(4, auto)',
           gap: '40px 48px',
           marginBottom: '48px',
           flexWrap: 'wrap',

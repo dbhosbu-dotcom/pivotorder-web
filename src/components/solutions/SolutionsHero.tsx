@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion';
 import { useT, useLanguage } from '@/context/LanguageContext';
 import { ENGINE_TRIAD } from '@/lib/pathwayData';
+import SolutionsFunnelCards from '@/components/solutions/SolutionsFunnelCards';
 
 export default function SolutionsHero() {
   const t = useT();
@@ -124,11 +125,11 @@ export default function SolutionsHero() {
             style={{ display: 'inline-flex', alignItems: 'center', gap: '6px', backgroundColor: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.07)', borderRadius: '20px', padding: '6px 18px', marginBottom: '56px' }}
           >
             {[
-              { label: isZh ? '引擎分析' : 'Engine Analysis', active: false },
+              { label: isZh ? '获客' : 'Acquire', active: true },
               { label: '→', active: false },
-              { label: isZh ? '干预路线图' : 'Intervention Map', active: true },
+              { label: isZh ? '收费' : 'Price', active: false },
               { label: '→', active: false },
-              { label: isZh ? '协议导出' : 'Protocol Export', active: false },
+              { label: isZh ? '交付' : 'Deliver', active: false },
             ].map((item, i) => (
               <span key={i} style={{ fontSize: '0.6875rem', fontWeight: item.active ? 600 : 400, letterSpacing: '0.04em', color: item.active ? '#FFD700' : 'rgba(255,255,255,0.25)' }}>
                 {item.label}
@@ -136,6 +137,8 @@ export default function SolutionsHero() {
             ))}
           </motion.div>
       </div>
+
+      <SolutionsFunnelCards />
 
       {/* ── Engine Triad ─────────────────────────────────────────────── */}
       <motion.div

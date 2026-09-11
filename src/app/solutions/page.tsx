@@ -2,12 +2,14 @@ import SolutionsHero from '@/components/solutions/SolutionsHero';
 import SolutionsGrid from '@/components/solutions/SolutionsGrid';
 import SolutionsCta  from '@/components/solutions/SolutionsCta';
 import PrintReport   from '@/components/solutions/PrintReport';
+import { buildPageMetadata } from '@/lib/seo';
 
-export const metadata = {
-  title: 'Clinical Intervention Pathways — PivotOrder',
+export const metadata = buildPageMetadata({
+  title: '营养师获客、收费与白标交付｜枢序健康',
   description:
-    'Agnostic, data-driven clinical intervention protocols based on your multi-omic biological age delta. Metabolic, epigenetic, microbiome, and autonomic pathways.',
-};
+    '枢序健康把获客留资、咨询收费与白标报告放进同一条工作台：H5 测评沉淀线索，报价路径写清交付物，白标草稿确认后发送。健康管理参考，不构成医学诊断。',
+  path: '/solutions',
+});
 
 export default function SolutionsPage() {
   return (

@@ -5,6 +5,8 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { AuthProvider } from '@/context/AuthContext';
+import { HOME_METADATA } from '@/lib/seo';
+import { SITE_NAME, SITE_ORIGIN } from '@/lib/site';
 
 /* Plus Jakarta Sans — rounded humanist geometry, closest to the PivotOrder logo wordmark */
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -21,23 +23,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'PivotOrder — Decoding the Data, Restoring the Order',
-  description:
-    'PivotOrder is an independent medical algorithm engine for multi-omic biological age analysis and digital twin modeling. Pure compute. No product bias.',
+  metadataBase: new URL(SITE_ORIGIN),
+  title: HOME_METADATA.title,
+  description: HOME_METADATA.description,
   keywords: [
-    'biological age',
-    'multi-omic analysis',
-    'epigenetic clock',
-    'precision medicine',
-    'digital twin',
+    '营养师获客',
+    '咨询收费',
+    '白标报告',
+    'H5 测评',
+    '枢序健康',
     'PivotOrder',
   ],
   openGraph: {
-    title: 'PivotOrder — Decoding the Data, Restoring the Order',
-    description:
-      'An absolutely neutral, independent medical algorithm engine. No product binding. Pure compute.',
+    title: HOME_METADATA.title,
+    description: HOME_METADATA.ogDescription,
     type: 'website',
-    locale: 'en_US',
+    locale: 'zh_CN',
+    siteName: SITE_NAME,
+    url: SITE_ORIGIN,
   },
 };
 
@@ -47,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
+    <html lang="zh-CN" className={`${plusJakartaSans.variable} ${jetbrainsMono.variable}`}>
       <body
         style={{
           fontFamily:
