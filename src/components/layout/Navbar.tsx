@@ -17,8 +17,8 @@ function useExploreItems(isZh: boolean) {
       icon:  '⬡',
     },
     {
-      label: isZh ? '干预方案库' : 'Solutions',
-      sub:   isZh ? '循证干预路径与生命钟靶点' : 'Evidence-based intervention pathways',
+      label: isZh ? '获客·收费·交付' : 'Solutions',
+      sub:   isZh ? 'H5 留资、报价路径与白标交付' : 'H5 leads, consult pricing, white-label delivery',
       href:  '/solutions',
       icon:  '◈',
     },

@@ -13,7 +13,7 @@ export default function Footer() {
     links: [
       { label: isZh ? '十大支柱协议' : '10-Pillar Protocol', href: '/pillars' },
       { label: isZh ? '算力引擎' : 'The Engine', href: '/engine' },
-      { label: isZh ? '干预方案' : 'Solutions', href: '/solutions' },
+      { label: isZh ? '获客·收费·交付' : 'Solutions', href: '/solutions' },
       { label: isZh ? '定价' : 'Pricing', href: '/pricing' },
     ],
   };

@@ -1,7 +1,6 @@
 import WorkbenchHero from '@/components/home/WorkbenchHero';
 import DeliveryProofSection from '@/components/home/DeliveryProofSection';
-import ParadigmSection from '@/components/home/ParadigmSection';
-import PillarsPreviewSection from '@/components/home/PillarsPreviewSection';
+import StudioFunnelSection from '@/components/home/StudioFunnelSection';
 import CtaSection from '@/components/home/CtaSection';
 import { buildPageMetadata, HOME_METADATA } from '@/lib/seo';
 
@@ -17,8 +16,7 @@ export default function HomePage() {
     <>
       <WorkbenchHero />
       <DeliveryProofSection />
-      <ParadigmSection />
-      <PillarsPreviewSection />
+      <StudioFunnelSection />
       <CtaSection />
     </>
   );

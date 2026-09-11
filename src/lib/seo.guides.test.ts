@@ -119,3 +119,29 @@ test('GTM acceptance blockers stay patched', () => {
   assert.equal(hero.includes('前 3 次体检报告解读，完全免费'), false);
   assert.equal(cta.includes('前 3 次体检报告解读，完全免费'), false);
 });
+
+test('homepage middle and nav drop leftover paradigm/pillars copy', () => {
+  const homepage = readSrc('app/page.tsx');
+  const funnel = readSrc('components/home/StudioFunnelSection.tsx');
+  const navbar = readSrc('components/layout/Navbar.tsx');
+  const footer = readSrc('components/layout/Footer.tsx');
+  const zh = readSrc('locales/zh.ts');
+
+  assert.match(homepage, /StudioFunnelSection/);
+  assert.equal(homepage.includes('ParadigmSection'), false);
+  assert.equal(homepage.includes('PillarsPreviewSection'), false);
+
+  assert.match(funnel, /获客、收费、交付/);
+  assert.match(funnel, /开张三步/);
+  assert.equal(funnel.includes('Data Points'), false);
+  assert.equal(funnel.includes('10-PILLAR'), false);
+  assert.equal(funnel.includes('十大代谢支柱'), false);
+  assert.equal(funnel.includes('诊所'), false);
+  assert.equal(funnel.includes('临床'), false);
+
+  assert.match(navbar, /获客·收费·交付/);
+  assert.equal(navbar.includes('干预方案'), false);
+  assert.match(footer, /获客·收费·交付/);
+  assert.equal(footer.includes('干预方案'), false);
+  assert.match(zh, /solutions:\s+'获客·收费·交付'/);
+});

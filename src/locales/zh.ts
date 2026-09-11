@@ -5,7 +5,7 @@ const zh: Dict = {
     home:        '首页',
     pillars:     '十大支柱',
     engine:      '算力引擎',
-    solutions:   '干预方案',
+    solutions:   '获客·收费·交付',
     science:     '科学依据',
     enterprise:  '机构接入',
     pricing:     '方案与定价',
